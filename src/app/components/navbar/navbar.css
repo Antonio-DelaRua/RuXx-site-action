@@ -1,0 +1,56 @@
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-left: 0%;
+    padding-right: 10%;
+    background: #360033;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #0b8793, #360033);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #0b8793, #360033); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    font-family: Orbitron, sans-serif;
+
+}
+
+
+
+.logo {
+    color: white;
+    font-size: 28px;
+
+}
+
+span {
+    color: #d3cc3a;
+}
+
+nav ul li{
+    list-style-type: none;
+    display: inline-block;
+    padding: 10px 20px;
+}
+
+nav ul li a{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+nav ul li a:hover{
+    color: #d3cc3a;
+    transition: .3s;
+}
+
+
+
+@media screen and (max-width: 768px) {
+    button{
+        background-color: #350537;
+        border: 2px solid #107888;
+    }
+}
+    
+
+
+

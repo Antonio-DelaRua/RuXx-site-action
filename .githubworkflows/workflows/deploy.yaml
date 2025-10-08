@@ -1,0 +1,54 @@
+name: CI Deploy VRDISTRIBUCION
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - closed
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: vrditribucion
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+          
+      - name: copy into folder dependencies
+        run: |
+            echo $PWD
+            cd ${{ github.workspace }}
+            ls -la
+
+      - name: Remove unnecessary files
+        run: |
+
+          ls -la ${{ github.workspace }}
+
+      - name: Publish
+        uses: dannybombastic/ssh-scp-ssh-pipelines@v1.1.5
+        with:
+            host: ${{ secrets.REMOTE_HOST }}
+            port: 22
+            user: ${{ secrets.REMOTE_USER }}
+            pass: ${{ secrets.REMOTE_PASS }}
+            connect_timeout: 10s
+            first_ssh: |
+              rm -rf /var/www/html/vrdistribucion/*
+            scp: |
+                "*" => /var/www/html/vrdistribucion
+                "server/*" => /home/ubuntu/server/
+            last_ssh: |
+              sudo systemctl stop app
+              sudo -u ubuntu chmod -R 774 /var/www/html/vrdistribucion/ ; sudo -u ubuntu chown -R ubuntu: /var/www/html/vrdistribucion
+              sudo -u ubuntu chmod -R 774 /home/ubuntu/server/ ; sudo -u ubuntu chown -R ubuntu: /home/ubuntu/server
+              sudo -u ubuntu /home/ubuntu/server/venv/bin/python -m pip install -r /home/ubuntu/server/requirements.txt
+              sudo systemctl start app
