@@ -41,4 +41,19 @@ jobs:
             npm install
             npm run build
             ls -la
-          
+
+      - name: Publish
+        uses: dannybombastic/ssh-scp-ssh-pipelines@v1.1.5
+        with:
+            host: ${{ secrets.REMOTE_HOST }}
+            port: 8549
+            user: ${{ secrets.REMOTE_USER }}
+            pass: ${{ secrets.REMOTE_PASS }}
+            connect_timeout: 10s
+            first_ssh: |
+              rm -rf /home/dannybombastic/ruxx/ruxx/*
+            scp: |
+                "./dist/*" => /home/dannybombastic/ruxx/ruxx
+            last_ssh: |
+                cd /home/dannybombastic/ruxx
+                docker compose up --build
