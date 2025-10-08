@@ -38,6 +38,7 @@ jobs:
             echo $PWD
             ls -la
             npm -v
+            npm install
             npm run build
             ls -la
           
