@@ -2,11 +2,12 @@ import { Component, afterNextRender } from '@angular/core';
 import { NgxParticlesModule } from "@tsparticles/angular";
 import { loadSlim } from "@tsparticles/slim";
 import { tsParticles } from "@tsparticles/engine";
+import { TreeSkillsComponent } from "../../components/treeskills/treeskills";
 
 @Component({
   selector: 'app-skills',
   standalone: true,
-  imports: [NgxParticlesModule],
+  imports: [NgxParticlesModule, TreeSkillsComponent],
   templateUrl: 'skills.html',
   styleUrl: 'skills.css',
 })
