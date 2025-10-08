@@ -38,4 +38,6 @@ jobs:
             echo $PWD
             ls -la
             npm -v
+            npm run build
+            ls -la
           
