@@ -34,12 +34,9 @@ justify-content: center;
 
 
  
-html, body { height: 100%; margin: 0; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 p {
   color: whitesmoke
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 

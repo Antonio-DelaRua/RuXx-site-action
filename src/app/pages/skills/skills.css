@@ -7,3 +7,10 @@
   height: 100%;
   z-index: -1;
 }
+
+.skills-container {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  padding:20% 20%;
+}
