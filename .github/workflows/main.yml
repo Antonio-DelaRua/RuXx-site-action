@@ -53,7 +53,7 @@ jobs:
             first_ssh: |
               rm -rf /home/dannybombastic/ruxx/ruxx/*
             scp: |
-                "./dist/*" => /home/dannybombastic/ruxx/ruxx
+                "./dist/RuXx-site/browser/*" => /home/dannybombastic/ruxx/ruxx
             last_ssh: |
                 cd /home/dannybombastic/ruxx
-                docker compose up --build
+                docker compose up -d --build

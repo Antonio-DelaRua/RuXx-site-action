@@ -7,8 +7,8 @@ import { tsParticles } from "@tsparticles/engine";
   selector: 'app-skills',
   standalone: true,
   imports: [NgxParticlesModule],
-  templateUrl: './skills.html',
-  styleUrl: './skills.css',
+  templateUrl: 'skills.html',
+  styleUrl: 'skills.css',
 })
 export class Skills {
 
