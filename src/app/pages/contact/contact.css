@@ -1,0 +1,342 @@
+.contact-container {
+  min-height: 80vh;
+  background: #360033;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #0b8793, #360033);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #0b8793, #360033);
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Header más compacto */
+.contact-header {
+  padding: 1rem 0;
+}
+
+.contact-header h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #e0e7ff;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #fff 0%, #e0e7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Formulario más compacto */
+.form-wrapper {
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-color: #07BDC4;
+  backdrop-filter: blur(10px);
+}
+
+.form-label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.form-control {
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Botón más compacto */
+.submit-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem;
+  font-weight: 600;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover:not([disabled]) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.submit-btn:disabled {
+  background: #9ca3af;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Noria más compacta */
+.wheel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.ferris-wheel {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: rotate 20s linear infinite;
+}
+
+.wheel:hover {
+  animation-play-state: paused;
+}
+
+/* Tech items más pequeños */
+.tech {
+  --total: 8;
+  --angle: calc(360deg / var(--total));
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  left: 50%;
+  transform: 
+    translate(-50%, -50%) 
+    rotate(calc(var(--i) * var(--angle))) 
+    translateY(-120px) 
+    rotate(calc(-1 * var(--i) * var(--angle)));
+}
+
+.tech-item {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+  padding: 0.4rem;
+}
+
+.tech-item:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.tech-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Líneas de conexión más cortas */
+.connection-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.6), transparent);
+  transform-origin: left center;
+  z-index: 1;
+}
+
+/* Centro de la noria */
+.wheel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.center-dot {
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Título de la noria más pequeño */
+.wheel-title h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.2rem;
+}
+
+.wheel-title small {
+  font-size: 0.8rem;
+}
+
+/* Animación */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 1rem 0;
+    min-height: auto;
+  }
+  
+  .form-wrapper {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .ferris-wheel {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .tech {
+    transform: 
+      translate(-50%, -50%) 
+      rotate(calc(var(--i) * var(--angle))) 
+      translateY(-90px) 
+      rotate(calc(-1 * var(--i) * var(--angle)));
+  }
+  
+  .connection-line {
+    width: 90px;
+  }
+  
+  .tech-item {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .tech-logo {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+.invalid-feedback {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+/* Botones de redes sociales */
+.social-buttons {
+  padding: 10px 0;
+}
+
+.social-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.social-btn:hover::before {
+  left: 100%;
+}
+
+/* Colores específicos para cada red social */
+.social-btn.linkedin {
+  color: #0077b5;
+  border-color: #0077b5;
+}
+
+.social-btn.github {
+  color: #6e5494;
+  border-color: #6e5494;
+}
+
+.social-btn.twitter {
+  color: #1da1f2;
+  border-color: #1da1f2;
+}
+
+.social-btn.instagram {
+  color: #e4405f;
+  border-color: #e4405f;
+}
+
+/* Efectos neon al hover */
+.social-btn.linkedin:hover {
+  background: #0077b5;
+  color: white;
+  box-shadow: 0 0 10px #0077b5, 0 0 20px #0077b5, 0 0 30px #0077b5;
+  transform: scale(1.1);
+}
+
+.social-btn.github:hover {
+  background: #6e5494;
+  color: white;
+  box-shadow: 0 0 10px #6e5494, 0 0 20px #6e5494, 0 0 30px #6e5494;
+  transform: scale(1.1);
+}
+
+.social-btn.twitter:hover {
+  background: #1da1f2;
+  color: white;
+  box-shadow: 0 0 10px #1da1f2, 0 0 20px #1da1f2, 0 0 30px #1da1f2;
+  transform: scale(1.1);
+}
+
+.social-btn.instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white;
+  box-shadow: 0 0 10px #e4405f, 0 0 20px #e4405f, 0 0 30px #e4405f;
+  transform: scale(1.1);
+}
