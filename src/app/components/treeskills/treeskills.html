@@ -1,120 +1,167 @@
-<div class="tree-skills-container" @fadeIn>
-  <h2 class="section-title">Tecnologias trabajadas</h2>
-  
-  <div class="skills-tree">
-    <div class="tree-branches">
-      @for (skill of skills; track skill.name; let i = $index) {
-        <div class="skill-branch" [class.delay-{{i}}]="true">
-          <div class="branch-node main-node" 
-               [class.expandable]="hasChildren(skill)"
-               (click)="hasChildren(skill) ? toggleNode(skill) : null">
-            
-            <div class="node-content">
-              <div class="node-main">
-                @if (hasChildren(skill)) {
-                  <span class="expand-icon" 
-                        [@rotateIcon]="isExpanded(skill) ? 'open' : 'closed'">
-                    ▶
-                  </span>
-                } @else {
-                  <span class="leaf-icon">•</span>
-                }
+<!-- Skills Tree Section - Mantenemos estructura personalizada -->
+<section class="container-fluid px-0">
+  <div class="tree-skills-container" @fadeIn>
+    <header class="tituloo container text-center py-4 my-4">
+      <h1 class="title-project display-4 fw-bold">Nivel de Tecnologías</h1>
+    </header>
+    
+    <hr class="my-4">
+    
+    <div class="container">
+      <div class="skills-tree pt-5">
+        <!-- Tu estructura personalizada del árbol se mantiene igual -->
+        <div class="tree-branches">
+          @for (skill of skills; track skill.name; let i = $index) {
+            <div class="skill-branch" [class.delay-{{i}}]="true">
+              <div class="branch-node main-node" 
+                   [class.expandable]="hasChildren(skill)"
+                   (click)="hasChildren(skill) ? toggleNode(skill) : null">
                 
-                <span class="skill-icon">{{ skill.icon }}</span>
-                <span class="skill-name">{{ skill.name }}</span>
-              </div>
-              
-              <div class="skill-level">
-                <div class="level-bars">
-                  @for (bar of getLevelBars(skill.level); track $index) {
-                    <span class="level-bar" [class.active]="bar"></span>
-                  }
-                </div>
-                <span class="level-text">Level {{ skill.level }}/5</span>
-              </div>
-            </div>
-
-            @if (skill.description) {
-              <p class="skill-description">{{ skill.description }}</p>
-            }
-          </div>
-
-          @if (hasChildren(skill) && isExpanded(skill)) {
-            <div class="children-container" @slideInOut>
-              <div class="children-branch">
-                @for (child of skill.children; track child.name) {
-                  <div class="skill-branch child-branch">
-                    <div class="branch-node" 
-                         [class.expandable]="hasChildren(child)"
-                         (click)="hasChildren(child) ? toggleNode(child) : null">
-                      
-                      <div class="node-content">
-                        <div class="node-main">
-                          @if (hasChildren(child)) {
-                            <span class="expand-icon" 
-                                  [@rotateIcon]="isExpanded(child) ? 'open' : 'closed'">
-                              ▶
-                            </span>
-                          } @else {
-                            <span class="leaf-icon">•</span>
-                          }
-                          
-                          <span class="skill-icon">{{ child.icon }}</span>
-                          <span class="skill-name">{{ child.name }}</span>
-                        </div>
-                        
-                        <div class="skill-level">
-                          <div class="level-bars">
-                            @for (bar of getLevelBars(child.level); track $index) {
-                              <span class="level-bar" [class.active]="bar"></span>
-                            }
-                          </div>
-                        </div>
-                      </div>
-
-                      @if (child.description) {
-                        <p class="skill-description">{{ child.description }}</p>
+                <div class="node-content">
+                  <div class="node-main">
+                    @if (hasChildren(skill)) {
+                      <span class="expand-icon" 
+                            [@rotateIcon]="isExpanded(skill) ? 'open' : 'closed'">
+                        ▶
+                      </span>
+                    } @else {
+                      <span class="leaf-icon">•</span>
+                    }
+                    
+                    <span class="skill-icon">{{ skill.icon }}</span>
+                    <span class="skill-name">{{ skill.name }}</span>
+                  </div>
+                  
+                  <div class="skill-level">
+                    <div class="level-bars">
+                      @for (bar of getLevelBars(skill.level); track $index) {
+                        <span class="level-bar" [class.active]="bar"></span>
                       }
                     </div>
+                    <span class="level-text">Level {{ skill.level }}/5</span>
+                  </div>
+                </div>
 
-                    @if (hasChildren(child) && isExpanded(child)) {
-                      <div class="children-container" @slideInOut>
-                        <div class="children-branch nested">
-                          @for (grandChild of child.children; track grandChild.name) {
-                            <div class="skill-branch grandchild-branch">
-                              <div class="branch-node leaf-node">
-                                <div class="node-content">
-                                  <div class="node-main">
-                                    <span class="leaf-icon">•</span>
-                                    <span class="skill-icon">{{ grandChild.icon }}</span>
-                                    <span class="skill-name">{{ grandChild.name }}</span>
-                                  </div>
-                                  
-                                  <div class="skill-level">
-                                    <div class="level-bars">
-                                      @for (bar of getLevelBars(grandChild.level); track $index) {
-                                        <span class="level-bar" [class.active]="bar"></span>
-                                      }
-                                    </div>
-                                  </div>
-                                </div>
+                @if (skill.description) {
+                  <p class="skill-description">{{ skill.description }}</p>
+                }
+              </div>
 
-                                @if (grandChild.description) {
-                                  <p class="skill-description">{{ grandChild.description }}</p>
+              @if (hasChildren(skill) && isExpanded(skill)) {
+                <div class="children-container" @slideInOut>
+                  <div class="children-branch">
+                    @for (child of skill.children; track child.name) {
+                      <div class="skill-branch child-branch">
+                        <div class="branch-node" 
+                             [class.expandable]="hasChildren(child)"
+                             (click)="hasChildren(child) ? toggleNode(child) : null">
+                          
+                          <div class="node-content">
+                            <div class="node-main">
+                              @if (hasChildren(child)) {
+                                <span class="expand-icon" 
+                                      [@rotateIcon]="isExpanded(child) ? 'open' : 'closed'">
+                                  ▶
+                                </span>
+                              } @else {
+                                <span class="leaf-icon">•</span>
+                              }
+                              
+                              <span class="skill-icon">{{ child.icon }}</span>
+                              <span class="skill-name">{{ child.name }}</span>
+                            </div>
+                            
+                            <div class="skill-level">
+                              <div class="level-bars">
+                                @for (bar of getLevelBars(child.level); track $index) {
+                                  <span class="level-bar" [class.active]="bar"></span>
                                 }
                               </div>
                             </div>
+                          </div>
+
+                          @if (child.description) {
+                            <p class="skill-description">{{ child.description }}</p>
                           }
                         </div>
+
+                        @if (hasChildren(child) && isExpanded(child)) {
+                          <div class="children-container" @slideInOut>
+                            <div class="children-branch nested">
+                              @for (grandChild of child.children; track grandChild.name) {
+                                <div class="skill-branch grandchild-branch">
+                                  <div class="branch-node leaf-node">
+                                    <div class="node-content">
+                                      <div class="node-main">
+                                        <span class="leaf-icon">•</span>
+                                        <span class="skill-icon">{{ grandChild.icon }}</span>
+                                        <span class="skill-name">{{ grandChild.name }}</span>
+                                      </div>
+                                      
+                                      <div class="skill-level">
+                                        <div class="level-bars">
+                                          @for (bar of getLevelBars(grandChild.level); track $index) {
+                                            <span class="level-bar" [class.active]="bar"></span>
+                                          }
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    @if (grandChild.description) {
+                                      <p class="skill-description">{{ grandChild.description }}</p>
+                                    }
+                                  </div>
+                                </div>
+                              }
+                            </div>
+                          </div>
+                        }
                       </div>
                     }
                   </div>
-                }
-              </div>
+                </div>
+              }
             </div>
           }
         </div>
-      }
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- Sponsors Section - Convertida a Bootstrap -->
+<section class="sponsors-section py-5">
+  <div class="container">
+    <div class="row justify-content-center align-items-center g-4">
+      <div class="col-auto">
+        <img class="paco img-fluid" src="assets/123.png" alt="Patrocinador 1">
+      </div>
+      <div class="col-auto">
+        <img class="paco1 img-fluid" src="assets/12.png" alt="Patrocinador 2">
+      </div>
+      <div class="col-auto">
+        <img class="paco2 img-fluid" src="assets/17.png" alt="Patrocinador 3">
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="barra my-5">
+
+<!-- Projects Section - Convertida a Bootstrap -->
+<section class="card-section py-5">
+  <div class="container">
+    <div class="prueba mb-5">
+      <header class="tituloo container text-center py-4">
+        <h1 class="title-project display-4 fw-bold">Últimos Proyectos</h1>
+      </header>
+    </div>
+    
+    <!-- Bootstrap Grid System -->
+    <div class="row g-4 justify-content-center">
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let project of projects">
+        <app-card [project]="project"></app-card>
+      </div>
+    </div>
+  </div>
+</section>

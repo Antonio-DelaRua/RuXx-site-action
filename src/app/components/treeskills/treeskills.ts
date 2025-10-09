@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { loadSlim } from "@tsparticles/slim";
+import { CardComponent } from '../card/card';
+import { ProjectService } from '../../services/project.service';
+
 
 export interface SkillNode {
   name: string;
@@ -14,9 +17,9 @@ export interface SkillNode {
 @Component({
   selector: 'app-tree-skills',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './treeskills.html',
-  styleUrls: ['./treeskills.css'],
+  imports: [CommonModule, CardComponent],
+  templateUrl: 'treeskills.html',
+  styleUrls: ['treeskills.css'],
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
@@ -53,6 +56,8 @@ export interface SkillNode {
 export class TreeSkillsComponent implements OnInit {
   @Input() skills: SkillNode[] = [];
   @Input() title: string = 'My Skills';
+  projects: any[] = [];
+  constructor(private projectService: ProjectService) {}
 
   expandedNodes: Set<string> = new Set();
 
@@ -85,8 +90,12 @@ export class TreeSkillsComponent implements OnInit {
   ngOnInit() {
     if (this.skills.length === 0) {
       this.skills = this.getDefaultSkills();
+
     }
+    this.projects = this.projectService.getProjects();
   }
+
+  
 
   private getDefaultSkills(): SkillNode[] {
     return [

@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'home.html',
   styleUrl: 'home.css'
 })
-export class Home  { // Ahora OnInit está definido
+export class Home  { 
   constructor() {}
 
 

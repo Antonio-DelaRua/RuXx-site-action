@@ -30,6 +30,7 @@
     "@angular/material": "^20.2.8",
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
+    "@material/card": "^14.0.0",
     "@tsparticles/angular": "^3.0.0",
     "@tsparticles/slim": "^3.9.1",
     "rxjs": "~7.8.0",
