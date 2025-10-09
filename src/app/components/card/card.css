@@ -1,22 +1,31 @@
 .project-card {
-  background: white;
+  /* Ya no necesitamos width fijo porque Bootstrap maneja el ancho */
+  /* height: 300px;  Vamos a quitar la altura fija para que sea flexible */
+  /* En su lugar, usamos h-100 en la tarjeta para que ocupe el 100% del height del contenedor padre, pero el padre debe tener una altura definida o ser flexible. */
+  background: transparent;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  height: 300px;
-  width: 500px;
+  /* Vamos a quitar la altura fija y usar flexbox interno para que se ajuste */
   display: flex;
   flex-direction: column;
+  height: 100%; /* Aseguramos que ocupe todo el espacio del contenedor padre */
+  border-color: #07BDC4;
 }
 
 .project-card:hover {
   transform: translateY(-15px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 
+    0 15px 30px rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(255, 255, 255, 0.3),
+    0 0 30px rgba(255, 255, 255, 0.1);
+  filter: brightness(1.1);
+
 }
 
 .card-image {
-  height: 200px;
+  height: 200px; /* Mantenemos una altura fija para la imagen */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   align-items: center;
@@ -36,22 +45,22 @@
   font-weight: bold;
 }
 
-.card-content {
+.card-body {
   padding: 1.5rem;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .project-title {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #2d3748;
+  color: #fafafa;
 }
 
 .project-description {
-  color: #718096;
+  color: #fafafa;
   margin-bottom: 1rem;
   line-height: 1.5;
   flex-grow: 1;
@@ -65,6 +74,7 @@
 }
 
 .tech-tag {
+  /* Bootstrap badge ya tiene estilos, pero podemos ajustar */
   background: #edf2f7;
   color: #4a5568;
   padding: 0.25rem 0.75rem;

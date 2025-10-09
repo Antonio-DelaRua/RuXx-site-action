@@ -356,3 +356,72 @@ body {
     padding: 1rem;
   }
 }
+
+.barra{
+  margin: 60PX;
+  margin-top: 190px;
+}
+
+.sponsors-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+}
+
+.sponsors-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+  flex-wrap: wrap; /* ✅ Se adapta en móviles */
+  width: 90%;
+  max-width: 1300px;
+  padding: 1rem 2rem;
+ 
+  
+
+  
+}
+
+.sponsors-container img {
+  width: 200px; /* Reduced from 440px */
+  height: auto;
+  opacity: 0.85;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 8px rgba(0,0,0,0.3));
+  flex-wrap: nowrap; /* Prevents items from wrapping */
+  flex: 1;
+  
+}
+
+.sponsors-container img:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .sponsors-container {
+    gap: 2rem;
+  }
+
+  .sponsors-container img {
+    width: 100px;
+  }
+}
+
+.paco {
+  width: 210px;
+  height: auto;
+}
+.paco1 {
+  width: 210px;
+  height: auto;
+}
+
+.paco2 {
+  width: 210px;
+  height: auto;
+}
