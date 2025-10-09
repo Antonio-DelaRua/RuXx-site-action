@@ -1,3 +1,20 @@
+<section class="card-section">
+  <div class="prueba">
+  <header class="tituloo">
+  <h1 class="title-project"> Últimos Proyectos</h1>
+</header>
+</div>
+  <div class="projects-grid">
+    <app-card 
+      *ngFor="let project of projects" 
+      [project]="project">
+    </app-card>
+  </div>
+</section>
+
+<hr>
+
+<section sytle="w-50">
 <div class="tree-skills-container" @fadeIn>
   <h2 class="section-title">Tecnologias trabajadas</h2>
   
@@ -118,3 +135,6 @@
     </div>
   </div>
 </div>
+</section>
+<hr>
+

@@ -1,29 +1,98 @@
-.tree-skills-container {
-  padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background: linear-gradient(120deg, #004f6e, #2b005b);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
 }
 
-.section-title {
+.tree-skills-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 2rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+
+/* 💬 Sección de proyectos */
+.card-section {
+  padding: 3rem 2rem;
+  background: transparent;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  width: 100%; /* 💡 antes max-width: 1000px */
+  max-width: 1600px; /* 💡 ampliamos */
+  margin: 0 auto;
+  padding-top: 3rem;
+}
+
+/* 💡 Título centrado sin limitar ancho */
+.title-project {
   text-align: center;
   font-size: 2.5rem;
-  margin-bottom: 3rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin-bottom: 1.5rem;
+  background: #fff;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   position: relative;
 }
 
-.section-title::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 4px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 2px;
+.tituloo {
+  width: 100%;
+  max-width: none; /* 💡 eliminamos el límite */
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  text-align: center;
+  background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  backdrop-filter: blur(5px);
+}
+
+/* 💡 Sección de tecnologías */
+.tech-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 4rem;
+}
+
+.tech-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 95%; /* 💡 antes 90% */
+  max-width: 1600px; /* 💡 antes 1200px */
+  gap: 3rem;
+}
+
+/* Imagen izquierda */
+.tech-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tech-image img {
+  width: 100%;
+  max-width: 500px; /* 💡 un poco más grande */
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  object-fit: cover;
 }
 
 .skills-tree {
@@ -259,5 +328,31 @@
   
   .children-branch {
     padding-left: 1rem;
+  }
+}
+
+/* Título */
+.section-title {
+  font-size: 2rem;
+  text-align: center;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .tech-content {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: none;
+  }
+
+  .tech-image,
+  .tech-tree {
+    width: 100%;
+  }
+
+  .tree-skills-container {
+    padding: 1rem;
   }
 }
