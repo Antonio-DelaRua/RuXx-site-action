@@ -164,7 +164,5 @@ export class TreeSkillsComponent implements OnInit {
       }
     ];
   }
-    particlesInit = async (engine: any): Promise<void> => {
-    await loadSlim(engine);
-  };
+
 }
