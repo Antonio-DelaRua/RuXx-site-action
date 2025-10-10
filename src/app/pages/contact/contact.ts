@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ParticlesBackground } from "../../components/particles-background/particles-background";
+import { CommonModule } from '@angular/common'; // 👈 Necesitas importar CommonModule
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.html',
   styleUrls: ['./contact.css'],
-  imports: [ReactiveFormsModule]
+  standalone: true, // 👈 Faltaba esta línea
+  imports: [CommonModule, ReactiveFormsModule, ParticlesBackground] // 👈 Agregado CommonModule
 })
 export class Contact {
   contactForm: FormGroup;
-
 
   technologies = [
     { name: 'Angular', logo: 'assets/tss.png' },
@@ -51,4 +53,3 @@ export class Contact {
   get subject() { return this.contactForm.get('subject'); }
   get message() { return this.contactForm.get('message'); }
 }
-
