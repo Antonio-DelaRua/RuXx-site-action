@@ -1,0 +1,125 @@
+<div class="contact-container">
+    <!-- Header más compacto -->
+    <header class="contact-header text-center mb-4">
+        <h2 class="fw-bold text-gradient mb-2">Contáctame</h2>
+        <p class="subtitle" style="font-family: Orbitron;">¿Tienes un proyecto en mente? ¡Hablemos!</p>
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-center align-items-center">
+            <!-- Noria más compacta - En móvil va primero, en lg va a la derecha -->
+            <div class="col-lg-5 col-md-6 order-lg-2 mb-4 mb-lg-0">
+                <div class="wheel-container">
+                    <div class="ferris-wheel">
+                        <div class="wheel">
+                            @for (tech of technologies; track tech; let i = $index) {
+                            <div class="tech" [style.--i]="i" [style.--total]="technologies.length">
+                                <div class="tech-item">
+                                    <img [src]="tech.logo" [alt]="tech.name" class="tech-logo">
+                                </div>
+                            </div>
+                            }
+                            <div class="wheel-center">
+                                <div class="center-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wheel-title text-center mt-3">
+                        <h3 class="text-gradient mb-1 mt-3">Antonio De la Rua Fernandez</h3>
+                        <hr style="color:aliceblue;">
+                        <small class="text" style="color:aliceblue; font-size: 14px; font-family: Orbitron;">Hablemos
+                            de tu idea. ¿Comenzamos un nuevo proyecto? No dudes en contactarme, ¡será un placer
+                            ayudarte!</small>
+                        <!-- Botones de redes sociales -->
+                        <div class="social-buttons d-flex justify-content-center gap-3 mt-4">
+                            <a href="[TU_LINK_LINKEDIN]" class="social-btn linkedin" target="_blank">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com/Antonio-DelaRua" class="social-btn github" target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://x.com/ruxxdeveloper" class="social-btn twitter" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.instagram.com/colinmcrua/" class="social-btn instagram" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario más compacto - En móvil va segundo, en lg va a la izquierda -->
+            <div class="col-lg-5 col-md-6 order-lg-1">
+                <div class="form-wrapper" style="font-family: Orbitron;">
+                    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+
+                        <div class="form-group mb-3">
+                            <label for="name" class="form-label">Nombre completo *</label>
+                            <input type="text" class="form-control" id="name" formControlName="name"
+                                [class.is-invalid]="name?.invalid && name?.touched">
+                            @if (name?.invalid && name?.touched) {
+                            <div class="invalid-feedback">
+                                @if (name?.errors?.['required']) {
+                                <span>El nombre es obligatorio</span>
+                                }
+                                @if (name?.errors?.['minlength']) {
+                                <span>Mínimo 2 caracteres</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">Correo electrónico *</label>
+                            <input type="email" class="form-control" id="email" formControlName="email"
+                                [class.is-invalid]="email?.invalid && email?.touched">
+                            @if (email?.invalid && email?.touched) {
+                            <div class="invalid-feedback">
+                                @if (email?.errors?.['required']) {
+                                <span>El email es obligatorio</span>
+                                }
+                                @if (email?.errors?.['email']) {
+                                <span>Email inválido</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="subject" class="form-label">Asunto *</label>
+                            <input type="text" class="form-control" id="subject" formControlName="subject"
+                                [class.is-invalid]="subject?.invalid && subject?.touched">
+                            @if (subject?.invalid && subject?.touched) {
+                            <div class="invalid-feedback">
+                                El asunto es obligatorio
+                            </div>
+                            }
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="message" class="form-label">Mensaje *</label>
+                            <textarea class="form-control" id="message" rows="4" formControlName="message"
+                                [class.is-invalid]="message?.invalid && message?.touched"></textarea>
+                            @if (message?.invalid && message?.touched) {
+                            <div class="invalid-feedback">
+                                @if (message?.errors?.['required']) {
+                                <span>El mensaje es obligatorio</span>
+                                }
+                                @if (message?.errors?.['minlength']) {
+                                <span>Mínimo 10 caracteres</span>
+                                }
+                            </div>
+                            }
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 submit-btn" [disabled]="contactForm.invalid">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr style="color:aliceblue; width: 5%;">
