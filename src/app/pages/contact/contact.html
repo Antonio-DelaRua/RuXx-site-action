@@ -1,14 +1,56 @@
 <div class="contact-container">
     <!-- Header más compacto -->
     <header class="contact-header text-center mb-4">
-        <h2 class="fw-bold text-gradient mb-2" >Contáctame</h2>
+        <h2 class="fw-bold text-gradient mb-2">Contáctame</h2>
         <p class="subtitle" style="font-family: Orbitron;">¿Tienes un proyecto en mente? ¡Hablemos!</p>
     </header>
 
     <div class="container">
         <div class="row justify-content-center align-items-center">
-            <!-- Formulario más compacto -->
-            <div class="col-lg-5 col-md-6">
+            <!-- Noria más compacta - En móvil va primero, en lg va a la derecha -->
+            <div class="col-lg-5 col-md-6 order-lg-2 mb-4 mb-lg-0">
+                <div class="wheel-container">
+                    <div class="ferris-wheel">
+                        <div class="wheel">
+                            @for (tech of technologies; track tech; let i = $index) {
+                            <div class="tech" [style.--i]="i" [style.--total]="technologies.length">
+                                <div class="tech-item">
+                                    <img [src]="tech.logo" [alt]="tech.name" class="tech-logo">
+                                </div>
+                            </div>
+                            }
+                            <div class="wheel-center">
+                                <div class="center-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="wheel-title text-center mt-3">
+                        <h3 class="text-gradient mb-1 mt-3">Antonio De la Rua Fernandez</h3>
+                        <hr style="color:aliceblue;">
+                        <small class="text" style="color:aliceblue; font-size: 14px; font-family: Orbitron;">Hablemos
+                            de tu idea. ¿Comenzamos un nuevo proyecto? No dudes en contactarme, ¡será un placer
+                            ayudarte!</small>
+                        <!-- Botones de redes sociales -->
+                        <div class="social-buttons d-flex justify-content-center gap-3 mt-4">
+                            <a href="[TU_LINK_LINKEDIN]" class="social-btn linkedin" target="_blank">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com/Antonio-DelaRua" class="social-btn github" target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://x.com/ruxxdeveloper" class="social-btn twitter" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="https://www.instagram.com/colinmcrua/" class="social-btn instagram" target="_blank">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario más compacto - En móvil va segundo, en lg va a la izquierda -->
+            <div class="col-lg-5 col-md-6 order-lg-1">
                 <div class="form-wrapper" style="font-family: Orbitron;">
                     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
 
@@ -75,50 +117,6 @@
                             Enviar Mensaje
                         </button>
                     </form>
-                </div>
-            </div>
-
-            <!-- Noria más compacta -->
-            <div class="col-lg-5 col-md-6">
-                <div class="wheel-container">
-                    <div class="ferris-wheel">
-                        <div class="wheel">
-                            @for (tech of technologies; track tech; let i = $index) {
-                            <div class="tech" [style.--i]="i" [style.--total]="technologies.length">
-                                <div class="tech-item">
-                                    <img [src]="tech.logo" [alt]="tech.name" class="tech-logo">
-
-                                </div>
-
-                            </div>
-                            }
-                            <div class="wheel-center">
-                                <div class="center-dot"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="wheel-title text-center mt-3">
-                        <h3 class="text-gradient mb-1 mt-3 ">Antonio De la Rua Fernandez</h3>
-                        <hr style="color:aliceblue;">
-                        <small class="text " style="color:aliceblue; font-size: 14px; font-family: Orbitron;">Hablemos
-                            de tu idea. ¿Comenzamos un nuevo proyecto? No dudes en contactarme, ¡será un placer
-                            ayudarte!</small>
-                        <!-- Botones de redes sociales -->
-                        <div class="social-buttons d-flex justify-content-center gap-3 mt-4">
-                            <a href="[TU_LINK_LINKEDIN]" class="social-btn linkedin" target="_blank">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                            <a href="https://github.com/Antonio-DelaRua" class="social-btn github" target="_blank">
-                                <i class="fab fa-github"></i>
-                            </a>
-                            <a href="https://x.com/ruxxdeveloper" class="social-btn twitter" target="_blank">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="https://www.instagram.com/colinmcrua/" class="social-btn instagram" target="_blank">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
