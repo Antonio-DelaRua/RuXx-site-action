@@ -1,0 +1,344 @@
+
+/* Sección Certificados */
+.certificates-section {
+    position: relative;
+    min-height: 100vh;
+    padding: 5rem 2rem;
+    overflow: hidden;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #7f42a7, #6600c5, #5300a0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #a7a7a7;
+    max-width: 600px;
+    margin: 0 auto 4rem;
+}
+
+/* Grid de Certificados CORREGIDO */
+.certificates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Cambiado de auto-fit a auto-fill */
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-items: center; /* Centrar las cards horizontalmente */
+}
+
+.certificate-card {
+    background: rgba(25, 25, 35, 0.85);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(127, 66, 167, 0.2),
+        inset 0 0 20px rgba(127, 66, 167, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    width: 100%; /* Asegurar que ocupe el ancho completo de su celda */
+    max-width: 350px; /* Limitar el ancho máximo */
+}
+
+
+
+/* Filtros de Tecnología */
+
+.tech-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-bottom: 3rem;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1rem;
+}
+
+.tech-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.2rem;
+    background: rgba(30, 30, 40, 0.7);
+    border: 1px solid rgba(127, 66, 167, 0.3);
+    border-radius: 50px;
+    color: #d0d0d0;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+    min-width: auto;
+    flex-shrink: 0;
+}
+
+.tech-filter:hover {
+    background: rgba(127, 66, 167, 0.2);
+    border-color: rgba(127, 66, 167, 0.6);
+    transform: translateY(-2px);
+}
+
+.tech-filter.active {
+    background: linear-gradient(135deg, #7f42a7, #5300a0);
+    border-color: rgba(127, 66, 167, 0.8);
+    color: white;
+    box-shadow: 0 5px 15px rgba(127, 66, 167, 0.4);
+}
+
+/* LOGOS ESPECÍFICOS PARA FILTROS - NUEVO */
+.tech-filter-logo {
+    width: 18px !important;
+    height: 18px !important;
+    object-fit: contain !important;
+    flex-shrink: 0;
+}
+
+.tech-filter i {
+    font-size: 0.9rem;
+    width: 18px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+/* RESPONSIVE PARA FILTROS */
+@media (max-width: 1024px) {
+    .tech-filters {
+        gap: 0.6rem;
+        padding: 0 0.5rem;
+    }
+    
+    .tech-filter {
+        padding: 0.6rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .tech-filter-logo {
+        width: 16px !important;
+        height: 16px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .tech-filters {
+        gap: 0.5rem;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        margin-bottom: 2rem;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .tech-filters::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .tech-filter {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.75rem;
+        flex-shrink: 0;
+    }
+    
+    .tech-filter-logo {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    
+    .tech-filter i {
+        font-size: 0.8rem;
+        width: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tech-filters {
+        gap: 0.4rem;
+    }
+    
+    .tech-filter {
+        padding: 0.45rem 0.8rem;
+        font-size: 0.7rem;
+    }
+    
+    /* Acortar textos largos en móviles muy pequeños */
+    .tech-filter[data-tech="javascript"] {
+        font-size: 0.65rem;
+        padding: 0.45rem 0.7rem;
+    }
+    
+    .tech-filter[data-tech="typescript"] {
+        font-size: 0.65rem;
+        padding: 0.45rem 0.7rem;
+    }
+}
+
+/* Estados de focus para accesibilidad */
+.tech-filter:focus {
+    outline: 2px solid rgba(127, 66, 167, 0.5);
+    outline-offset: 2px;
+}
+
+/* Mejora el contraste para modo oscuro */
+@media (prefers-color-scheme: dark) {
+    .tech-filter {
+        background: rgba(40, 40, 50, 0.8);
+    }
+    
+    .tech-filter.active {
+        background: linear-gradient(135deg, #8a52b8, #5a00b0);
+    }
+}
+
+/* Grid de Certificados */
+
+
+.certificate-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow:
+        0 15px 35px rgba(103, 0, 197, 0.3),
+        0 0 0 1px rgba(127, 66, 167, 0.4),
+        inset 0 0 30px rgba(127, 66, 167, 0.1);
+    border-color: rgba(127, 66, 167, 0.3);
+}
+
+
+.certificate-image {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.certificate-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.certificate-card:hover .certificate-image img {
+    transform: scale(1.05);
+}
+
+.certificate-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.certificate-card:hover .certificate-overlay {
+    opacity: 1;
+}
+
+.overlay-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.overlay-content i {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.overlay-content span {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.certificate-info {
+    padding: 1rem;
+    background: linear-gradient(135deg, rgba(127, 66, 167, 0.1), rgba(103, 0, 197, 0.05));
+}
+
+.certificate-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.certificate-issuer {
+    color: #868686;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.certificate-tech {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tech-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+}
+
+.tech-badge.angular {
+    background: rgba(227, 49, 49, 0.2);
+    color: #e33131;
+    border: 1px solid rgba(227, 49, 49, 0.4);
+}
+
+.tech-badge.javascript {
+    background: rgba(247, 223, 30, 0.2);
+    color: #f7df1e;
+    border: 1px solid rgba(247, 223, 30, 0.4);
+}
+
+.tech-badge.node {
+    background: rgba(140, 200, 75, 0.2);
+    color: #8cc84b;
+    border: 1px solid rgba(140, 200, 75, 0.4);
+}
+
+.tech-badge.python {
+    background: rgba(53, 114, 165, 0.2);
+    color: #3572a5;
+    border: 1px solid rgba(53, 114, 165, 0.4);
+}
+
+.tech-badge.web {
+    background: rgba(127, 66, 167, 0.2);
+    color: #c299ff;
+    border: 1px solid rgba(127, 66, 167, 0.4);
+}
+
+.tech-badge.typescript {
+    background: rgba(66, 106, 167, 0.2);
+    color: #0adce4;
+    border: 1px solid rgba(127, 66, 167, 0.4);
+}

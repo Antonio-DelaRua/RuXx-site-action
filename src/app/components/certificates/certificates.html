@@ -1,0 +1,66 @@
+
+    <!-- Sección Certificados -->
+    <section class="certificates-section" id="certificates">
+        <div class="certificates-bg"></div>
+
+
+        <div class="section-header">
+            <h2 class="section-title" data-key="certificates-title">Certificados</h2>
+            <p class="section-subtitle" data-key="certificates-subtitle">Mis logros y certificaciones en diferentes tecnologías</p>
+        </div>
+
+        <!-- Filtros por Tecnología -->
+        <div class="tech-filters">
+    <button class="tech-filter" [class.active]="activeFilter === 'all'" data-tech="all" data-key="filter-all" (click)="filterCertificates('all')">
+        <i class="fas fa-layer-group"></i>
+        Todos
+    </button>
+    <button class="tech-filter" [class.active]="activeFilter === 'angular'" data-tech="angular" (click)="filterCertificates('angular')">
+        <img src="/assets/angular-logo.png" alt="Angular" class="tech-filter-logo">
+        Angular
+    </button>
+    <button class="tech-filter" [class.active]="activeFilter === 'javascript'" data-tech="javascript" (click)="filterCertificates('javascript')">
+        <i class="fab fa-js-square"></i>
+        JavaScript
+    </button>
+    <button class="tech-filter" [class.active]="activeFilter === 'HTML'" data-tech="HTML" (click)="filterCertificates('HTML')">
+        <i class="fab fa-html5"></i>
+        HTML
+    </button>
+    <button class="tech-filter" [class.active]="activeFilter === 'python'" data-tech="python" (click)="filterCertificates('python')">
+        <img src="/assets/Python.svg" alt="Python" class="tech-filter-logo">
+        Python
+    </button>
+    <button class="tech-filter" [class.active]="activeFilter === 'web'" data-tech="web" (click)="filterCertificates('web')">
+        <i class="fas fa-code"></i>
+        Web
+    </button>
+    <button class="tech-filter" [class.active]="activeFilter === 'typescript'" data-tech="typescript" (click)="filterCertificates('typescript')">
+        <i class="fas fa-code"></i>
+        TypeScript
+    </button>
+</div>
+
+        <!-- Grid de Certificados -->
+        <div class="certificates-grid">
+            <div class="certificate-card" *ngFor="let cert of filteredCertificates" [attr.data-tech]="cert.tech" (click)="viewCertificate(cert)">
+                <div class="certificate-image">
+                    <img [src]="cert.image" [alt]="cert.title">
+                    <div class="certificate-overlay">
+                        <div class="overlay-content">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                            <span data-key="span-cert1">Ver Certificado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="certificate-info">
+                    <h3 class="certificate-title">{{ cert.title }}</h3>
+                    <p class="certificate-issuer">{{ cert.issuer }}</p>
+                    <div class="certificate-tech">
+                        <span class="tech-badge" [ngClass]="cert.tech">{{ cert.tech | titlecase }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>

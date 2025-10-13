@@ -1,0 +1,365 @@
+/* Gradient and layer blur effect */
+.image-gradient {
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0.5;
+  z-index: -1;
+}
+
+.layer-blur {
+  height: 0;
+  width: 30rem;
+  position: absolute;
+  top: 20%;
+  right: 0;
+  box-shadow: 0 0 700px 15px white;
+  rotate: -30deg;
+  z-index: -1;
+}
+
+.desktop-text {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* CONTAINER */
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* MAIN CONTENT */
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(90vh - 6rem);
+}
+
+.content {
+  max-width: 40rem;
+  margin-left: 10%;
+  margin-top: 60px;
+  z-index: 2; /* Aseguramos que esté por encima */
+}
+
+.tag-box {
+  position: relative;
+  width: 18rem;
+  height: 2.5rem;
+  border-radius: 50px;
+  background: linear-gradient(to right, #656565, #7f42a7, #6600c5, #5300a0, #fafafa, #757575, #656565);
+  background-size: 200%;
+  animation: animationGradient 2.5s linear infinite;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+@keyframes animationGradient {
+  to {
+    background-position: 200%;
+  }
+}
+
+.mobile-text {
+  display: none;
+}
+
+.tag-box .tag {
+  position: absolute;
+  inset: 3px 3px 3px 3px;
+  background-color: black;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s ease;
+}
+
+.tag-box .tag:hover {
+  color: #5300a0;
+}
+
+.content h1 {
+  font-size: 4rem;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+  margin: 2rem 0;
+  line-height: 1.2;
+  text-shadow: 0 0 10px rgba(128, 128, 128, 0.418)
+}
+
+.description {
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  max-width: 35rem;
+  color: gray;
+}
+
+.robot-3d {
+  position: absolute;
+  top: 0;
+  right: -20%;
+}
+
+.buttons {
+  margin-top: 2rem;
+}
+
+/* Botones de redes sociales */
+.social-buttons { 
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+  width: fit-content;
+}
+
+.social-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.social-btn:hover::before {
+  left: 100%;
+}
+
+/* Colores específicos para cada red social */
+.social-btn.linkedin {
+  color: #0077b5;
+  border-color: #0077b5;
+}
+
+.social-btn.github {
+  color: #6e5494;
+  border-color: #6e5494;
+}
+
+.social-btn.twitter {
+  color: #1da1f2;
+  border-color: #1da1f2;
+}
+
+.social-btn.instagram {
+  color: #e4405f;
+  border-color: #e4405f;
+}
+
+/* Efectos neon al hover */
+.social-btn.linkedin:hover {
+  background: #0077b5;
+  color: white;
+  box-shadow: 0 0 10px #0077b5, 0 0 20px #0077b5, 0 0 30px #0077b5;
+  transform: scale(1.1);
+}
+
+.social-btn.github:hover {
+  background: #6e5494;
+  color: white;
+  box-shadow: 0 0 10px #6e5494, 0 0 20px #6e5494, 0 0 30px #6e5494;
+  transform: scale(1.1);
+}
+
+.social-btn.twitter:hover {
+  background: #1da1f2;
+  color: white;
+  box-shadow: 0 0 10px #1da1f2, 0 0 20px #1da1f2, 0 0 30px #1da1f2;
+  transform: scale(1.1);
+}
+
+.social-btn.instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white;
+  box-shadow: 0 0 10px #e4405f, 0 0 20px #e4405f, 0 0 30px #e4405f;
+  transform: scale(1.1);
+}
+
+/* === ROBOT SPLINE === */
+.robot-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  z-index: 1;
+}
+
+.robot-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  clip-path: inset(0 0 15% 0);
+}
+
+/* HERO SECTION LAYOUT */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* TABLET RESPONSIVE */
+@media (max-width: 1300px) {
+  header {
+    padding: 1rem 0.5rem;
+  }
+
+  .content {
+    margin-top: 85%;
+    margin-bottom: 25px;
+  }
+
+  .robot-container {
+    width: 50%;
+    height: 50%;
+    top: 10%;
+  }
+
+  .robot-container iframe {
+    clip-path: inset(0 0 10% 0);
+  }
+}
+
+/* MOBILE RESPONSIVE - LAYOUT CORREGIDO */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column; /* Cambiamos a columna para móvil */
+    min-height: auto;
+    padding: 2rem 0;
+  }
+
+  /* ROBOT EN LA PARTE SUPERIOR */
+  .robot-container {
+    position: relative; /* Cambiamos a relative para el flujo normal */
+    order: 1; /* Primero en el orden */
+    width: 100%;
+    height: 300px; /* Altura fija para móvil */
+    top: 0;
+    right: 0;
+    padding-left: 20px;
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 75%); /* Más recorte en móviles pequeños */
+
+  }
+
+  .robot-container iframe {
+    clip-path: none; /* Eliminamos el clip-path para móvil */
+    height: 100%;
+  }
+
+  /* CONTENIDO DEBAJO DEL ROBOT */
+  .content {
+    order: 2; /* Segundo en el orden */
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    margin-top: 0;
+    margin-left: 0;
+    text-align: center; /* Centramos el texto en móvil */
+  }
+
+  .tag-box {
+    width: 16rem;
+    margin: 0 auto;
+  }
+
+  .desktop-text {
+    display: none;
+  }
+
+  .mobile-text {
+    display: block;
+    font-size: 14px;
+  }
+
+  .content h1 {
+    font-size: 2.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .description {
+    font-size: 1rem;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .social-buttons {
+    justify-content: center; /* Centramos botones sociales en móvil */
+  }
+
+  /* Ajustes para header en móvil */
+  header {
+    padding: 1rem 0.1rem;
+  }
+
+  nav {
+    display: none;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Ajustes adicionales para móviles muy pequeños */
+@media (max-width: 480px) {
+  .robot-container {
+    height: 350px;
+    margin-left: 75px;
+  }
+
+  .content h1 {
+    font-size: 2rem;
+   
+  }
+
+  .mobile-text{
+    margin-top: 10px;
+  }
+
+  .tag-box {
+    width: 14rem;
+    height: 2.2rem;
+  }
+
+.social-buttons {
+    display: flex;
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical (si es necesario) */
+    gap: 1rem;
+    width: 100%; /* Ocupa todo el ancho disponible */
+}
+
+.social-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    /* Los botones ya estarán centrados por el contenedor */
+}
+}
+

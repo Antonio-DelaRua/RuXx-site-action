@@ -1,57 +1,261 @@
-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 20px;
-    padding-left: 0%;
-    padding-right: 10%;
-    background: #360033;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #0b8793, #360033);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #0b8793, #360033);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    font-family: Orbitron, sans-serif;
-    position: relative;
-    z-index: 100;
-    /* por encima del fondo */
-
+/* CONTAINER */
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
 }
 
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0; /* Aumenté el padding vertical */
+  width: 100%;
+  max-width: 100%;
+}
 
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 600;
+}
 
 .logo {
-    color: white;
-    font-size: 28px;
-
+  padding-left: 1rem; /* Reducí el padding */
+  font-weight: 600;
 }
 
-span {
-    color: #d3cc3a;
+/* BOTÓN HAMBURGUESA - OCULTO EN DESKTOP */
+.menu-toggle {
+  display: none; /* Oculto por defecto */
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1000;
 }
 
-nav ul li {
-    list-style-type: none;
-    display: inline-block;
-    padding: 10px 20px;
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
 }
 
-nav ul li a {
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
+/* NAV DESKTOP */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  z-index: 999;
+  margin-left: auto; /* Esto empuja el nav a la derecha */
 }
 
-nav ul li a:hover {
-    color: #d3cc3a;
-    transition: .3s;
+nav a {
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  transition: color 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
+nav a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(127, 66, 167, 0.5);
+  transition: left 0.3s ease;
+  z-index: -1;
+  border-radius: 4px;
+}
 
+nav a:hover::before {
+  left: 0;
+}
 
-@media screen and (max-width: 768px) {
-    button {
-        background-color: #350537;
-        border: 2px solid #107888;
-    }
+nav a:hover {
+  color: white;
+}
+
+/* DROPDOWN DE IDIOMAS */
+.language-dropdown {
+  position: relative;
+}
+
+.language-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.language-btn:hover {
+  background: rgba(127, 66, 167, 0.2);
+}
+
+.language-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #1a1a1a;
+  border-radius: 4px;
+  padding: 0.5rem;
+  min-width: 120px;
+  display: none;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.language-menu.active {
+  display: block;
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.language-option:hover {
+  background: rgba(127, 66, 167, 0.3);
+}
+
+.flag-icon {
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* ========== MOBILE RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  /* BOTÓN HAMBURGUESA VISIBLE EN MÓVIL */
+  .menu-toggle {
+    display: flex;
+    position: relative;
+    z-index: 1001;
+  }
+
+  /* NAV OCULTO EN MÓVIL POR DEFECTO */
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100vh;
+    background: #1a1a1a;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 5rem;
+    transition: right 0.4s ease;
+    z-index: 1000;
+  }
+
+  /* NAV ACTIVO EN MÓVIL */
+  .nav-menu.active {
+    right: 0;
+  }
+
+  .nav-menu a {
+    display: block;
+    padding: 1rem 2rem;
+    text-align: center;
+    border-radius: 0;
+    margin: 0;
+    width: 80%;
+    font-size: 1.1rem;
+  }
+
+  .nav-menu a:hover {
+    background: rgba(127, 66, 167, 0.5);
+    transform: none;
+  }
+
+  /* Animación del botón hamburguesa a X */
+  .menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+  }
+
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  .logo {
+    padding-left: 0.5rem;
+  }
+
+  .language-menu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 200px;
+  }
+}
+
+/* TABLET RESPONSIVE */
+@media (max-width: 1300px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+  
+  nav {
+    gap: 1.5rem;
+  }
+  
+  nav a {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* PARA PANTALLAS MUY PEQUEÑAS */
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .nav-menu {
+    width: 85%;
+  }
+  
+  .logo {
+    padding-left: 0.25rem;
+  }
 }
