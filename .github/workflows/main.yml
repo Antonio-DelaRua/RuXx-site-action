@@ -49,7 +49,7 @@ jobs:
             port: 8549
             user: ${{ secrets.REMOTE_USER }}
             pass: ${{ secrets.REMOTE_PASS }}
-            connect_timeout: 10s
+            connect_timeout: 30s
             first_ssh: |
               rm -rf /home/dannybombastic/ruxx/ruxx/*
             scp: |
