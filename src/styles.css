@@ -27,28 +27,7 @@ body {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     
-    /* Sombra que combina con Bootstrap */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    
-    /* Transiciones suaves */
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    
-    /* Padding para mejor espaciado */
-    padding: 0.5rem 0;
-}
 
-.section-title:hover {
-    text-shadow: 0 4px 12px rgba(127, 66, 167, 0.4),
-                 0 8px 24px rgba(102, 0, 197, 0.3);
-    transform: translateY(-3px) scale(1.03);
-}
-
-/* Para dispositivos móviles */
-@media (max-width: 768px) {
-    .section-title {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
 }
 .section-subtitle {
     text-align: center;
