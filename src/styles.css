@@ -1,42 +1,59 @@
-
 /* You can add global styles to this file, and also import other style files */
-/* You can add global styles to this file, and also import other style files */
-/* You can add global styles to this file, and also import other style files */
-
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&family=Manrope:wght@400;700&family=Orbitron:wght@600&display=swap');
+@import '@fortawesome/fontawesome-free/css/all.min.css';
 
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-  height: 100%;
-  background: #360033;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #0b8793, #360033);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #0b8793, #360033); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  padding: 0;
-  
+    font-family: 'Orbitron', sans-serif;
+    background-color: black;
+    color: #e7e7e7;
+    min-height: 100vh;
+    line-height: 1.5;
 
 }
 
-h1, h2, h3, h4, h5 {
-  font-family: 'Orbitron', sans-serif;
-}
-p, span, a{
-  font-family: 'Manrope', sans-serif;
-}
-
-
-
-.wrapper {
-display: flex;
-align-items: center;
-justify-content: center;
-}
-
-
- 
-
-p {
-  color: whitesmoke
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, #7f42a7, #6600c5, #5300a0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    
+    /* Sombra que combina con Bootstrap */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    /* Transiciones suaves */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* Padding para mejor espaciado */
+    padding: 0.5rem 0;
 }
 
+.section-title:hover {
+    text-shadow: 0 4px 12px rgba(127, 66, 167, 0.4),
+                 0 8px 24px rgba(102, 0, 197, 0.3);
+    transform: translateY(-3px) scale(1.03);
+}
 
+/* Para dispositivos móviles */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+}
+.section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #a7a7a7;
+    max-width: 600px;
+    margin: 0 auto 4rem;
+}

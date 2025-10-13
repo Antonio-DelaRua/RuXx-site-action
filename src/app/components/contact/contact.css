@@ -1,0 +1,101 @@
+.contact-container{
+  padding-bottom: 12rem;
+}
+
+/* Contenedor del Spline */
+.spline-wrapper {
+  position: relative;
+  width: 600px;
+  height: 500px;
+  overflow: hidden;
+  background: #000; /* Fondo negro para mejor contraste */
+  
+}
+
+.spline-iframe {
+  position: absolute;
+  top: -0;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  border: none;
+}
+
+/* Título del Spline centrado */
+.spline-title {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.spline-title h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color:#4098DC;
+}
+
+.spline-title small {
+  font-size: 0.8rem;
+  display: block;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 1rem 0;
+    min-height: auto;
+  }
+
+  .form-wrapper {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .spline-wrapper {
+    height: 300px;
+    max-width: 400px;
+  }
+
+  .spline-title {
+    text-align: center;
+  }
+
+  .social-buttons {
+    justify-content: center;
+  }
+}
+
+.invalid-feedback {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 0.2rem;
+}
+
+/* Correcciones adicionales */
+.contact-header h2 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.spline-title h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Asegurar que los textos sean visibles */
+.text {
+  color: aliceblue !important;
+}
+
+/* Asegurar que el hr sea visible */
+hr {
+    color: grey;
+    opacity: 1;
+    margin: 1rem auto;
+    max-width: 300px;
+    border: none;
+    height: 1px;
+    background: grey;
+}
+

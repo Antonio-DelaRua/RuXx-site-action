@@ -1,22 +1,47 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container">
-    <a class="navbar-brand" href="/" style="color:aliceblue">RuXx<span>Dev.</span>Site</a>
-    <div class="d-flex align-items-center">
-      <!-- Enlace de Proyectos -->
-      <a class="nav-link me-4" href="/skills" 
-         style="color:aliceblue; font-family: Orbitron; font-weight: bold;">
-        Skills
-      </a>
-       <a class="nav-link me-4" href="/Contacto" 
-         style="color:aliceblue; font-family: Orbitron; font-weight: bold;">
-        Contacto
-      </a>
+<div class="container">
+  <header>
+    <h1 class="logo">RuXxDev</h1>
+    
+    <!-- Botón hamburguesa para móvil -->
+    <button class="menu-toggle" 
+            [class.active]="isMobileMenuOpen"
+            (click)="toggleMobileMenu()"
+            aria-label="Toggle menu"
+            type="button">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav-menu" [class.active]="isMobileMenuOpen" (click)="$event.stopPropagation()">
+      <a (click)="scrollToSection('section-2')" data-key="nav-projects">Proyectos</a>
+      <a (click)="scrollToSection('learning-path')" data-key="nav-learning">Estudios</a>
+      <a (click)="scrollToSection('certificates')" data-key="nav-certificates">Certificados</a>
+      <a (click)="scrollToSection('contact')" data-key="nav-contact">Contacto</a>
       
-      <!-- Botón de Currículum -->
-      <a class="btn " target="_blank" href="https://drive.google.com/file/d/1vSg4k8u_H5q4bQWxI7doolJkMmZsT6GE/view?usp=drive_link" 
-         style="font-weight: bold; color: #fff; background-color: #07BDC4; text-decoration: none; font-family: Orbitron;">
-        Currículum
-      </a>
-    </div>
-  </div>
-</nav>
+      <!-- Dropdown de Idiomas -->
+      <div class="language-dropdown">
+        <button class="language-btn" 
+                (click)="toggleLanguageMenu($event)"
+                [class.active]="isLanguageMenuOpen"
+                aria-label="Select language"
+                type="button">
+          <img [src]="currentLanguage === 'es' ? './assets/spain-flag.jpg' : './assets/uk-flag.jpg'" 
+               [alt]="currentLanguage === 'es' ? 'Español' : 'English'" 
+               class="flag-icon">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="language-menu" [class.active]="isLanguageMenuOpen" (click)="$event.stopPropagation()">
+          <div class="language-option" (click)="changeLanguage('es')" data-lang="es">
+            <img src="assets/spain-flag.jpg" alt="Español" class="flag-icon">
+            <span>Español</span>
+          </div>
+          <div class="language-option" (click)="changeLanguage('en')" data-lang="en">
+            <img src="assets/uk-flag.jpg" alt="English" class="flag-icon">
+            <span>English</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+</div>

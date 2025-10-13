@@ -1,0 +1,130 @@
+    <section class="parallax-section">
+        <div class="parallax-container">
+            <div class="parallax-layer layer-1"></div>
+            <div class="parallax-layer layer-2"></div>
+            <div class="parallax-layer layer-3"></div>
+        </div>
+        <div class="particles" id="particles"></div>
+
+        <div class="parallax-content" id="section-2">
+            <h2 class="section-title" data-key="projects-title">Mis Proyectos</h2>
+            <p class="section-subtitle" data-key="projects-subtitle">Si quieres ver todos pulsa <a
+                    href="https://github.com/Antonio-DelaRua?tab=repositories" target="_blank"
+                    style="text-decoration: none; color:#6400C2;">aqui</a> </p>
+
+            <div class="projects-container" style="padding-top: 45px;">
+                <!-- Proyecto 1 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-image-content">
+                            <img class="img-project" src="./assets/angular-logo.png" alt="E-Commerce Platform"
+                                class="project-icon icono-python">
+                            <h3 class="project-title">Angular <br>
+                                <div class="name-proyecto">Web - Wikikar</div>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description" data-key="project-descrip1">
+                            Portal web automotriz con una API REST integrada a Firebase. con componentes de angular
+                            material y bootstrap.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Angular</span>
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">Api-rest</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link demo" onclick="openModal('./assets/wiki.png')">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                            <a href="https://github.com/Antonio-DelaRua/WIKIKAR" target="_blank"
+                                class="project-link code">
+                                <i class="fab fa-github"></i>
+                                Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div> <!-- Cierre del primer project-card -->
+
+                <!-- Proyecto 2 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-image-content">
+                            <img class="img-project" src="./assets/Python.svg" alt="E-Commerce Platform"
+                                class="project-icon">
+                            <h3 class="project-title">Python<br>
+                                <div class="name-proyecto">App - Selina IA</div>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description" data-key="project-descrip2">
+                            Chatbot con interfaz grafica, y llm local integrado especializado en python,
+                            automatizaciones por voz y más..
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Langchain</span>
+                            <span class="tech-tag">Tkinter</span>
+                            <span class="tech-tag">IA</span>
+                            <span class="tech-tag">Ollama</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link demo" onclick="openModal('./assets/Chat0.png')">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                            <a href="https://github.com/Antonio-DelaRua/Selina_IA" target="_blank"
+                                class="project-link code">
+                                <i class="fab fa-github"></i>
+                                Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Proyecto 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-image-content">
+                            <img class="img-project" src="./assets/ecom1.png" alt="E-Commerce Platform" class="project-icon">
+                            <h3 class="project-title">E-Commerce<br>
+                                <div class="name-proyecto">Web - VRdistribución</div>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description" data-key="project-descrip3">
+                            Web comercial, completa con integracion de agentes ia en un chat box para las preguntas del
+                            usuario y un diseño minimalista.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Html</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">Javascript</span>
+                            <span class="tech-tag">PostgreSQL</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://vrdistribucion.com/" target="_blank" class="project-link demo">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                            <a href="#" class="project-link code" onclick="openModal('./assets/vrd.png')">
+                                <i class="fab fa-github"></i>
+                                Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal fuera de la sección de proyectos -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>

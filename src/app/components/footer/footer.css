@@ -1,10 +1,101 @@
-.container-fluid{
-  background: #1F1C2C;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #928DAB, #1F1C2C);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #928DAB, #1F1C2C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  
+
+/* Footer Minimalista */
+.minimal-footer {
+    background: linear-gradient(180deg, #0a0a0a 0%, #1a0a2a 100%);
+    color: #e0e7ff;
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid rgba(127, 66, 167, 0.3);
+   
 }
 
-.container-fluid {
-  position: absolute;
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 2rem 1.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Línea decorativa */
+.footer-divider {
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            rgba(127, 66, 167, 0.5) 50%,
+            transparent 100%);
+    margin-bottom: 2rem;
+}
+
+/* Contenido inferior */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Copyright */
+.copyright p {
+    color: #a7a7a7;
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.copyright p:first-child {
+    margin-bottom: 0.3rem;
+}
+
+/* Botón Volver Arriba */
+.back-to-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(127, 66, 167, 0.2);
+    color: #e0e7ff;
+    border: 1px solid rgba(127, 66, 167, 0.4);
+    border-radius: 25px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.back-to-top:hover {
+    background: rgba(127, 66, 167, 0.4);
+    border-color: rgba(127, 66, 167, 0.7);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(127, 66, 167, 0.3);
+}
+
+.back-to-top i {
+    transition: transform 0.3s ease;
+}
+
+.back-to-top:hover i {
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-content {
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    .copyright p {
+        font-size: 0.8rem;
+    }
+
+    .back-to-top {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
 }

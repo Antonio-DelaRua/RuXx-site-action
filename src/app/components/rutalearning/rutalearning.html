@@ -1,0 +1,48 @@
+<section class="learning-path-section" id="learning-path">
+    <div class="learning-path-bg"></div>
+    
+    <div class="section-header">
+        <h2 class="section-title">Ruta de Aprendizaje</h2>
+        <p class="section-subtitle">Mi evolución y crecimiento como desarrollador</p>
+    </div>
+
+    <div class="timeline">
+        <div class="timeline-line"></div>
+        
+        <!-- Paso dinámico usando *ngFor -->
+        <div *ngFor="let step of steps; let i = index"
+             #timelineStep
+             class="timeline-step"
+             [class.left]="step.side === 'left'"
+             [class.right]="step.side === 'right'">
+            <div class="step-marker">
+                <div class="marker-dot"></div>
+            </div>
+            <div class="step-content">
+                <div class="step-header">
+                    <div class="step-icon">
+                        <i [class]="step.icon"></i>
+                    </div>
+                    <div>
+                        <h3 class="step-title">{{ step.title }}</h3>
+                        <p class="step-period">{{ step.period }}</p>
+                    </div>
+                </div>
+                <p class="step-description">
+                    {{ step.description }}
+                </p>
+                <div class="step-skills">
+                    <span *ngFor="let skill of step.skills" class="skill-tag">
+                        {{ skill }}
+                    </span>
+                </div>
+                <div class="step-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" [style.width.%]="step.progress"></div>
+                    </div>
+                    <span class="progress-text">{{ step.progress }}%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
