@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "projects": {
+    "RuXx-site": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -57,10 +57,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Selina-web:build:production"
+              "buildTarget": "RuXx-site:build:production"
             },
             "development": {
-              "buildTarget": "Selina-web:build:development"
+              "buildTarget": "RuXx-site:build:development"
             }
           },
           "defaultConfiguration": "development"
