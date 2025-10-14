@@ -30,6 +30,8 @@
     "@angular/platform-browser": "^20.3.0",
     "@angular/router": "^20.3.0",
     "@fortawesome/fontawesome-free": "^7.1.0",
+    "@ngx-translate/core": "^17.0.0",
+    "@ngx-translate/http-loader": "^17.0.0",
     "@splinetool/react-spline": "^4.1.0",
     "@splinetool/runtime": "^1.10.77",
     "bootstrap": "^5.3.8",
@@ -38,6 +40,7 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^20.3.5",
     "@angular/build": "^20.3.4",
     "@angular/cli": "^20.3.4",
     "@angular/compiler-cli": "^20.3.0",

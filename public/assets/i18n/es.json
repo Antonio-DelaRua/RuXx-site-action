@@ -1,0 +1,15 @@
+{
+  "APP": {
+    "TITLE": "RuXxDev"
+  },
+  "NAV": {
+    "PROJECTS": "Proyectos",
+    "LEARNING": "Estudios",
+    "CERTIFICATES": "Certificados",
+    "CONTACT": "Contacto",
+    "LANGUAGE": {
+      "ES": "Español",
+      "EN": "English"
+    }
+  }
+}

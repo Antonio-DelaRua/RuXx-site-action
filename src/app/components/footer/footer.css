@@ -50,7 +50,7 @@
 
 /* Botón Volver Arriba */
 .back-to-top {
-    display: flex;
+    display: none; /* Initially hidden */
     align-items: center;
     gap: 0.5rem;
     background: rgba(127, 66, 167, 0.2);
