@@ -17,5 +17,15 @@
     "NAME_MOBILE": "Antonio De la Rua",
     "TITLE": "Full Stack Developer",
     "DESCRIPTION": "Passionate developer specialized in Angular, JavaScript and Node.js. I love transforming complex ideas into smooth and efficient user experiences. Always looking for new challenges that allow me to continue growing professionally."
+  },
+
+  "PROYECTOS": {
+    "TITLE": "Projects",
+    "SUBTITLE": "If you want to see them all click",
+    "LINK": "here",
+    "CARD1": "Automotive web portal with a REST API integrated with Firebase. with angular components material and bootstrap.",
+    "CARD2": "Chatbot with graphical interface, and integrated local llm specialized in python, voice automations and more.",
+    "CARD3": "Commercial website, complete with integration of AI agents in a chat box for questions user and a minimalist design."
+  
   }
 }
