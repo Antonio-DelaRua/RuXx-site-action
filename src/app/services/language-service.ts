@@ -1,41 +1,34 @@
+// language-service.ts
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class LanguageService {
-  currentLang = 'es';
-  supportedLangs = ['es', 'en']; 
+  private currentLangSubject = new BehaviorSubject<string>('es');
+  public currentLang$ = this.currentLangSubject.asObservable();
 
   constructor(private translate: TranslateService) {
-    // Establece español como idioma por defecto
+    // Configuración inicial
     this.translate.setDefaultLang('es');
-
-    // Intenta cargar idioma guardado en localStorage
-    const savedLang = localStorage.getItem('userLanguage');
-
-    if (savedLang && this.supportedLangs.includes(savedLang)) {
-      this.useLanguage(savedLang);
-    } else {
-      // Detecta idioma del navegador (ejemplo: "en-US" → "en")
-      const browserLang = navigator.language.split('-')[0];
-      if (this.supportedLangs.includes(browserLang)) {
-        this.useLanguage(browserLang);
-      } else {
-        this.useLanguage('es'); // fallback
-      }
-    }
+    
+    // Recuperar idioma guardado o usar el del navegador
+    const savedLang = localStorage.getItem('userLang');
+    const browserLang = this.translate.getBrowserLang();
+    const initialLang = savedLang || browserLang || 'es';
+    
+    this.switch(initialLang);
   }
 
-  /** Cambia el idioma globalmente y lo guarda */
+  get currentLang(): string {
+    return this.currentLangSubject.value;
+  }
+
   switch(lang: string) {
-    this.useLanguage(lang);
-    localStorage.setItem('userLanguage', lang);
-  }
-
-  /** Método centralizado para aplicar un idioma */
-  private useLanguage(lang: string) {
     this.translate.use(lang);
-    this.currentLang = lang;
+    this.currentLangSubject.next(lang);
+    localStorage.setItem('userLang', lang);
   }
 }
