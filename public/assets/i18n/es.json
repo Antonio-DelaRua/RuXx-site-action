@@ -11,5 +11,11 @@
       "ES": "Español",
       "EN": "English"
     }
+  },
+  "HERO": {
+    "NAME": "Antonio De la Rua Fernandez",
+    "NAME_MOBILE": "Antonio De la Rua",
+    "TITLE": "Full Stack Developer",
+    "DESCRIPTION": "Desarrollador apasionado especializado en Angular, JavaScript y Node.js. Me encanta transformar ideas complejas en experiencias de usuario fluidas y eficientes. Siempre buscando nuevos desafíos que me permitan seguir creciendo profesionalmente."
   }
 }
