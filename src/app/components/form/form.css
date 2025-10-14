@@ -1,118 +1,104 @@
-/* Contenedor del formulario mejorado */
+/* Contenedor del formulario como sección profesional */
 .form-wrapper {
-  background: rgba(15, 15, 25, 0.8);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(7, 189, 196, 0.1),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(7, 189, 196, 0.2);
-  max-width: 500px;
+  padding: 1.5rem 2rem; /* 1.5rem arriba/abajo, 2rem izquierda/derecha */
+  max-width: 600px;
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
-  animation: formEntrance 0.8s ease-out;
-}
+  min-height: auto; /* Elimina cualquier altura mínima */
 
-/* Efecto de borde difuminado animado */
-.form-wrapper::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(
-    45deg,
-    #667eea,
-    #764ba2,
-    #07BDC4,
-    #667eea
-  );
-  background-size: 400% 400%;
-  border-radius: 22px;
-  z-index: -1;
-  animation: gradientShift 3s ease infinite;
-  filter: blur(8px);
-  opacity: 0.7;
-}
-
-/* Animación de entrada del formulario */
-@keyframes formEntrance {
-  0% {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-/* Animación del gradiente del borde */
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
 }
 
 /* Header del formulario */
 .form-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
   position: relative;
 }
 
 .form-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #07BDC4, #667eea);
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(to right, #fafafa, #7f42a7, #6600c5, #5300a0, #fafafa);
+  background-size: 200%;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 0.5rem;
-  animation: titleGlow 2s ease-in-out infinite alternate;
+  color: transparent;
+  animation: titleGradient 3s linear infinite;
+  position: relative;
 }
 
-@keyframes titleGlow {
-  from {
-    text-shadow: 0 0 5px rgba(7, 189, 196, 0.3);
-  }
+.form-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(to right, #fafafa, #7f42a7, #6600c5, #5300a0, #fafafa);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: titleGradient 3s linear infinite;
+  position: relative;
+}
+
+.form-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(to right, transparent, #6600c5, transparent);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes titleGradient {
   to {
-    text-shadow: 0 0 15px rgba(7, 189, 196, 0.6), 0 0 20px rgba(102, 126, 234, 0.4);
+    background-position: 200%;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.5;
+    width: 80px;
+  }
+  50% {
+    opacity: 1;
+    width: 120px;
   }
 }
 
 .form-subtitle {
-  color: #a7a7a7;
-  font-size: 0.9rem;
+  color: #666;
+  font-size: 1.1rem;
   font-family: Orbitron;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-/* Contenedor de inputs mejorado */
+/* Contenedor de inputs profesional */
 .input-container {
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 /* Labels flotantes */
 .form-label {
   position: absolute;
   top: 50%;
-  left: 3rem;
+  left: 1.5rem;
   transform: translateY(-50%);
-  color: #a7a7a7;
-  font-size: 0.9rem;
+  color: #666;
+  font-size: 1rem;
   font-weight: 500;
   transition: all 0.3s ease;
   pointer-events: none;
   z-index: 2;
-  background: rgba(15, 15, 25, 0.9);
+  background: white;
   padding: 0 0.5rem;
 }
 
@@ -121,15 +107,14 @@
   transform: none;
 }
 
-/* Inputs mejorados */
+/* Inputs profesionales */
 .form-control {
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1rem 3rem 1rem 1rem;
+  background: white;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  padding: 1.2rem 1.5rem;
   font-size: 1rem;
-  color: #030303;
-  background-color: #e0d7d7;
+  color: #333;
   transition: all 0.3s ease;
   width: 100%;
   position: relative;
@@ -137,21 +122,19 @@
 }
 
 .form-control:focus {
-  background: rgba(255, 255, 255, 0.08);
   border-color: #07BDC4;
-  box-shadow: 0 0 0 3px rgba(7, 189, 196, 0.2);
+  box-shadow: 0 0 0 3px rgba(7, 189, 196, 0.1);
   outline: none;
-  transform: translateY(-2px);
 }
 
 .form-control:focus + .form-label,
 .form-control:not(:placeholder-shown) + .form-label {
   top: 0;
-  left: 1rem;
-  font-size: 0.8rem;
+  left: 1.5rem;
+  font-size: 0.85rem;
   color: #07BDC4;
   transform: translateY(-50%);
-  background: rgba(15, 15, 25, 0.95);
+  background: white;
 }
 
 .textarea-container .form-control:focus + .form-label,
@@ -160,50 +143,32 @@
   transform: translateY(-50%);
 }
 
-/* Borde de enfoque animado */
-.focus-border {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #07BDC4, #667eea);
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
-  border-radius: 2px;
-}
-
-.form-control:focus ~ .focus-border {
-  width: 100%;
-}
-
 /* Iconos de inputs */
 .input-icon {
   position: absolute;
-  right: 1rem;
+  right: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #a7a7a7;
+  color: #999;
   z-index: 2;
   transition: all 0.3s ease;
 }
 
 .form-control:focus ~ .input-icon {
   color: #07BDC4;
-  transform: translateY(-50%) scale(1.1);
 }
 
-/* Feedback de validación mejorado */
+/* Feedback de validación profesional */
 .invalid-feedback {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   margin-top: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 8px;
-  background: rgba(220, 53, 69, 0.1);
-  border: 1px solid rgba(220, 53, 69, 0.3);
-  color: #ff6b6b;
-  animation: shake 0.5s ease-in-out;
+  padding: 0.75rem;
+  border-radius: 6px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  animation: fadeInUp 0.3s ease;
 }
 
 .animated-feedback {
@@ -221,42 +186,30 @@
   }
 }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-/* Botón mejorado con efectos */
+/* Botón profesional */
 .submit-btn {
   position: relative;
   width: 100%;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.2rem 2rem;
+  background: linear-gradient(135deg, #07BDC4 0%, #667eea 100%);
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   color: white;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.1rem;
   cursor: pointer;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  margin-top: 1rem;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+  box-shadow: 0 4px 15px rgba(7, 189, 196, 0.3);
 }
 
 .submit-btn:not([disabled]):hover {
-  transform: translateY(-3px);
-  box-shadow: 
-    0 10px 25px rgba(102, 126, 234, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-.submit-btn:not([disabled]):hover .btn-gradient {
-  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(7, 189, 196, 0.4);
 }
 
 .submit-btn:disabled {
-  background: #4a5568;
+  background: #ccc;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
@@ -266,35 +219,9 @@
 .btn-text {
   position: relative;
   z-index: 2;
-  transition: all 0.3s ease;
 }
 
-.submit-btn:not([disabled]):hover .btn-text {
-  letter-spacing: 1px;
-}
-
-/* Efecto de gradiente en hover */
-.btn-gradient {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.5s ease;
-  z-index: 1;
-}
-
-.submit-btn:not([disabled]):hover .btn-gradient {
-  left: 100%;
-}
-
-/* Estados de carga y éxito (para futura implementación) */
+/* Estados de carga y éxito */
 .btn-loading,
 .btn-success {
   display: none;
@@ -319,54 +246,42 @@
 .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
 
 @keyframes loading {
-  0%, 80%, 100% { 
+  0%, 80%, 100% {
     transform: scale(0);
     opacity: 0.5;
   }
-  40% { 
+  40% {
     transform: scale(1);
     opacity: 1;
   }
 }
 
-/* Efectos de partículas en el fondo del formulario */
-.form-wrapper::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(7, 189, 196, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
-  z-index: -1;
-  pointer-events: none;
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   .form-wrapper {
-    padding: 1.5rem;
-    margin: 0 1rem;
+    padding: 2rem 1rem;
   }
-  
+
   .form-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
-  
+
+  .form-subtitle {
+    font-size: 1rem;
+  }
+
   .form-control {
-    padding: 0.875rem 2.5rem 0.875rem 0.875rem;
+    padding: 1rem 1.2rem;
   }
-  
+
   .input-icon {
-    right: 0.875rem;
+    right: 1.2rem;
   }
 }
 
-/* Animaciones de entrada escalonada para los campos */
+/* Animaciones sutiles de entrada */
 .form-group {
-  animation: slideInUp 0.6s ease forwards;
+  animation: fadeInUp 0.8s ease forwards;
   opacity: 0;
   transform: translateY(20px);
 }
@@ -376,7 +291,7 @@
 .form-group:nth-child(3) { animation-delay: 0.3s; }
 .form-group:nth-child(4) { animation-delay: 0.4s; }
 
-@keyframes slideInUp {
+@keyframes fadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);

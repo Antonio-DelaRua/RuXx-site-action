@@ -1,17 +1,16 @@
-<div class="form-wrapper" style="font-family: Orbitron;">
+<section class="form-wrapper" style="font-family: Orbitron;">
   <div class="form-header">
-    <h3 class="form-title">{{ 'FORM.TITLE' | translate}}</h3>
+    <h2 class="form-title">{{ 'FORM.TITLE' | translate}}</h2>
     <p class="form-subtitle">{{ 'FORM.SUBTITLE' | translate}}</p>
   </div>
-  
+
   <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
     <!-- Campo Nombre -->
-    <div class="form-group mb-4">
+    <div class="form-group">
       <div class="input-container">
-        <input type="text" class="form-control" id="name" formControlName="name" 
+        <input type="text" class="form-control" id="name" formControlName="name"
                placeholder="{{'FORM.PLACEHOLDER1' | translate}}" [class.is-invalid]="name?.invalid && name?.touched">
-        <label for="name" class="form-label"></label>
-        <div class="focus-border"></div>
+        <label for="name" class="form-label">{{'FORM.PLACEHOLDER1' | translate}}</label>
         <i class="input-icon fas fa-user"></i>
       </div>
       @if (name?.invalid && name?.touched) {
@@ -27,12 +26,11 @@
     </div>
 
     <!-- Campo Email -->
-    <div class="form-group mb-4">
+    <div class="form-group">
       <div class="input-container">
-        <input type="email" class="form-control" id="email" formControlName="email" 
+        <input type="email" class="form-control" id="email" formControlName="email"
                placeholder="Email" [class.is-invalid]="email?.invalid && email?.touched">
-        <label for="email" class="form-label"></label>
-        <div class="focus-border"></div>
+        <label for="email" class="form-label">Email</label>
         <i class="input-icon fas fa-envelope"></i>
       </div>
       @if (email?.invalid && email?.touched) {
@@ -48,12 +46,11 @@
     </div>
 
     <!-- Campo Asunto -->
-    <div class="form-group mb-4">
+    <div class="form-group">
       <div class="input-container">
-        <input type="text" class="form-control" id="subject" formControlName="subject" 
+        <input type="text" class="form-control" id="subject" formControlName="subject"
                placeholder="{{'FORM.PLACEHOLDER2' | translate}}" [class.is-invalid]="subject?.invalid && subject?.touched">
-        <label for="subject" class="form-label"></label>
-        <div class="focus-border"></div>
+        <label for="subject" class="form-label">{{'FORM.PLACEHOLDER2' | translate}}</label>
         <i class="input-icon fas fa-tag"></i>
       </div>
       @if (subject?.invalid && subject?.touched) {
@@ -64,12 +61,11 @@
     </div>
 
     <!-- Campo Mensaje -->
-    <div class="form-group mb-4">
+    <div class="form-group">
       <div class="input-container textarea-container">
-        <textarea class="form-control" id="message" rows="4" formControlName="message" 
+        <textarea class="form-control" id="message" rows="4" formControlName="message"
                   placeholder="{{'FORM.PLACEHOLDER3' | translate}}" [class.is-invalid]="message?.invalid && message?.touched"></textarea>
-        <label for="message" class="form-label"></label>
-        <div class="focus-border"></div>
+        <label for="message" class="form-label">{{'FORM.PLACEHOLDER3' | translate}}</label>
         <i class="input-icon fas fa-comment"></i>
       </div>
       @if (message?.invalid && message?.touched) {
@@ -97,7 +93,6 @@
       <div class="btn-success">
         <i class="fas fa-check"></i>
       </div>
-      <div class="btn-gradient"></div>
     </button>
   </form>
-</div>
+</section>
