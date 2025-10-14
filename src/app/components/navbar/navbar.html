@@ -11,10 +11,10 @@
     </button>
 
     <nav class="nav-menu" [class.active]="isMobileMenuOpen" (click)="$event.stopPropagation()">
-      <a (click)="scrollToSection('section-2')">Proyectos</a>
-      <a (click)="scrollToSection('learning-path')">Estudios</a>
-      <a (click)="scrollToSection('certificates')">Certificados</a>
-      <a (click)="scrollToSection('contact')">Contacto</a>
+      <a (click)="scrollToSection('section-2')">{{ 'NAV.PROJECTS' | translate }}</a>
+      <a (click)="scrollToSection('learning-path')">{{ 'NAV.LEARNING' | translate }}</a>
+      <a (click)="scrollToSection('certificates')">{{ 'NAV.CERTIFICATES' | translate }}</a>
+      <a (click)="scrollToSection('contact')">{{ 'NAV.CONTACT' | translate }}</a>
 
       <!-- Dropdown de Idiomas -->
       <div class="language-dropdown" (click)="$event.stopPropagation()">
@@ -24,7 +24,7 @@
                 aria-label="Select language"
                 type="button">
           <img [src]="currentFlag"
-               [alt]="langService.currentLang === 'es' ? 'Español' : 'English'"
+               [alt]="langService.currentLang === 'es' ? ('NAV.LANGUAGE.ES' | translate) : ('NAV.LANGUAGE.EN' | translate)"
                class="flag-icon">
           <i class="fas fa-chevron-down"></i>
         </button>
@@ -33,12 +33,12 @@
              [class.active]="isLanguageMenuOpen"
              (click)="$event.stopPropagation()">
           <div class="language-option" (click)="changeLanguage('es')">
-            <img src="assets/spain-flag.jpg" alt="Español" class="flag-icon">
-            <span>Español</span>
+            <img src="assets/spain-flag.jpg" [alt]="'NAV.LANGUAGE.ES' | translate" class="flag-icon">
+            <span>{{ 'NAV.LANGUAGE.ES' | translate }}</span>
           </div>
           <div class="language-option" (click)="changeLanguage('en')">
-            <img src="assets/uk-flag.jpg" alt="English" class="flag-icon">
-            <span>English</span>
+            <img src="assets/uk-flag.jpg" [alt]="'NAV.LANGUAGE.EN' | translate" class="flag-icon">
+            <span>{{ 'NAV.LANGUAGE.EN' | translate }}</span>
           </div>
         </div>
       </div>

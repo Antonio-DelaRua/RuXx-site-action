@@ -1,12 +1,13 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service'; // <-- Importa tu servicio
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule],
   templateUrl: './navbar.html',
   styleUrls: ['./navbar.css']
 })
@@ -54,15 +55,7 @@ export class NavbarComponent implements OnInit {
 
   scrollToSection(sectionId: string) {
     const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      // Fallback: try to find the element by class or other selectors
-      const contactElement = document.querySelector('app-contact');
-      if (contactElement && sectionId === 'contact') {
-        contactElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
     this.closeMenus();
   }
 

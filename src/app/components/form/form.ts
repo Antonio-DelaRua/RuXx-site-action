@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 
 @Component({
   selector: 'app-form',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './form.html',
   styleUrl: './form.css'
@@ -21,7 +22,6 @@ export class Form {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      console.log('Datos del formulario:', this.contactForm.value);
       // Aquí integrarías tu servicio para enviar el correo
       alert('¡Mensaje enviado! (Esta es una simulación)');
       this.contactForm.reset();
