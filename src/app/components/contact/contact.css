@@ -30,8 +30,24 @@
 .spline-title h3 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  color:#4098DC;
+    font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  position: relative;
+  animation: glow 2s ease-in-out infinite alternate;
 }
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px #fff, 0 0 10px #7f42a7, 0 0 15px #6600c5;
+  }
+  to {
+    text-shadow: 0 0 10px #fff, 0 0 20px #5300a0, 0 0 30px #7f42a7;
+  }
+}
+
 
 .spline-title small {
   font-size: 0.8rem;
@@ -90,12 +106,164 @@
 
 /* Asegurar que el hr sea visible */
 hr {
-    color: grey;
-    opacity: 1;
     margin: 1rem auto;
     max-width: 300px;
     border: none;
-    height: 1px;
-    background: grey;
+    height: 2px;
+    background: linear-gradient(to right, #656565, #7f42a7, #6600c5, #5300a0, #fafafa, #757575, #656565);
+    background-size: 200%;
+    animation: animationGradientReverse 2.5s linear infinite;
 }
 
+@keyframes animationGradientReverse {
+  from {
+    background-position: 200%;
+  }
+  to {
+    background-position: 0%;
+  }
+}
+
+/* === BOTONES ESCRITORIO === */
+.social-buttons-desktop { 
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  width: fit-content;
+  margin-left: 200px;
+}
+
+/* === BOTONES RESPONSIVE === */
+.social-buttons-responsive {
+  display: none; /* Oculto por defecto */
+}
+
+/* === ESTILOS COMPARTIDOS PARA AMBOS TIPOS DE BOTONES === */
+.social-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.social-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.social-btn:hover::before {
+  left: 100%;
+}
+
+/* Colores específicos para cada red social */
+.social-btn.linkedin {
+  color: #0077b5;
+  border-color: #0077b5;
+}
+
+.social-btn.github {
+  color: #6e5494;
+  border-color: #6e5494;
+}
+
+.social-btn.twitter {
+  color: #1da1f2;
+  border-color: #1da1f2;
+}
+
+.social-btn.instagram {
+  color: #e4405f;
+  border-color: #e4405f;
+}
+
+/* Efectos neon al hover */
+.social-btn.linkedin:hover {
+  background: #0077b5;
+  color: white;
+  box-shadow: 0 0 10px #0077b5, 0 0 20px #0077b5, 0 0 30px #0077b5;
+  transform: scale(1.1);
+}
+
+.social-btn.github:hover {
+  background: #6e5494;
+  color: white;
+  box-shadow: 0 0 10px #6e5494, 0 0 20px #6e5494, 0 0 30px #6e5494;
+  transform: scale(1.1);
+}
+
+.social-btn.twitter:hover {
+  background: #1da1f2;
+  color: white;
+  box-shadow: 0 0 10px #1da1f2, 0 0 20px #1da1f2, 0 0 30px #1da1f2;
+  transform: scale(1.1);
+}
+
+.social-btn.instagram:hover {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white;
+  box-shadow: 0 0 10px #e4405f, 0 0 20px #e4405f, 0 0 30px #e4405f;
+  transform: scale(1.1);
+}
+
+/* === RESPONSIVE === */
+
+/* TABLET */
+@media (max-width: 1024px) {
+  .social-buttons-desktop { 
+    display: none; /* Oculta botones de escritorio */
+  }
+  
+  .social-buttons-responsive {
+    display: flex; /* Muestra botones responsive */
+    gap: 1rem;
+    justify-content: center;
+    width: 100%;
+    margin: 2rem auto 0 auto;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .social-buttons-responsive {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    width: 100%;
+    margin: 2rem auto 0 auto;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+  
+  .social-buttons-responsive .social-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+/* ESCRITORIO (asegurar que solo se vean los botones de escritorio) */
+@media (min-width: 1025px) {
+  .social-buttons-responsive {
+    display: none !important;
+  }
+  
+  .social-buttons-desktop {
+    display: flex;
+  }
+}
