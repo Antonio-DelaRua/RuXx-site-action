@@ -18,55 +18,131 @@
     "TITLE": "Full Stack Developer",
     "DESCRIPTION": "Desarrollador apasionado especializado en Angular, JavaScript y Node.js. Me encanta transformar ideas complejas en experiencias de usuario fluidas y eficientes. Siempre buscando nuevos desafíos que me permitan seguir creciendo profesionalmente."
   },
-    "PROYECTOS": {
-      "TITLE": "Proyectos",
-      "SUBTITLE": "Si quieres ver todos pulsa",
-      "LINK": "aquí",
-      "CARD1": "Portal web automotriz con una API REST integrada a Firebase. con componentes de angular material y bootstrap.",
-      "CARD2": "Chatbot con interfaz grafica, y llm local integrado especializado en python, automatizaciones por voz y más..",
-      "CARD3": "Web comercial, completa con integracion de agentes ia en un chat box para las preguntas del usuario y un diseño minimalista."
-  
-    },
-    "LEARNING_PATH": {
-      "TITLE": "Ruta de Aprendizaje",
-      "SUBTITLE": "Mi evolución y crecimiento como desarrollador",
-      "STEPS": {
-        "FUNDAMENTOS_WEB": {
-          "TITLE": "Fundamentos Web",
-          "PERIOD": "2021 - 2022",
-          "DESCRIPTION": "Comencé mi viaje en el desarrollo web aprendiendo los fundamentos: HTML, CSS y JavaScript. Creé mis primeras páginas web estáticas y comprendí los principios del diseño responsive.",
-          "SKILLS": ["HTML5", "CSS3", "JavaScript", "Responsive Design"]
-        },
-        "JAVASCRIPT_AVANZADO": {
-          "TITLE": "JavaScript Avanzado",
-          "PERIOD": "2022 - 2022",
-          "DESCRIPTION": "Profundicé en JavaScript, explorando ES6+, programación asíncrona, APIs y comenzando con Node.js para el desarrollo del lado del servidor.",
-          "SKILLS": ["ES6+", "Async/Await", "APIs REST", "Node.js"]
-        },
-        "FRAMEWORKS_FRONTEND": {
-          "TITLE": "Frameworks Frontend",
-          "PERIOD": "2023 - 2023",
-          "DESCRIPTION": "Me especialicé en Angular, explorando su ecosistema completo: TypeScript, RxJS, servicios, componentes y routing. También experimenté con React para ampliar mis habilidades.",
-          "SKILLS": ["Angular", "TypeScript", "RxJS", "React"]
-        },
-        "BACKEND_BD": {
-          "TITLE": "Backend & Bases de Datos",
-          "PERIOD": "2023 - 2024",
-          "DESCRIPTION": "Ampliando mis habilidades al backend con Node.js, Express, y diferentes bases de datos como MongoDB y MySQL.",
-          "SKILLS": ["Node.js", "Express", "MongoDB", "MySQL"]
-        },
-        "DEVOPS_CLOUD": {
-          "TITLE": "DevOps & Cloud",
-          "PERIOD": "2024 - Presente",
-          "DESCRIPTION": "Explorando deployment, CI/CD, Docker y servicios cloud para llevar mis aplicaciones a producción.",
-          "SKILLS": ["Docker", "AWS", "CI/CD", "Git"]
-        },
-        "ESPECIALIZACION_AVANZADA": {
-          "TITLE": "Especialización Avanzada",
-          "PERIOD": "Futuro",
-          "DESCRIPTION": "Continuando mi aprendizaje en arquitecturas avanzadas, microservicios y nuevas tecnologías emergentes.",
-          "SKILLS": ["Microservicios", "GraphQL", "WebSockets", "Testing"]
-        }
+  "PROYECTOS": {
+    "TITLE": "Proyectos",
+    "SUBTITLE": "Si quieres ver todos pulsa",
+    "LINK": "aquí",
+    "CARD1": "Portal web automotriz con una API REST integrada a Firebase. con componentes de angular material y bootstrap.",
+    "CARD2": "Chatbot con interfaz grafica, y llm local integrado especializado en python, automatizaciones por voz y más..",
+    "CARD3": "Web comercial, completa con integracion de agentes ia en un chat box para las preguntas del usuario y un diseño minimalista."
+  },
+  "LEARNING_PATH": {
+    "TITLE": "Ruta de Aprendizaje",
+    "SUBTITLE": "Mi evolución y crecimiento como desarrollador",
+    "STEPS": {
+      "FUNDAMENTOS_WEB": {
+        "TITLE": "Fundamentos Web",
+        "PERIOD": "2021 - 2022",
+        "DESCRIPTION": "Comencé mi viaje en el desarrollo web aprendiendo los fundamentos: HTML, CSS y JavaScript. Creé mis primeras páginas web estáticas y comprendí los principios del diseño responsive.",
+        "SKILLS": [
+          "HTML5",
+          "CSS3",
+          "JavaScript",
+          "Responsive Design"
+        ]
+      },
+      "JAVASCRIPT_AVANZADO": {
+        "TITLE": "JavaScript Avanzado",
+        "PERIOD": "2022 - 2022",
+        "DESCRIPTION": "Profundicé en JavaScript, explorando ES6+, programación asíncrona, APIs y comenzando con Node.js para el desarrollo del lado del servidor.",
+        "SKILLS": [
+          "ES6+",
+          "Async/Await",
+          "APIs REST",
+          "Node.js"
+        ]
+      },
+      "FRAMEWORKS_FRONTEND": {
+        "TITLE": "Frameworks Frontend",
+        "PERIOD": "2023 - 2023",
+        "DESCRIPTION": "Me especialicé en Angular, explorando su ecosistema completo: TypeScript, RxJS, servicios, componentes y routing. También experimenté con React para ampliar mis habilidades.",
+        "SKILLS": [
+          "Angular",
+          "TypeScript",
+          "RxJS",
+          "React"
+        ]
+      },
+      "BACKEND_BD": {
+        "TITLE": "Backend & Bases de Datos",
+        "PERIOD": "2023 - 2024",
+        "DESCRIPTION": "Ampliando mis habilidades al backend con Node.js, Express, y diferentes bases de datos como MongoDB y MySQL.",
+        "SKILLS": [
+          "Node.js",
+          "Express",
+          "MongoDB",
+          "MySQL"
+        ]
+      },
+      "DEVOPS_CLOUD": {
+        "TITLE": "DevOps & Cloud",
+        "PERIOD": "2024 - Presente",
+        "DESCRIPTION": "Explorando deployment, CI/CD, Docker y servicios cloud para llevar mis aplicaciones a producción.",
+        "SKILLS": [
+          "Docker",
+          "AWS",
+          "CI/CD",
+          "Git"
+        ]
+      },
+      "ESPECIALIZACION_AVANZADA": {
+        "TITLE": "Especialización Avanzada",
+        "PERIOD": "Futuro",
+        "DESCRIPTION": "Continuando mi aprendizaje en arquitecturas avanzadas, microservicios y nuevas tecnologías emergentes.",
+        "SKILLS": [
+          "Microservicios",
+          "GraphQL",
+          "WebSockets",
+          "Testing"
+        ]
       }
     }
+  },
+ "CERTIFICATES": {
+    "TITLE": "Certificados",
+    "SUBTITLE": "Mis logros y certificaciones en diferentes tecnologías",
+    "BUTTON": "Todos",
+    "HOVERCARD": "Ver Certificado",
+    "FILTERS": {
+      "ALL": "Todos",
+      "ANGULAR": "Angular",
+      "JAVASCRIPT": "JavaScript",
+      "HTML": "HTML",
+      "PYTHON": "Python",
+      "WEB": "Web",
+      "TYPESCRIPT": "TypeScript"
+    }
+  },
+  "TITLES": {
+    "ANGULAR_BASIC": "Angular Básico",
+    "WEB_DESIGN": "Web Design",
+    "MODERN_JAVASCRIPT": "JavaScript Moderno",
+    "HTML": "HTML",
+    "PYTHON": "Python Profesional",
+    "TYPESCRIPT": "Web Full Stack"
+},
+  "CONTACT": {
+    "TITLE": "Contáctame",
+    "SUBTITLE": "¿Tienes un proyecto en mente? ¡Hablemos!",
+    "PARRAFO": " Hablemos de tu idea.  No dudes en contactarme."
+  },
+  "FORM": {
+    "TITLE": "Envíame un mensaje",
+    "SUBTITLE": "Responderé en menos de 24 horas",
+    "PLACEHOLDER1": "Nombre",
+    "PLACEHOLDER2": "Asunto",
+    "PLACEHOLDER3": "Mensaje",
+    "SENDMESSAGE": "Enviar Mensaje",
+    "ALERT1": "El nombre es obligatorio",
+    "ALERT2": "Mínimo 2 caracteres",
+    "ALERT3": "El email es obligatorio",
+    "ALERT4": "Email no válido",
+    "ALERT5": "El asunto es obligatorio",
+    "ALERT6": "El mensaje es obligatorio",
+    "ALERT7": "Mínimo 10 caracteres"
+  },
+  "FOOTER": {
+    "DESCRIPTION": "&copy; 2024 Antonio De la Rua Fernandez. Todos los derechos reservados.",
+    "BUTTON": "Volver arriba"
   }
+}

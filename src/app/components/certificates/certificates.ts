@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../services/language-service';
 
 interface Certificate {
   id: number;
-  title: string;
+  titleKey: string;
   issuer: string;
   tech: string;
   image: string;
@@ -12,17 +14,17 @@ interface Certificate {
 
 @Component({
   selector: 'app-certificates',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './certificates.html',
   styleUrl: './certificates.css'
 })
-export class Certificates {
+export class Certificates implements OnInit {
   activeFilter: string = 'all';
 
   certificates: Certificate[] = [
     {
       id: 1,
-      title: 'Angular Básico',
+      titleKey: 'TITLES.ANGULAR_BASIC',
       issuer: 'OpenBootCamp - 2022',
       tech: 'angular',
       image: 'assets/angular.png',
@@ -30,7 +32,7 @@ export class Certificates {
     },
     {
       id: 2,
-      title: 'Web Design',
+      titleKey: 'TITLES.WEB_DESIGN',
       issuer: 'freeCodeCamp - 2023',
       tech: 'web',
       image: 'assets/deve.png',
@@ -38,7 +40,7 @@ export class Certificates {
     },
     {
       id: 3,
-      title: 'JavaScript Moderno',
+      titleKey: 'TITLES.MODERN_JAVASCRIPT',
       issuer: 'OpenBootCamp - 2022',
       tech: 'javascript',
       image: 'assets/javascript.png',
@@ -46,7 +48,7 @@ export class Certificates {
     },
     {
       id: 4,
-      title: 'HTML',
+      titleKey: 'TITLES.HTML',
       issuer: 'OpenBootCamp - 2022',
       tech: 'HTML',
       image: 'assets/htmlcer.png',
@@ -54,7 +56,7 @@ export class Certificates {
     },
     {
       id: 5,
-      title: 'Python Profesional',
+      titleKey: 'TITLES.PYTHON',
       issuer: 'Udemy - 2025',
       tech: 'python',
       image: 'assets/piyon.png',
@@ -62,7 +64,7 @@ export class Certificates {
     },
     {
       id: 6,
-      title: 'Web Full Stack',
+      titleKey: 'TITLES.TYPESCRIPT',
       issuer: 'OpenBootCamp - 2022',
       tech: 'typescript',
       image: 'assets/typescript.png',
@@ -72,17 +74,30 @@ export class Certificates {
 
   filteredCertificates: Certificate[] = this.certificates;
 
+  constructor(
+    public translate: TranslateService,
+    private languageService: LanguageService
+  ) {}
+
+  ngOnInit() {
+    this.languageService.currentLang$.subscribe(lang => {
+      this.translate.use(lang);
+    });
+    this.translate.use(this.languageService.currentLang);
+  }
+
   filterCertificates(tech: string): void {
     this.activeFilter = tech;
-    if (tech === 'all') {
-      this.filteredCertificates = this.certificates;
-    } else {
-      this.filteredCertificates = this.certificates.filter(cert => cert.tech === tech);
-    }
+    this.filteredCertificates = tech === 'all' 
+      ? this.certificates 
+      : this.certificates.filter(cert => cert.tech === tech);
   }
 
   viewCertificate(certificate: Certificate): void {
-    // Simple modal implementation
+    this.createModal(certificate);
+  }
+
+  private createModal(certificate: Certificate): void {
     const modal = document.createElement('div');
     modal.style.cssText = `
       position: fixed;
@@ -106,8 +121,6 @@ export class Certificates {
       border-radius: 10px;
       overflow: hidden;
       position: relative;
-      align-items: center;
-      justify-content: center;
     `;
 
     const closeBtn = document.createElement('button');
@@ -132,7 +145,7 @@ export class Certificates {
 
     const img = document.createElement('img');
     img.src = certificate.image;
-    img.alt = certificate.title;
+    img.alt = this.translate.instant(certificate.titleKey);
     img.style.cssText = `
       max-width: 100%;
       max-height: 100%;
@@ -144,10 +157,8 @@ export class Certificates {
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
 
-    const closeModal = () => {
-      document.body.removeChild(modal);
-    };
-
+    const closeModal = () => document.body.removeChild(modal);
+    
     modal.addEventListener('click', closeModal);
     closeBtn.addEventListener('click', (e) => {
       e.stopPropagation();

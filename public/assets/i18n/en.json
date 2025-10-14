@@ -69,5 +69,54 @@
           "SKILLS": ["Microservicios", "GraphQL", "WebSockets", "Testing"]
         }
       }
+    },
+ "CERTIFICATES": {
+    "TITLE": "Certificates",
+    "SUBTITLE": "My achievements and certifications in different technologies",
+    "BUTTON": "ALL",
+    "HOVERCARD": "view Certificate",
+    "FILTERS": {
+      "ALL": "ALL",
+      "ANGULAR": "Angular",
+      "JAVASCRIPT": "JavaScript",
+      "HTML": "HTML",
+      "PYTHON": "Python",
+      "WEB": "Web",
+      "TYPESCRIPT": "TypeScript"
+    }
+  
+  },
+    "TITLES": {
+    "ANGULAR_BASIC": "Basic Angular",
+    "WEB_DESIGN": "Web Design",
+    "MODERN_JAVASCRIPT": "Modern JavaScript ",
+    "HTML": "HTML",
+    "PYTHON": "Python Pro",
+    "TYPESCRIPT": "Web Full Stack"
+  },
+  "CONTACT": {
+    "TITLE": "Contáct",
+    "SUBTITLE": "Do you have a project in mind? Let's talk!",
+    "PARRAFO": "Let's talk about your idea.  Don't hesitate to contact me."
+    },
+
+  "FORM": {
+    "TITLE": "Send me a message",
+    "SUBTITLE": "I will respond in less than 24 hours",
+    "PLACEHOLDER1": "Name",
+    "PLACEHOLDER2": "Subject",
+    "PLACEHOLDER3": "Message",
+    "SENDMESSAGE": "Send message",
+    "ALERT1": "The name is required",
+    "ALERT2": "Minimum 2 characters",
+    "ALERT3": "Email is mandatory",
+    "ALERT4": "Invalid email",
+    "ALERT5": "The matter is mandatory",
+    "ALERT6": "The message is mandatory",
+    "ALERT7": "Minimum 10 characters"   
+    },
+  "FOOTER": {
+    "DESCRIPTION": "&copy; 2024 Antonio De la Rua Fernandez. All rights reserved.",
+    "BUTTON": "Back to top"
     }
 }

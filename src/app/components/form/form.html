@@ -1,7 +1,7 @@
 <div class="form-wrapper" style="font-family: Orbitron;">
   <div class="form-header">
-    <h3 class="form-title">Envíame un mensaje</h3>
-    <p class="form-subtitle">Responderé en menos de 24 horas</p>
+    <h3 class="form-title">{{ 'FORM.TITLE' | translate}}</h3>
+    <p class="form-subtitle">{{ 'FORM.SUBTITLE' | translate}}</p>
   </div>
   
   <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
@@ -9,7 +9,7 @@
     <div class="form-group mb-4">
       <div class="input-container">
         <input type="text" class="form-control" id="name" formControlName="name" 
-               placeholder="Nombre" [class.is-invalid]="name?.invalid && name?.touched">
+               placeholder="{{'FORM.PLACEHOLDER1' | translate}}" [class.is-invalid]="name?.invalid && name?.touched">
         <label for="name" class="form-label"></label>
         <div class="focus-border"></div>
         <i class="input-icon fas fa-user"></i>
@@ -17,10 +17,10 @@
       @if (name?.invalid && name?.touched) {
       <div class="invalid-feedback animated-feedback">
         @if (name?.errors?.['required']) {
-        <span><i class="fas fa-exclamation-circle"></i> El nombre es obligatorio</span>
+        <span><i class="fas fa-exclamation-circle"></i>{{ 'FORM.ALERT1' | translate}}</span>
         }
         @if (name?.errors?.['minlength']) {
-        <span><i class="fas fa-exclamation-circle"></i> Mínimo 2 caracteres</span>
+        <span><i class="fas fa-exclamation-circle"></i>{{ 'FORM.ALERT2' | translate}}</span>
         }
       </div>
       }
@@ -38,10 +38,10 @@
       @if (email?.invalid && email?.touched) {
       <div class="invalid-feedback animated-feedback">
         @if (email?.errors?.['required']) {
-        <span><i class="fas fa-exclamation-circle"></i> El email es obligatorio</span>
+        <span><i class="fas fa-exclamation-circle"></i>{{ 'FORM.ALERT3' | translate}}</span>
         }
         @if (email?.errors?.['email']) {
-        <span><i class="fas fa-exclamation-circle"></i> Email inválido</span>
+        <span><i class="fas fa-exclamation-circle"></i>{{'FORM.ALERT4' | translate}}</span>
         }
       </div>
       }
@@ -51,14 +51,14 @@
     <div class="form-group mb-4">
       <div class="input-container">
         <input type="text" class="form-control" id="subject" formControlName="subject" 
-               placeholder="Asunto " [class.is-invalid]="subject?.invalid && subject?.touched">
+               placeholder="{{'FORM.PLACEHOLDER2' | translate}}" [class.is-invalid]="subject?.invalid && subject?.touched">
         <label for="subject" class="form-label"></label>
         <div class="focus-border"></div>
         <i class="input-icon fas fa-tag"></i>
       </div>
       @if (subject?.invalid && subject?.touched) {
       <div class="invalid-feedback animated-feedback">
-        <span><i class="fas fa-exclamation-circle"></i> El asunto es obligatorio</span>
+        <span><i class="fas fa-exclamation-circle"></i>{{ 'FORM.ALERT5' | translate}}</span>
       </div>
       }
     </div>
@@ -67,7 +67,7 @@
     <div class="form-group mb-4">
       <div class="input-container textarea-container">
         <textarea class="form-control" id="message" rows="4" formControlName="message" 
-                  placeholder="Mensaje " [class.is-invalid]="message?.invalid && message?.touched"></textarea>
+                  placeholder="{{'FORM.PLACEHOLDER3' | translate}}" [class.is-invalid]="message?.invalid && message?.touched"></textarea>
         <label for="message" class="form-label"></label>
         <div class="focus-border"></div>
         <i class="input-icon fas fa-comment"></i>
@@ -75,10 +75,10 @@
       @if (message?.invalid && message?.touched) {
       <div class="invalid-feedback animated-feedback">
         @if (message?.errors?.['required']) {
-        <span><i class="fas fa-exclamation-circle"></i> El mensaje es obligatorio</span>
+        <span><i class="fas fa-exclamation-circle"></i>{{'FORM.ALERT6' | translate}}</span>
         }
         @if (message?.errors?.['minlength']) {
-        <span><i class="fas fa-exclamation-circle"></i> Mínimo 10 caracteres</span>
+        <span><i class="fas fa-exclamation-circle"></i>{{ 'FORM.ALERT7' | translate}}</span>
         }
       </div>
       }
@@ -86,7 +86,7 @@
 
     <!-- Botón de envío -->
     <button type="submit" class="btn submit-btn" [disabled]="contactForm.invalid">
-      <span class="btn-text">Enviar Mensaje</span>
+      <span class="btn-text">{{'FORM.SENDMESSAGE' | translate}}</span>
       <div class="btn-loading">
         <div class="loading-dots">
           <span></span>
