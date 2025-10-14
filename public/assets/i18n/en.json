@@ -27,5 +27,47 @@
     "CARD2": "Chatbot with graphical interface, and integrated local llm specialized in python, voice automations and more.",
     "CARD3": "Commercial website, complete with integration of AI agents in a chat box for questions user and a minimalist design."
   
-  }
+  },
+  "LEARNING_PATH": {
+      "TITLE": "Learning Route",
+      "SUBTITLE": "My evolution and growth as a developer",
+      "STEPS": {
+        "FUNDAMENTOS_WEB": {
+          "TITLE": "Web Fundamentals",
+          "PERIOD": "2021 - 2022",
+          "DESCRIPTION": "I started my journey in web development by learning the fundamentals: HTML, CSS and JavaScript. I created my first static web pages and understood the principles of responsive design.",
+          "SKILLS": ["HTML5", "CSS3", "JavaScript", "Responsive Design"]
+        },
+        "JAVASCRIPT_AVANZADO": {
+          "TITLE": "Advanced JavaScript",
+          "PERIOD": "2022 - 2022",
+          "DESCRIPTION": "I delved into JavaScript, exploring ES6+, asynchronous programming, APIs, and starting with Node.js for server-side development.",
+          "SKILLS": ["ES6+", "Async/Await", "APIs REST", "Node.js"]
+        },
+        "FRAMEWORKS_FRONTEND": {
+          "TITLE": "Frontend Angular",
+          "PERIOD": "2023 - 2023",
+          "DESCRIPTION": "I specialized in Angular, exploring its entire ecosystem: TypeScript, RxJS, services, components and routing. I also experimented with React to expand my skills.",
+          "SKILLS": ["Angular", "TypeScript", "RxJS", "React"]
+        },
+        "BACKEND_BD": {
+          "TITLE": "Backend & Databases",
+          "PERIOD": "2023 - 2024",
+          "DESCRIPTION": "Expanding my skills to the backend with Node.js, Express, and different databases like MongoDB and MySQL.",
+          "SKILLS": ["Node.js", "Express", "MongoDB", "MySQL"]
+        },
+        "DEVOPS_CLOUD": {
+          "TITLE": "DevOps & Cloud",
+          "PERIOD": "2024 - Presente",
+          "DESCRIPTION": "Exploring deployment, CI/CD, Docker and cloud services to bring my applications to production.",
+          "SKILLS": ["Docker", "AWS", "CI/CD", "Git"]
+        },
+        "ESPECIALIZACION_AVANZADA": {
+          "TITLE": "Advanced Specialization",
+          "PERIOD": "Futuro",
+          "DESCRIPTION": "Continuing my learning in advanced architectures, microservices and new emerging technologies.",
+          "SKILLS": ["Microservicios", "GraphQL", "WebSockets", "Testing"]
+        }
+      }
+    }
 }
