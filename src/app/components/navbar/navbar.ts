@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { LanguageService } from '../../services/language-service'; // <-- Importa tu servicio
 
 @Component({
   selector: 'app-navbar',
@@ -12,13 +13,8 @@ import { RouterModule } from '@angular/router';
 export class NavbarComponent implements OnInit {
   isMobileMenuOpen = false;
   isLanguageMenuOpen = false;
-  currentLanguage = 'es';
-  
-  // Las rutas ahora apuntan correctamente a public/assets/
-  flagPaths = {
-    es: 'assets/spain-flag.jpg',
-    en: 'assets/uk-flag.jpg'
-  };
+
+  constructor(public langService: LanguageService) {} // <-- Inyección del servicio
 
   ngOnInit() {
     this.checkScreenSize();
@@ -38,9 +34,7 @@ export class NavbarComponent implements OnInit {
 
   toggleMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
-    if (this.isMobileMenuOpen) {
-      this.isLanguageMenuOpen = false;
-    }
+    if (this.isMobileMenuOpen) this.isLanguageMenuOpen = false;
   }
 
   toggleLanguageMenu(event: Event) {
@@ -49,9 +43,8 @@ export class NavbarComponent implements OnInit {
   }
 
   changeLanguage(lang: string) {
-    this.currentLanguage = lang;
+    this.langService.switch(lang); // <-- Usa el servicio centralizado
     this.isLanguageMenuOpen = false;
-    console.log('Idioma cambiado a:', lang);
   }
 
   closeMenus() {
@@ -63,14 +56,25 @@ export class NavbarComponent implements OnInit {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Fallback: try to find the element by class or other selectors
+      const contactElement = document.querySelector('app-contact');
+      if (contactElement && sectionId === 'contact') {
+        contactElement.scrollIntoView({ behavior: 'smooth' });
+      }
     }
     this.closeMenus();
   }
 
   @HostListener('document:click')
   onDocumentClick() {
-    if (this.isLanguageMenuOpen) {
-      this.isLanguageMenuOpen = false;
-    }
+    if (this.isLanguageMenuOpen) this.isLanguageMenuOpen = false;
+  }
+
+  /** Para mostrar la bandera correcta */
+  get currentFlag(): string {
+    return this.langService.currentLang === 'es'
+      ? 'assets/spain-flag.jpg'
+      : 'assets/uk-flag.jpg';
   }
 }

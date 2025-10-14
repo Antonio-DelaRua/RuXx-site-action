@@ -1,42 +1,42 @@
 <div class="container">
   <header>
     <h1 class="logo">RuXxDev</h1>
-    
+
     <!-- Botón hamburguesa para móvil -->
-    <button class="menu-toggle" 
-            [class.active]="isMobileMenuOpen"
-            (click)="toggleMobileMenu()"
-            aria-label="Toggle menu"
-            type="button">
+    <button class="menu-toggle" [class.active]="isMobileMenuOpen" (click)="toggleMobileMenu()" aria-label="Toggle menu"
+      type="button">
       <span></span>
       <span></span>
       <span></span>
     </button>
 
     <nav class="nav-menu" [class.active]="isMobileMenuOpen" (click)="$event.stopPropagation()">
-      <a (click)="scrollToSection('section-2')" data-key="nav-projects">Proyectos</a>
-      <a (click)="scrollToSection('learning-path')" data-key="nav-learning">Estudios</a>
-      <a (click)="scrollToSection('certificates')" data-key="nav-certificates">Certificados</a>
-      <a (click)="scrollToSection('contact')" data-key="nav-contact">Contacto</a>
-      
+      <a (click)="scrollToSection('section-2')">Proyectos</a>
+      <a (click)="scrollToSection('learning-path')">Estudios</a>
+      <a (click)="scrollToSection('certificates')">Certificados</a>
+      <a (click)="scrollToSection('contact')">Contacto</a>
+
       <!-- Dropdown de Idiomas -->
-      <div class="language-dropdown">
-        <button class="language-btn" 
+      <div class="language-dropdown" (click)="$event.stopPropagation()">
+        <button class="language-btn"
                 (click)="toggleLanguageMenu($event)"
                 [class.active]="isLanguageMenuOpen"
                 aria-label="Select language"
                 type="button">
-          <img [src]="currentLanguage === 'es' ? './assets/spain-flag.jpg' : './assets/uk-flag.jpg'" 
-               [alt]="currentLanguage === 'es' ? 'Español' : 'English'" 
+          <img [src]="currentFlag"
+               [alt]="langService.currentLang === 'es' ? 'Español' : 'English'"
                class="flag-icon">
           <i class="fas fa-chevron-down"></i>
         </button>
-        <div class="language-menu" [class.active]="isLanguageMenuOpen" (click)="$event.stopPropagation()">
-          <div class="language-option" (click)="changeLanguage('es')" data-lang="es">
+
+        <div class="language-menu"
+             [class.active]="isLanguageMenuOpen"
+             (click)="$event.stopPropagation()">
+          <div class="language-option" (click)="changeLanguage('es')">
             <img src="assets/spain-flag.jpg" alt="Español" class="flag-icon">
             <span>Español</span>
           </div>
-          <div class="language-option" (click)="changeLanguage('en')" data-lang="en">
+          <div class="language-option" (click)="changeLanguage('en')">
             <img src="assets/uk-flag.jpg" alt="English" class="flag-icon">
             <span>English</span>
           </div>
