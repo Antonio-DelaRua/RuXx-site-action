@@ -17,5 +17,106 @@
     "NAME_MOBILE": "Antonio De la Rua",
     "TITLE": "Full Stack Developer",
     "DESCRIPTION": "Passionate developer specialized in Angular, JavaScript and Node.js. I love transforming complex ideas into smooth and efficient user experiences. Always looking for new challenges that allow me to continue growing professionally."
-  }
+  },
+
+  "PROYECTOS": {
+    "TITLE": "Projects",
+    "SUBTITLE": "If you want to see them all click",
+    "LINK": "here",
+    "CARD1": "Automotive web portal with a REST API integrated with Firebase. with angular components material and bootstrap.",
+    "CARD2": "Chatbot with graphical interface, and integrated local llm specialized in python, voice automations and more.",
+    "CARD3": "Commercial website, complete with integration of AI agents in a chat box for questions user and a minimalist design."
+  
+  },
+  "LEARNING_PATH": {
+      "TITLE": "Learning Route",
+      "SUBTITLE": "My evolution and growth as a developer",
+      "STEPS": {
+        "FUNDAMENTOS_WEB": {
+          "TITLE": "Web Fundamentals",
+          "PERIOD": "2021 - 2022",
+          "DESCRIPTION": "I started my journey in web development by learning the fundamentals: HTML, CSS and JavaScript. I created my first static web pages and understood the principles of responsive design.",
+          "SKILLS": ["HTML5", "CSS3", "JavaScript", "Responsive Design"]
+        },
+        "JAVASCRIPT_AVANZADO": {
+          "TITLE": "Advanced JavaScript",
+          "PERIOD": "2022 - 2022",
+          "DESCRIPTION": "I delved into JavaScript, exploring ES6+, asynchronous programming, APIs, and starting with Node.js for server-side development.",
+          "SKILLS": ["ES6+", "Async/Await", "APIs REST", "Node.js"]
+        },
+        "FRAMEWORKS_FRONTEND": {
+          "TITLE": "Frontend Angular",
+          "PERIOD": "2023 - 2023",
+          "DESCRIPTION": "I specialized in Angular, exploring its entire ecosystem: TypeScript, RxJS, services, components and routing. I also experimented with React to expand my skills.",
+          "SKILLS": ["Angular", "TypeScript", "RxJS", "React"]
+        },
+        "BACKEND_BD": {
+          "TITLE": "Backend & Databases",
+          "PERIOD": "2023 - 2024",
+          "DESCRIPTION": "Expanding my skills to the backend with Node.js, Express, and different databases like MongoDB and MySQL.",
+          "SKILLS": ["Node.js", "Express", "MongoDB", "MySQL"]
+        },
+        "DEVOPS_CLOUD": {
+          "TITLE": "DevOps & Cloud",
+          "PERIOD": "2024 - Presente",
+          "DESCRIPTION": "Exploring deployment, CI/CD, Docker and cloud services to bring my applications to production.",
+          "SKILLS": ["Docker", "AWS", "CI/CD", "Git"]
+        },
+        "ESPECIALIZACION_AVANZADA": {
+          "TITLE": "Advanced Specialization",
+          "PERIOD": "Futuro",
+          "DESCRIPTION": "Continuing my learning in advanced architectures, microservices and new emerging technologies.",
+          "SKILLS": ["Microservicios", "GraphQL", "WebSockets", "Testing"]
+        }
+      }
+    },
+ "CERTIFICATES": {
+    "TITLE": "Certificates",
+    "SUBTITLE": "My achievements and certifications in different technologies",
+    "BUTTON": "ALL",
+    "HOVERCARD": "view Certificate",
+    "FILTERS": {
+      "ALL": "ALL",
+      "ANGULAR": "Angular",
+      "JAVASCRIPT": "JavaScript",
+      "HTML": "HTML",
+      "PYTHON": "Python",
+      "WEB": "Web",
+      "TYPESCRIPT": "TypeScript"
+    }
+  
+  },
+    "TITLES": {
+    "ANGULAR_BASIC": "Basic Angular",
+    "WEB_DESIGN": "Web Design",
+    "MODERN_JAVASCRIPT": "Modern JavaScript ",
+    "HTML": "HTML",
+    "PYTHON": "Python Pro",
+    "TYPESCRIPT": "Web Full Stack"
+  },
+  "CONTACT": {
+    "TITLE": "Contáct",
+    "SUBTITLE": "Do you have a project in mind? Let's talk!",
+    "PARRAFO": "Let's talk about your idea.  Don't hesitate to contact me."
+    },
+
+  "FORM": {
+    "TITLE": "Send me a message",
+    "SUBTITLE": "I will respond in less than 24 hours",
+    "PLACEHOLDER1": "Name",
+    "PLACEHOLDER2": "Subject",
+    "PLACEHOLDER3": "Message",
+    "SENDMESSAGE": "Send message",
+    "ALERT1": "The name is required",
+    "ALERT2": "Minimum 2 characters",
+    "ALERT3": "Email is mandatory",
+    "ALERT4": "Invalid email",
+    "ALERT5": "The matter is mandatory",
+    "ALERT6": "The message is mandatory",
+    "ALERT7": "Minimum 10 characters"   
+    },
+  "FOOTER": {
+    "DESCRIPTION": "&copy; 2024 Antonio De la Rua Fernandez. All rights reserved.",
+    "BUTTON": "Back to top"
+    }
 }

@@ -1,4 +1,3 @@
-
 /* NUEVA SECCIÓN DE PROYECTOS CON PARALLAX */
 .parallax-section {
     position: relative;
@@ -38,25 +37,7 @@
     padding: 5rem 2rem;
 }
 
-.section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 1rem;
-    background: linear-gradient(45deg, #7f42a7, #6600c5, #5300a0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 
-}
-
-.section-subtitle {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #a7a7a7;
-    max-width: 600px;
-    margin: 0 auto 4rem;
-}
 
 .projects-container {
     display: grid;
@@ -135,10 +116,10 @@
 }
 
 .project-description {
-    color: #a7a7a7;
+    color: #fff;
     margin-bottom: 1.5rem;
-    line-height: 1.6;
-    font-size: 0.8rem;
+    line-height: 1.3;
+    font-size: 0.9rem;
 }
 
 .project-tech {
@@ -202,42 +183,8 @@
     background: rgba(255, 255, 255, 0.2);
 }
 
-/* Efectos de partículas para el fondo parallax */
-.particles {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
 
-.particle {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    animation: float 15s infinite linear;
-}
 
-@keyframes float {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0;
-    }
-
-    10% {
-        opacity: 1;
-    }
-
-    90% {
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateY(-1000px) rotate(720deg);
-        opacity: 0;
-    }
-}
 
 /* TABLET RESPONSIVE */
 @media (max-width: 1300px) {
@@ -309,123 +256,8 @@
         font-size: 1rem;
     }
 
-    /* MEJORAS EN LA SECCIÓN PARALLAX */
-    .parallax-section {
-        position: relative;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        overflow: hidden;
-        background: #000;
-        /* Fondo negro garantizado */
-    }
 
-    .parallax-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 200%;
-        /* Altura extra para efecto parallax más pronunciado */
-        z-index: -1;
-    }
 
-    .parallax-layer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        transform-style: preserve-3d;
-    }
-
-    .layer-1 {
-        background:
-            radial-gradient(circle at 20% 20%, rgba(127, 66, 167, 0.4) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(102, 0, 197, 0.3) 0%, transparent 50%);
-        transform: translateZ(-3px) scale(1.5);
-        animation: floatLayer1 20s ease-in-out infinite;
-    }
-
-    .layer-2 {
-        background:
-            radial-gradient(circle at 60% 30%, rgba(83, 0, 160, 0.25) 0%, transparent 45%),
-            radial-gradient(circle at 30% 70%, rgba(160, 0, 255, 0.2) 0%, transparent 40%);
-        transform: translateZ(-6px) scale(2);
-        animation: floatLayer2 25s ease-in-out infinite;
-    }
-
-    .layer-3 {
-        background:
-            linear-gradient(45deg, transparent 30%, rgba(180, 70, 255, 0.1) 50%, transparent 70%);
-        transform: translateZ(-9px) scale(3);
-        animation: floatLayer3 30s ease-in-out infinite;
-    }
-
-    /* Efectos de movimiento para las capas */
-    @keyframes floatLayer1 {
-
-        0%,
-        100% {
-            transform: translateZ(-3px) scale(1.5) translateY(0) translateX(0);
-        }
-
-        50% {
-            transform: translateZ(-3px) scale(1.5) translateY(-20px) translateX(15px);
-        }
-    }
-
-    @keyframes floatLayer2 {
-
-        0%,
-        100% {
-            transform: translateZ(-6px) scale(2) translateY(0) translateX(0);
-        }
-
-        50% {
-            transform: translateZ(-6px) scale(2) translateY(15px) translateX(-20px);
-        }
-    }
-
-    @keyframes floatLayer3 {
-
-        0%,
-        100% {
-            transform: translateZ(-9px) scale(3) translateY(0) translateX(0);
-        }
-
-        50% {
-            transform: translateZ(-9px) scale(3) translateY(-10px) translateX(10px);
-        }
-    }
-
-    .parallax-content {
-        position: relative;
-        z-index: 10;
-        padding: 5rem 2rem;
-    }
-
-    .section-title {
-        font-size: 3.5rem;
-        font-weight: 700;
-        text-align: center;
-        margin-bottom: 1rem;
-        background: linear-gradient(45deg, #8a2be2, #6600cc, #9400d3);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
-    }
-
-    .section-subtitle {
-        text-align: center;
-        font-size: 1.2rem;
-        color: #b8b8b8;
-        max-width: 600px;
-        margin: 0 auto 4rem;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-    }
 
     /* Mejora en las tarjetas con efecto parallax individual */
     .projects-container {
@@ -654,69 +486,9 @@
         border-color: rgba(255, 255, 255, 0.3);
     }
 
-    /* Partículas mejoradas */
-    .particles {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-    }
-
-    .particle {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 50%;
-        animation: float 15s infinite linear;
-        box-shadow: 0 0 10px rgba(127, 66, 167, 0.5);
-    }
-
-    @keyframes float {
-        0% {
-            transform: translateY(100vh) rotate(0deg);
-            opacity: 0;
-        }
-
-        10% {
-            opacity: 0.7;
-        }
-
-        90% {
-            opacity: 0.7;
-        }
-
-        100% {
-            transform: translateY(-100px) rotate(720deg);
-            opacity: 0;
-        }
-    }
 
 
-    /* Efecto de scroll parallax mejorado */
-    .parallax-section {
-        transform-style: preserve-3d;
-        padding-top: 50px;
-    }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-        .section-title {
-            font-size: 2.5rem;
-        }
-
-        .projects-container {
-            grid-template-columns: 1fr;
-        }
-
-        .project-links {
-            flex-direction: column;
-        }
-
-        .parallax-container {
-            height: 150%;
-        }
-    }
 }
 
 .img-project {
@@ -731,52 +503,6 @@
 
 
 
-/* The Modal (background) */
-.modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.9);
-    /* Black w/ opacity */
-}
-
-/* modal content */
-
-
-.modal-content {
-    margin: auto;
-    display: block;
-    width: 80%;
-    max-width: 700px;
-    margin-top: 5%;
-}
-
-.close {
-    position: absolute;
-    top: 15px;
-    right: 35px;
-    color: white;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.close:hover {
-    color: #ccc;
-}
 
 .icono-python {
     width: 140px;
@@ -792,6 +518,6 @@
     color: grey;
 }
 
-.project-link.code{
+.project-link.code {
     font-size: 12px;
 }

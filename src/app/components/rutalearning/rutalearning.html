@@ -2,8 +2,8 @@
     <div class="learning-path-bg"></div>
     
     <div class="section-header">
-        <h2 class="section-title">Ruta de Aprendizaje</h2>
-        <p class="section-subtitle">Mi evolución y crecimiento como desarrollador</p>
+        <h2 class="section-title">{{'LEARNING_PATH.TITLE' | translate }}</h2>
+        <p class="section-subtitle">{{'LEARNING_PATH.SUBTITLE' | translate }}</p>
     </div>
 
     <div class="timeline">
@@ -24,15 +24,15 @@
                         <i [class]="step.icon"></i>
                     </div>
                     <div>
-                        <h3 class="step-title">{{ step.title }}</h3>
-                        <p class="step-period">{{ step.period }}</p>
+                        <h3 class="step-title">{{ step.titleKey | translate }}</h3>
+                        <p class="step-period">{{ step.periodKey | translate }}</p>
                     </div>
                 </div>
                 <p class="step-description">
-                    {{ step.description }}
+                    {{ step.descriptionKey | translate }}
                 </p>
                 <div class="step-skills">
-                    <span *ngFor="let skill of step.skills" class="skill-tag">
+                    <span *ngFor="let skill of (step.skillsKey | translate)" class="skill-tag">
                         {{ skill }}
                     </span>
                 </div>

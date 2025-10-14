@@ -7,10 +7,10 @@
         <div class="particles" id="particles"></div>
 
         <div class="parallax-content" id="section-2">
-            <h2 class="section-title" data-key="projects-title">Mis Proyectos</h2>
-            <p class="section-subtitle" data-key="projects-subtitle">Si quieres ver todos pulsa <a
+            <h2 class="section-title" data-key="projects-title">{{ 'PROYECTOS.TITLE' | translate}}</h2>
+            <p class="section-subtitle" data-key="projects-subtitle">{{'PROYECTOS.SUBTITLE' | translate}}<a
                     href="https://github.com/Antonio-DelaRua?tab=repositories" target="_blank"
-                    style="text-decoration: none; color:#6400C2;">aqui</a> </p>
+                    style="text-decoration: none; color:#6400C2;"> {{'PROYECTOS.LINK' | translate}}</a> </p>
 
             <div class="projects-container" style="padding-top: 45px;">
                 <!-- Proyecto 1 -->
@@ -26,8 +26,7 @@
                     </div>
                     <div class="project-content">
                         <p class="project-description" data-key="project-descrip1">
-                            Portal web automotriz con una API REST integrada a Firebase. con componentes de angular
-                            material y bootstrap.
+                            {{'PROYECTOS.CARD1' | translate}}
                         </p>
                         <div class="project-tech">
                             <span class="tech-tag">Angular</span>
@@ -62,8 +61,7 @@
                     </div>
                     <div class="project-content">
                         <p class="project-description" data-key="project-descrip2">
-                            Chatbot con interfaz grafica, y llm local integrado especializado en python,
-                            automatizaciones por voz y más..
+                            {{'PROYECTOS.CARD2' | translate}}
                         </p>
                         <div class="project-tech">
                             <span class="tech-tag">Python</span>
@@ -98,8 +96,7 @@
                     </div>
                     <div class="project-content">
                         <p class="project-description" data-key="project-descrip3">
-                            Web comercial, completa con integracion de agentes ia en un chat box para las preguntas del
-                            usuario y un diseño minimalista.
+                            {{'PROYECTOS.CARD3' | translate}}
                         </p>
                         <div class="project-tech">
                             <span class="tech-tag">Html</span>
@@ -123,8 +120,3 @@
         </div>
     </section>
 
-    <!-- Modal fuera de la sección de proyectos -->
-    <div id="imageModal" class="modal">
-        <span class="close">&times;</span>
-        <img class="modal-content" id="modalImage">
-    </div>

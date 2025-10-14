@@ -1,13 +1,17 @@
-import { Component, AfterViewInit, HostListener } from '@angular/core';
+import { Component, AfterViewInit, HostListener, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { LanguageService } from '../../services/language-service';
+
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './footer.html',
   styleUrl: './footer.css'
 })
-export class Footer implements AfterViewInit {
+export class Footer implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     this.initBackToTop();
@@ -36,4 +40,21 @@ export class Footer implements AfterViewInit {
       }
     }
   }
+
+    constructor(
+    public translate: TranslateService,
+    private languageService: LanguageService 
+  ) {}
+
+  get PROYECTOS() {
+    return this.translate.instant('PROYECTOS');
+  }
+
+  ngOnInit() {
+    // Suscribirse a los cambios de idioma del servicio
+    this.languageService.currentLang$.subscribe(lang => {
+      this.translate.use(lang);
+    });
+  }
 }
+

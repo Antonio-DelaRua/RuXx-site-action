@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '../../services/language-service'; // Asegúrate de importar el servicio
+import { LanguageService } from '../../services/language-service'; 
 
 @Component({
   selector: 'app-hero',
@@ -15,7 +15,7 @@ export class Hero implements OnInit {
   
   constructor(
     public translate: TranslateService,
-    private languageService: LanguageService // Inyecta el servicio
+    private languageService: LanguageService 
   ) {}
 
   ngOnInit() {
