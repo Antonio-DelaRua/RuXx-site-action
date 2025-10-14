@@ -3,17 +3,21 @@
 
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Orbitron', sans-serif;
-    background-color: black;
-    color: #e7e7e7;
-    min-height: 100vh;
-    line-height: 1.5;  
+  font-family: 'Orbitron', sans-serif;
+  background-color: black;
+  color: #e7e7e7;
+  min-height: 100vh;
+  line-height: 1.5;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 :host {
@@ -31,21 +35,22 @@ section {
 
 
 .section-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    background: linear-gradient(45deg, #7f42a7, #6600c5, #5300a0);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(45deg, #7f42a7, #6600c5, #5300a0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
 
 }
+
 .section-subtitle {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #a7a7a7;
-    max-width: 600px;
-    margin: 0 auto 4rem;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #a7a7a7;
+  max-width: 600px;
+  margin: 0 auto 4rem;
 }
