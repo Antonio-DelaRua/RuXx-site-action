@@ -21,6 +21,15 @@ export class Footer implements AfterViewInit, OnInit {
     const backToTopBtn = document.getElementById('backToTop');
     if (backToTopBtn) {
       backToTopBtn.addEventListener('click', () => {
+      // Force iframe reload to prevent vibration bug
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+          const src = iframe.src;
+          iframe.src = '';
+          setTimeout(() => {
+            iframe.src = src;
+          }, 10);
+        });
         window.scrollTo({
           top: 0,
           behavior: 'smooth'

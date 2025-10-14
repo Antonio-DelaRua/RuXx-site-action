@@ -214,6 +214,8 @@ main {
   height: 100%;
   border: none;
   clip-path: inset(0 0 15% 0);
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 /* HERO SECTION LAYOUT */
