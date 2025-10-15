@@ -22,9 +22,9 @@
     "TITLE": "Proyectos",
     "SUBTITLE": "Si quieres ver todos pulsa",
     "LINK": "aquí",
-    "CARD1": "Portal web automotriz con una API REST integrada a Firebase. con componentes de angular material y bootstrap.",
-    "CARD2": "Chatbot con interfaz grafica, y llm local integrado especializado en python, automatizaciones por voz y más..",
-    "CARD3": "Web comercial, completa con integracion de agentes ia en un chat box para las preguntas del usuario y un diseño minimalista."
+    "CARD1": "Portal web automotriz con una API REST integrada a Firebase. con componentes de angular material y bootstrap .",
+    "CARD2": "Chatbot con interfaz grafica, y llm local integrado especializado en python, automatizaciones por voz y control del PC .",
+    "CARD3": "Web comercial, completa con integracion de agentes ia en un chat box para las preguntas del usuario y un diseño minimalista ."
   },
   "LEARNING_PATH": {
     "TITLE": "Ruta de Aprendizaje",

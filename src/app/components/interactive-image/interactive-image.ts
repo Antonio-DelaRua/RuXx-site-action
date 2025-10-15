@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service'; 
-
+import { SendChat } from '../../services/send-chat';
 
 @Component({
   selector: 'app-interactive-image',
@@ -12,14 +12,28 @@ import { LanguageService } from '../../services/language-service';
   templateUrl: './interactive-image.html',
   styleUrls: ['./interactive-image.css'],
 })
-export class InteractiveImageComponent implements OnInit{
+export class InteractiveImageComponent implements OnInit {
   isActivated = false;
   isChatOpen = false;
   chatMessage = '';
   messages: string[] = [];
   showImage = false;
   showHint = false;
+  loading = false;
   private clickTimeout: any = null;
+
+  constructor(
+    public translate: TranslateService,
+    private languageService: LanguageService,
+    private sendChatService: SendChat
+  ) {}
+
+  ngOnInit() {
+    this.languageService.currentLang$.subscribe(lang => {
+      this.translate.use(lang);
+    });
+    this.translate.use(this.languageService.currentLang);
+  }
 
   activateChatbot() {
     this.isActivated = true;
@@ -28,54 +42,42 @@ export class InteractiveImageComponent implements OnInit{
 
   onImageClick(event: MouseEvent) {
     event.preventDefault();
-    
-    // Si ya hay un timeout pendiente, es un doble click
     if (this.clickTimeout) {
       clearTimeout(this.clickTimeout);
       this.clickTimeout = null;
-      // No mostrar el hint en doble click
       return;
     }
-
-    // Esperar para determinar si es click simple o doble
     this.clickTimeout = setTimeout(() => {
       this.showHintMessage();
       this.clickTimeout = null;
-    }, 300); // Tiempo para detectar doble click (300ms)
+    }, 300);
   }
 
   onDoubleClick(event: MouseEvent) {
     event.preventDefault();
-    
-    // Cancelar cualquier timeout pendiente
     if (this.clickTimeout) {
       clearTimeout(this.clickTimeout);
       this.clickTimeout = null;
     }
-    
     this.openChat();
   }
 
   showHintMessage() {
-    // Solo mostrar el hint si no está abierto el chat
     if (!this.isChatOpen) {
       this.showHint = true;
-      
-      // Ocultar después de 3 segundos
       setTimeout(() => {
         this.showHint = false;
       }, 3000);
     }
   }
 
-openChat() {
-  this.isChatOpen = true;
-  this.showHint = false;
-  
-  this.translate.get('CHATBOX.WELCOME_MESSAGE').subscribe((message: string) => {
-    this.messages.push(message);
-  });
-}
+  openChat() {
+    this.isChatOpen = true;
+    this.showHint = false;
+    this.translate.get('CHATBOX.WELCOME_MESSAGE').subscribe((message: string) => {
+      this.messages.push(`🤖 ${message}`);
+    });
+  }
 
   closeChat() {
     this.isChatOpen = false;
@@ -83,28 +85,44 @@ openChat() {
     this.chatMessage = '';
   }
 
-  sendMessage() {
-    if (this.chatMessage.trim()) {
-      this.messages.push(`Tú: ${this.chatMessage}`);
-      this.messages.push('IA: Esta funcionalidad se implementará próximamente');
-      this.chatMessage = '';
+  async sendMessage() {
+    if (!this.chatMessage.trim()) return;
+
+    const userMessage = this.chatMessage.trim();
+    this.messages.push(`🧑‍💻 Tú: ${userMessage}`);
+    this.chatMessage = '';
+    this.loading = true;
+
+    try {
+      // ✅ Ahora sí coincide el nombre del método
+      const response = await this.sendChatService.getData(userMessage);
+
+      // ✅ Manejo flexible de la respuesta - ajusta según lo que devuelva n8n
+      let aiMessage = 'No response';
+      
+      if (typeof response === 'string') {
+        aiMessage = response;
+      } else if (response?.output) {
+        aiMessage = response.output;
+      } else if (response?.data) {
+        aiMessage = response.data;
+      } else if (response) {
+        aiMessage = JSON.stringify(response);
+      }
+
+      this.messages.push(`🤖 IA: ${aiMessage}`);
+      
+    } catch (error: any) {
+      console.error('Error enviando mensaje:', error);
+      
+      // ✅ Mensajes de error más específicos
+      if (error.message?.includes('Workflow no activado') || error.status === 404) {
+        this.messages.push('⚠️ El asistente no está disponible en este momento. Por favor, intenta más tarde.');
+      } else {
+        this.messages.push('⚠️ Error de conexión. Verifica tu internet e intenta nuevamente.');
+      }
+    } finally {
+      this.loading = false;
     }
-  }
-
- 
-
-    constructor(
-    public translate: TranslateService,
-    private languageService: LanguageService 
-  ) {}
-
-  ngOnInit() {
-    // Suscribirse a los cambios de idioma del servicio
-    this.languageService.currentLang$.subscribe(lang => {
-      this.translate.use(lang);
-    });
-
-    // Establecer el idioma inicial
-    this.translate.use(this.languageService.currentLang);
   }
 }
