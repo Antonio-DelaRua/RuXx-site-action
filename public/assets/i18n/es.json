@@ -150,6 +150,7 @@
     "HELP": "doble click para chatear",
     "SEND": "Enviar",
     "PLACEHOLDER": "Escribe tu mensaje...",
-    "WELCOME_MESSAGE": "¡Hola! ¿En qué puedo ayudarte?"
+    "WELCOME_MESSAGE": "¡Hola! ¿En qué puedo ayudarte?",
+    "CHATBOX.TYPING": "Buscando información..."
   }
 }
