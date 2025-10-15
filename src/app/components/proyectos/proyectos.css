@@ -263,8 +263,6 @@
     }
 
 
-
-
     /* Mejora en las tarjetas con efecto parallax individual */
     .projects-container {
         display: grid;
@@ -522,3 +520,4 @@
 .project-link.code {
     font-size: 12px;
 }
+

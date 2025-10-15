@@ -154,110 +154,123 @@ nav a:hover {
   border-radius: 2px;
 }
 
-/* ========== MOBILE RESPONSIVE ========== */
-@media (max-width: 768px) {
-  .container {
-    padding: 0 1rem;
-  }
-  
-  /* BOTÓN HAMBURGUESA VISIBLE EN MÓVIL */
-  .menu-toggle {
-    display: flex;
-    position: relative;
-    z-index: 1001;
-  }
 
-  /* NAV OCULTO EN MÓVIL POR DEFECTO */
-  .nav-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 70%;
-    height: 100vh;
-    background: #1a1a1a;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 2rem;
-    padding-top: 5rem;
-    transition: right 0.4s ease;
-    z-index: 1000;
-  }
+        /* ========== MOBILE RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            /* BOTÓN HAMBURGUESA VISIBLE EN MÓVIL */
+            .menu-toggle {
+                display: flex;
+                position: relative;
+                z-index: 1001;
+            }
 
-  /* NAV ACTIVO EN MÓVIL */
-  .nav-menu.active {
-    right: 0;
-  }
+            /* NAV OCULTO EN MÓVIL POR DEFECTO */
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: #1a1a1a;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 2rem;
+                padding-top: 5rem;
+                transition: right 0.4s ease;
+                z-index: 1000;
+            }
 
-  .nav-menu a {
-    display: block;
-    padding: 1rem 2rem;
-    text-align: center;
-    border-radius: 0;
-    margin: 0;
-    width: 80%;
-    font-size: 1.1rem;
-  }
+            /* NAV ACTIVO EN MÓVIL */
+            .nav-menu.active {
+                right: 0;
+            }
 
-  .nav-menu a:hover {
-    background: rgba(127, 66, 167, 0.5);
-    transform: none;
-  }
+            .nav-menu a {
+                display: block;
+                padding: 1rem 2rem;
+                text-align: center;
+                border-radius: 0;
+                margin: 0;
+                width: 80%;
+                font-size: 1.1rem;
+            }
 
-  /* Animación del botón hamburguesa a X */
-  .menu-toggle.active span:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
-  }
+            .nav-menu a:hover {
+                background: rgba(127, 66, 167, 0.5);
+                transform: none;
+            }
 
-  .menu-toggle.active span:nth-child(2) {
-    opacity: 0;
-  }
+            /* SELECTOR DE IDIOMAS EN MÓVIL */
+            .language-selector {
+                width: 100%;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            .language-button {
+                width: 80%;
+                justify-content: center;
+                border: 1px solid rgba(78, 4, 138, 0.5);
+            }
+            
+            .language-menu {
+                position: absolute;
+                top: 100%;
+                left: -40%;
+                width: 80%;
+                min-width: unset;
+            }
 
-  .menu-toggle.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
-  }
+            /* Animación del botón hamburguesa a X */
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(6px, 6px);
+            }
 
-  .logo {
-    padding-left: 0.5rem;
-  }
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
 
-  .language-menu {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 200px;
-  }
-}
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(6px, -6px);
+            }
 
-/* TABLET RESPONSIVE */
-@media (max-width: 1300px) {
-  .container {
-    padding: 0 1.5rem;
-  }
-  
-  nav {
-    gap: 1.5rem;
-  }
-  
-  nav a {
-    padding: 0.5rem 0.8rem;
-    font-size: 0.9rem;
-  }
-}
+            .logo {
+                padding-left: 0.5rem;
+            }
+        }
 
-/* PARA PANTALLAS MUY PEQUEÑAS */
-@media (max-width: 480px) {
-  header h1 {
-    font-size: 1.5rem;
-  }
-  
-  .nav-menu {
-    width: 85%;
-  }
-  
-  .logo {
-    padding-left: 0.25rem;
-  }
-}
+        /* TABLET RESPONSIVE */
+        @media (max-width: 1300px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            nav {
+                gap: 1.5rem;
+            }
+            
+            nav a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
 
+        /* PARA PANTALLAS MUY PEQUEÑAS */
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .nav-menu {
+                width: 85%;
+            }
+            
+            .logo {
+                padding-left: 0.25rem;
+            }
+        }   
