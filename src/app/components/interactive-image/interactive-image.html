@@ -1,0 +1,62 @@
+<!-- Botón circular del chatbot -->
+<button 
+  class="chatbot-toggle" 
+  *ngIf="!isActivated" 
+  (click)="activateChatbot()"
+  title="Abrir asistente virtual"
+>
+  💬
+</button>
+
+<!-- Contenedor de la imagen (oculto inicialmente) -->
+<div 
+  class="interactive-container" 
+  [class.activated]="isActivated"
+>
+  <img 
+    src="assets/robitroll.png"
+    alt="Asistente virtual"
+    class="interactive-image"
+    (click)="onImageClick($event)"
+    (dblclick)="onDoubleClick($event)"
+  />
+  
+  <!-- Texto de ayuda que aparece al hacer click -->
+  <div class="hint-message" *ngIf="showHint">
+    {{'CHATBOX.HELP' | translate}}
+  </div>
+  
+  <!-- Chat como viñeta -->
+  <div class="chat-bubble" *ngIf="isChatOpen">
+    <div class="chat-container">
+      <div class="chat-header">
+        <div class="chat-title">{{'CHATBOX.TITLE' | translate}}</div>
+        <button class="close-btn" (click)="closeChat()">×</button>
+      </div>
+      
+      <div class="chat-messages">
+        <div 
+          *ngFor="let message of messages" 
+          class="message" 
+          [class.user]="message.startsWith('Tú:')"
+          [class.ai]="!message.startsWith('Tú:')"
+        >
+          {{ message }}
+        </div>
+      </div>
+      
+      <div class="chat-input-container">
+        <input 
+          type="text" 
+          class="chat-input" 
+          [placeholder]="'CHATBOX.PLACEHOLDER' | translate"
+          [(ngModel)]="chatMessage"
+          (keyup.enter)="sendMessage()"
+        >
+        <button class="send-btn" (click)="sendMessage()">
+           {{'CHATBOX.SEND' | translate}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

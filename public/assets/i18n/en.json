@@ -118,5 +118,12 @@
   "FOOTER": {
     "DESCRIPTION": "© 2024 Antonio De la Rua Fernandez. All rights reserved.",
     "BUTTON": "Back to top"
-    }
+    },
+  "CHATBOX": {
+    "TITLE": "Virtual Assistant",
+    "HELP": "Double click to chat",
+    "SEND": "Send",
+    "PLACEHOLDER": "Write your message...",
+    "WELCOME_MESSAGE": "Hello! How can I help you?"
+  }
 }

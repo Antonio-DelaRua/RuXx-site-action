@@ -4,6 +4,7 @@ import { provideHttpClient, withInterceptorsFromDi, HttpClient } from '@angular/
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader, TRANSLATE_HTTP_LOADER_CONFIG } from '@ngx-translate/http-loader';
 import { routes } from './app.routes';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
+    FormsModule,
 
     // ✅ Required: provide loader configuration explicitly
     {
