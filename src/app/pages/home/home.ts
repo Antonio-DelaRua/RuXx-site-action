@@ -8,22 +8,24 @@ import { Contact } from '../../components/contact/contact';
 import { Footer } from '../../components/footer/footer';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { InteractiveImageComponent } from "../../components/interactive-image/interactive-image";
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule,                    
-    RouterModule,                    
+    CommonModule,
+    RouterModule,
     NavbarComponent,
     Hero,
     Proyectos,
     RutalearningComponent,
     Certificates,
     Contact,
-    Footer
-  ],
+    Footer,
+    InteractiveImageComponent
+],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
