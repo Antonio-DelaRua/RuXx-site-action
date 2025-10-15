@@ -70,4 +70,6 @@ export class NavbarComponent implements OnInit {
       ? 'assets/spain-flag.jpg'
       : 'assets/uk-flag.jpg';
   }
+
+  
 }

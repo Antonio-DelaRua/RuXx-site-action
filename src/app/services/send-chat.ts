@@ -7,7 +7,7 @@ import { v4 as uuidv4} from 'uuid';
   providedIn: 'root'
 })
 export class SendChat {
-  private n8nWebhookUrl = 'https://automation.durbanod.com/webhook/ecc6e333-4f1a-4f7e-801a-d84ce040f972';  
+  private n8nWebhookUrl = 'https://automation.durbanod.com/webhook-test/ecc6e333-4f1a-4f7e-801a-d84ce040f972';  
 
   constructor(private http: HttpClient) {}
 

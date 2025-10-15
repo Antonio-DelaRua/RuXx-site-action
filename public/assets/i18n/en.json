@@ -124,6 +124,7 @@
     "HELP": "Double click to chat",
     "SEND": "Send",
     "PLACEHOLDER": "Write your message...",
-    "WELCOME_MESSAGE": "Hello! How can I help you?"
+    "WELCOME_MESSAGE": "Hello! How can I help you?",
+    "CHATBOX.TYPING": "Searching info..."
   }
 }
