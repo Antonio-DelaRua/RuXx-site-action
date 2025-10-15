@@ -8,11 +8,12 @@
   💬
 </button>
 
-<!-- Contenedor de la imagen (oculto inicialmente) -->
+<!-- Contenedor principal -->
 <div 
   class="interactive-container" 
   [class.activated]="isActivated"
 >
+  <!-- Imagen del asistente -->
   <img 
     src="assets/robitroll.png"
     alt="Asistente virtual"
@@ -21,30 +22,43 @@
     (dblclick)="onDoubleClick($event)"
   />
   
-  <!-- Texto de ayuda que aparece al hacer click -->
+  <!-- Texto de ayuda temporal -->
   <div class="hint-message" *ngIf="showHint">
-    {{'CHATBOX.HELP' | translate}}
+    {{ 'CHATBOX.HELP' | translate }}
   </div>
   
-  <!-- Chat como viñeta -->
+  <!-- Ventana de chat -->
   <div class="chat-bubble" *ngIf="isChatOpen">
     <div class="chat-container">
+      <!-- Cabecera -->
       <div class="chat-header">
-        <div class="chat-title">{{'CHATBOX.TITLE' | translate}}</div>
+        <div class="chat-title">{{ 'CHATBOX.TITLE' | translate }}</div>
         <button class="close-btn" (click)="closeChat()">×</button>
       </div>
       
-      <div class="chat-messages">
+      <!-- Mensajes -->
+      <div class="chat-messages" #chatMessages>
         <div 
           *ngFor="let message of messages" 
-          class="message" 
-          [class.user]="message.startsWith('Tú:')"
-          [class.ai]="!message.startsWith('Tú:')"
+          class="message"
+          [ngClass]="{
+            'user': message.startsWith('🧑‍💻'),
+            'ai': message.startsWith('🤖'),
+            'error': message.startsWith('⚠️')
+          }"
         >
           {{ message }}
         </div>
+
+        <!-- Indicador de carga -->
+        <div class="loading" *ngIf="loading">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
       </div>
       
+      <!-- Entrada de texto -->
       <div class="chat-input-container">
         <input 
           type="text" 
@@ -53,8 +67,12 @@
           [(ngModel)]="chatMessage"
           (keyup.enter)="sendMessage()"
         >
-        <button class="send-btn" (click)="sendMessage()">
-           {{'CHATBOX.SEND' | translate}}
+        <button 
+          class="send-btn" 
+          (click)="sendMessage()" 
+          [disabled]="loading || !chatMessage.trim()"
+        >
+          {{ 'CHATBOX.SEND' | translate }}
         </button>
       </div>
     </div>
