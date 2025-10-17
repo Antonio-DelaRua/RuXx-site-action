@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BreakpointService {
-  isMobile$: Observable<boolean>;
+  private isMobileSubject = new BehaviorSubject<boolean>(false);
+  public isMobile$ = this.isMobileSubject.asObservable();
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    this.isMobile$ = this.breakpointObserver.observe([
-      Breakpoints.Handset,
-      Breakpoints.Tablet
-    ]).pipe(
-      map(result => result.matches)
-    );
+  constructor() {
+    this.checkScreenSize();
+    window.addEventListener('resize', () => this.checkScreenSize());
+  }
+
+  private checkScreenSize(): void {
+    const isMobile = window.innerWidth <= 768;
+    this.isMobileSubject.next(isMobile);
+  }
+
+  get isMobile(): boolean {
+    return this.isMobileSubject.value;
   }
 }
