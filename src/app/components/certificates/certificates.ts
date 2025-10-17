@@ -104,87 +104,177 @@ export class Certificates implements OnInit {
     return this.imageOptimizationService.getCertificateImageConfig(image);
   }
 
-  private createModal(certificate: Certificate, config?: ImageConfig): void {
-    const modal = document.createElement('div');
-    modal.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      cursor: pointer;
-    `;
+private createModal(certificate: Certificate, config?: ImageConfig): void {
+  const modal = document.createElement('div');
+  modal.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    cursor: pointer;
+    padding: 20px;
+    box-sizing: border-box;
+  `;
 
-    const modalContent = document.createElement('div');
-    modalContent.style.cssText = `
-      max-width: 90%;
-      max-height: 90%;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    `;
+  const modalContent = document.createElement('div');
+  modalContent.style.cssText = `
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    cursor: default;
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+  `;
 
-    const closeBtn = document.createElement('button');
-    closeBtn.innerHTML = '×';
-    closeBtn.style.cssText = `
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      background: rgba(0, 0, 0, 0.7);
-      color: white;
-      border: none;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1001;
-    `;
+  const closeBtn = document.createElement('button');
+  closeBtn.innerHTML = '×';
+  closeBtn.style.cssText = `
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    transition: all 0.3s ease;
+    font-weight: bold;
+  `;
 
-    const img = document.createElement('img');
-    img.src = config ? config.src : certificate.image;
-    img.alt = this.translate.instant(certificate.titleKey);
-    img.style.cssText = `
-      max-width: 100%;
-      max-height: 100%;
-      display: block;
-      object-fit: contain;
-    `;
+  closeBtn.addEventListener('mouseenter', () => {
+    closeBtn.style.background = '#e74c3c';
+    closeBtn.style.transform = 'scale(1.1)';
+  });
+  closeBtn.addEventListener('mouseleave', () => {
+    closeBtn.style.background = 'rgba(0, 0, 0, 0.8)';
+    closeBtn.style.transform = 'scale(1)';
+  });
 
-    // Set dimensions immediately if available to prevent reflow
-    if (config && config.width && config.height) {
-      img.width = config.width;
-      img.height = config.height;
+  const imgContainer = document.createElement('div');
+  imgContainer.style.cssText = `
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    max-width: 100%;
+    max-height: calc(90vh - 100px);
+    overflow: auto;
+  `;
+
+  const img = document.createElement('img');
+  
+  // USAR IMAGEN ORIGINAL SIN COMPRIMIR para certificados
+  const originalImagePath = this.getOriginalImagePath(certificate.image);
+  img.src = originalImagePath;
+  img.alt = this.translate.instant(certificate.titleKey);
+  
+  img.style.cssText = `
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: contain;
+  `;
+
+  // Información del certificado
+  const infoOverlay = document.createElement('div');
+  infoOverlay.style.cssText = `
+    width: 100%;
+    background: rgba(255, 255, 255, 0.98);
+    color: #333;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #eee;
+    box-sizing: border-box;
+  `;
+
+  const title = document.createElement('h3');
+  title.textContent = this.translate.instant(certificate.titleKey);
+  title.style.cssText = `
+    margin: 0 0 5px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c3e50;
+  `;
+
+  const issuer = document.createElement('p');
+  issuer.textContent = certificate.issuer;
+  issuer.style.cssText = `
+    margin: 0;
+    font-size: 16px;
+    color: #7f8c8d;
+    font-weight: 500;
+  `;
+
+  infoOverlay.appendChild(title);
+  infoOverlay.appendChild(issuer);
+
+  imgContainer.appendChild(img);
+  modalContent.appendChild(imgContainer);
+  modalContent.appendChild(infoOverlay);
+  modalContent.appendChild(closeBtn);
+  modal.appendChild(modalContent);
+  document.body.appendChild(modal);
+
+  document.body.style.overflow = 'hidden';
+
+  const closeModal = () => {
+    if (document.body.contains(modal)) {
+      document.body.removeChild(modal);
     }
-
-    modalContent.appendChild(img);
-    modalContent.appendChild(closeBtn);
-    modal.appendChild(modalContent);
-    document.body.appendChild(modal);
-
-    const closeModal = () => document.body.removeChild(modal);
-    
-    modal.addEventListener('click', closeModal);
-    closeBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
+    document.body.style.overflow = '';
+  };
+  
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
       closeModal();
-    });
+    }
+  });
 
-    // Remove unused breakpoint subscription that could cause reflow
-    // this.breakpointService.isMobile$.subscribe(isMobile => {
-    //   this.isMobile = isMobile;
-    // });
+  closeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeModal();
+  });
+
+  const handleKeydown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeModal();
+      document.removeEventListener('keydown', handleKeydown);
+    }
+  };
+  document.addEventListener('keydown', handleKeydown);
+}
+
+// Método para obtener la imagen original sin comprimir
+private getOriginalImagePath(optimizedPath: string): string {
+  // Reemplazar 'opt-' por el nombre original
+  const imageName = optimizedPath.split('/').pop();
+  if (imageName && imageName.startsWith('opt-')) {
+    const originalName = imageName.replace('opt-', '');
+    return optimizedPath.replace(imageName, originalName);
   }
-  }
+  return optimizedPath;
+}
+}
