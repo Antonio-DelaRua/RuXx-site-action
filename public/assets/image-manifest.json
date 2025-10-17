@@ -1,5 +1,5 @@
 {
-  "generated": "2025-10-17T15:45:52.235Z",
+  "generated": "2025-10-17T16:50:21.123Z",
   "images": [
     {
       "original": "spain-flag.webp",
@@ -13,17 +13,17 @@
       "original": "gradient.webp",
       "optimized": "opt-gradient.webp",
       "originalSize": 93620,
-      "optimizedSize": 82994,
-      "savings": 10626,
-      "savingsPercent": "11.4"
+      "optimizedSize": 79086,
+      "savings": 14534,
+      "savingsPercent": "15.5"
     },
     {
       "original": "angular.webp",
       "optimized": "opt-angular.webp",
       "originalSize": 32646,
-      "optimizedSize": 12690,
-      "savings": 19956,
-      "savingsPercent": "61.1"
+      "optimizedSize": 6542,
+      "savings": 26104,
+      "savingsPercent": "80.0"
     },
     {
       "original": "angular-logo.webp",
@@ -37,49 +37,49 @@
       "original": "deve.webp",
       "optimized": "opt-deve.webp",
       "originalSize": 25844,
-      "optimizedSize": 15520,
-      "savings": 10324,
-      "savingsPercent": "39.9"
+      "optimizedSize": 7046,
+      "savings": 18798,
+      "savingsPercent": "72.7"
     },
     {
       "original": "piyon2.webp",
       "optimized": "opt-piyon2.webp",
       "originalSize": 17506,
-      "optimizedSize": 10848,
-      "savings": 6658,
-      "savingsPercent": "38.0"
+      "optimizedSize": 5374,
+      "savings": 12132,
+      "savingsPercent": "69.3"
     },
     {
       "original": "javascript.webp",
       "optimized": "opt-javascript.webp",
       "originalSize": 17216,
-      "optimizedSize": 10234,
-      "savings": 6982,
-      "savingsPercent": "40.6"
+      "optimizedSize": 5180,
+      "savings": 12036,
+      "savingsPercent": "69.9"
     },
     {
       "original": "typescript.webp",
       "optimized": "opt-typescript.webp",
       "originalSize": 16546,
-      "optimizedSize": 10296,
-      "savings": 6250,
-      "savingsPercent": "37.8"
+      "optimizedSize": 4992,
+      "savings": 11554,
+      "savingsPercent": "69.8"
     },
     {
       "original": "html.webp",
       "optimized": "opt-html.webp",
       "originalSize": 14550,
-      "optimizedSize": 7672,
-      "savings": 6878,
-      "savingsPercent": "47.3"
+      "optimizedSize": 3844,
+      "savings": 10706,
+      "savingsPercent": "73.6"
     },
     {
       "original": "robitroll.webp",
       "optimized": "opt-robitroll.webp",
       "originalSize": 31442,
-      "optimizedSize": 7716,
-      "savings": 23726,
-      "savingsPercent": "75.5"
+      "optimizedSize": 3652,
+      "savings": 27790,
+      "savingsPercent": "88.4"
     }
   ]
 }

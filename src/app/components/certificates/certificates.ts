@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service';
+import { BreakpointService } from '../../services/breakpoints';
+import { ImageOptimizationService, ImageConfig } from '../../services/image-optimization.service';
 
 interface Certificate {
   id: number;
@@ -19,6 +21,7 @@ interface Certificate {
   styleUrl: './certificates.css'
 })
 export class Certificates implements OnInit {
+  isMobile = false;
   activeFilter: string = 'all';
 
   certificates: Certificate[] = [
@@ -76,7 +79,9 @@ export class Certificates implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private breakpointService: BreakpointService,
+    private imageOptimizationService: ImageOptimizationService
   ) {}
 
   ngOnInit() {
@@ -95,6 +100,10 @@ export class Certificates implements OnInit {
 
   viewCertificate(certificate: Certificate): void {
     this.createModal(certificate);
+  }
+
+  getCertificateImageConfig(image: string): ImageConfig {
+    return this.imageOptimizationService.getCertificateImageConfig(image);
   }
 
   private createModal(certificate: Certificate): void {
@@ -164,5 +173,9 @@ export class Certificates implements OnInit {
       e.stopPropagation();
       closeModal();
     });
+
+    this.breakpointService.isMobile$.subscribe(isMobile => {
+      this.isMobile = isMobile;
+    });
   }
-}
+  }

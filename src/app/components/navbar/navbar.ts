@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service'; // <-- Importa tu servicio
+import { BreakpointService } from '../../services/breakpoints';
 
 @Component({
   selector: 'app-navbar',
@@ -14,11 +15,20 @@ import { LanguageService } from '../../services/language-service'; // <-- Import
 export class NavbarComponent implements OnInit {
   isMobileMenuOpen = false;
   isLanguageMenuOpen = false;
+  isMobile = false;
 
-  constructor(public langService: LanguageService) {} // <-- Inyección del servicio
+  constructor(
+    public langService: LanguageService,
+    private breakpointService: BreakpointService
+  ) {} // <-- Inyección del servicio
 
   ngOnInit() {
     this.checkScreenSize();
+
+    // Suscribirse a los cambios de breakpoint
+    this.breakpointService.isMobile$.subscribe(isMobile => {
+      this.isMobile = isMobile;
+    });
   }
 
   @HostListener('window:resize')

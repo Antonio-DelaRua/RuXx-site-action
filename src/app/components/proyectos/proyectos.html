@@ -1,160 +1,214 @@
 <section class="parallax-section" aria-labelledby="projects-title">
-    <div class="parallax-container">
-        <div class="parallax-layer layer-1" aria-hidden="true"></div>
-        <div class="parallax-layer layer-2" aria-hidden="true"></div>
-        <div class="parallax-layer layer-3" aria-hidden="true"></div>
+  <div class="parallax-container">
+    <div class="parallax-layer layer-1" aria-hidden="true"></div>
+    <div class="parallax-layer layer-2" aria-hidden="true"></div>
+    <div class="parallax-layer layer-3" aria-hidden="true"></div>
+  </div>
+
+  <div class="particles" id="particles" aria-hidden="true"></div>
+
+  <div class="parallax-content" id="section-2">
+    <h2 class="section-title" id="projects-title" data-key="projects-title">
+      {{ 'PROYECTOS.TITLE' | translate }}
+    </h2>
+
+    <p class="section-subtitle" data-key="projects-subtitle">
+      {{ 'PROYECTOS.SUBTITLE' | translate }}
+      <a
+        href="https://github.com/Antonio-DelaRua?tab=repositories"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="text-decoration: none; color:#6400C2;"
+      >
+        {{ 'PROYECTOS.LINK' | translate }}
+      </a>
+    </p>
+
+    <!-- 👇 Cambia el layout según el tamaño de pantalla -->
+    <div *ngIf="isMobile$ | async; else desktopView">
+      <!-- 🌙 Vista móvil -->
+      <div class="projects-container mobile">
+        <ng-container *ngTemplateOutlet="projectsContent"></ng-container>
+      </div>
     </div>
-    <div class="particles" id="particles" aria-hidden="true"></div>
 
-    <div class="parallax-content" id="section-2">
-        <h2 class="section-title" id="projects-title" data-key="projects-title">
-            {{ 'PROYECTOS.TITLE' | translate}}
-        </h2>
+    <!-- 🌞 Vista escritorio -->
+    <ng-template #desktopView>
+      <div class="projects-container desktop">
+        <ng-container *ngTemplateOutlet="projectsContent"></ng-container>
+      </div>
+    </ng-template>
 
-        <p class="section-subtitle" data-key="projects-subtitle">
-            {{'PROYECTOS.SUBTITLE' | translate}}
-            <a href="https://github.com/Antonio-DelaRua?tab=repositories" target="_blank" rel="noopener noreferrer"
-                style="text-decoration: none; color:#6400C2;">
-                {{'PROYECTOS.LINK' | translate}}
-            </a>
-        </p>
+    <!-- 💡 Contenido compartido -->
+    <ng-template #projectsContent>
+      <!-- Proyecto 1 - Wikikar -->
+      <article class="project-card" itemscope itemtype="https://schema.org/SoftwareApplication">
+        <meta itemprop="applicationCategory" content="Web Application" />
+        <meta itemprop="operatingSystem" content="Web" />
 
-        <div class="projects-container">
-
-            <!-- Proyecto 1 - Wikikar -->
-            <article class="project-card" itemscope itemtype="https://schema.org/SoftwareApplication">
-                <meta itemprop="applicationCategory" content="Web Application">
-                <meta itemprop="operatingSystem" content="Web">
-
-                <div class="project-image">
-                    <div class="project-image-content">
-                        <img class="img-project" src="assets/angular-logo.webp"
-                            alt="Logo de Angular - Framework para Wikikar" width="353" height="200" loading="lazy"
-                            itemprop="screenshot">
-                        <h3 class="project-title" itemprop="name">
-                            Angular <br>
-                            <span class="name-proyecto" itemprop="alternateName">Web - Wikikar</span>
-                        </h3>
-                    </div>
-                </div>
-
-                <div class="project-content">
-                    <p class="project-description" data-key="project-descrip1" itemprop="description">
-                        {{'PROYECTOS.CARD1' | translate}}
-                    </p>
-
-                    <div class="project-tech" itemprop="keywords">
-                        <span class="tech-tag">Angular</span>
-                        <span class="tech-tag">Node</span>
-                        <span class="tech-tag">Firebase</span>
-                        <span class="tech-tag">Api</span>
-                        <span class="tech-tag">Material</span>
-                        <span class="tech-tag">Postman</span>
-                    </div>
-
-                    <div class="project-links">
-                        <button class="project-link demo" (click)="openModal('assets/wiki.webp')"
-                            aria-label="Ver demo del proyecto Wikikar">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-                            Live Demo
-                        </button>
-                        <a href="https://github.com/Antonio-DelaRua/WIKIKAR" target="_blank" rel="noopener noreferrer"
-                            class="project-link code" itemprop="codeRepository">
-                            <i class="fab fa-github" aria-hidden="true"></i>
-                            Source Code
-                        </a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Proyecto 2 - Selina IA -->
-            <article class="project-card" itemscope itemtype="https://schema.org/SoftwareApplication">
-                <meta itemprop="applicationCategory" content="Desktop Application">
-                <meta itemprop="operatingSystem" content="Windows, Linux, macOS">
-
-                <div class="project-image">
-                    <div class="project-image-content">
-                        <img class="img-project" src="assets/Python.svg" alt="Logo de Python - Lenguaje para Selina IA"
-                            width="353" height="200" loading="lazy" itemprop="screenshot">
-                        <h3 class="project-title" itemprop="name">
-                            Python<br>
-                            <span class="name-proyecto" itemprop="alternateName">App - Selina IA</span>
-                        </h3>
-                    </div>
-                </div>
-
-                <div class="project-content">
-                    <p class="project-description" data-key="project-descrip2" itemprop="description">
-                        {{'PROYECTOS.CARD2' | translate}}
-                    </p>
-
-                    <div class="project-tech" itemprop="keywords">
-                        <span class="tech-tag">Python</span>
-                        <span class="tech-tag">Langchain</span>
-                        <span class="tech-tag">Tkinter</span>
-                        <span class="tech-tag">IA</span>
-                        <span class="tech-tag">Ollama</span>
-                        <span class="tech-tag">Sqlite</span>
-                    </div>
-
-                    <div class="project-links">
-                        <button class="project-link demo" (click)="openModal('assets/chat-ia.webp')"
-                            aria-label="Ver demo de la aplicación Selina IA">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-                            Live Demo
-                        </button>
-                        <a href="https://github.com/Antonio-DelaRua/Selina_IA" target="_blank" rel="noopener noreferrer"
-                            class="project-link code" itemprop="codeRepository">
-                            <i class="fab fa-github" aria-hidden="true"></i>
-                            Source Code
-                        </a>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Proyecto 3 - VRdistribución -->
-            <article class="project-card" itemscope itemtype="https://schema.org/WebApplication">
-                <meta itemprop="applicationCategory" content="E-Commerce">
-                <meta itemprop="operatingSystem" content="Web">
-
-                <div class="project-image">
-                    <div class="project-image-content">
-                        <img class="img-project" src="assets/ecom1.webp"
-                            alt="Tienda online VRdistribución - Plataforma e-commerce" width="353" height="200" loading="lazy" itemprop="screenshot">
-                        <h3 class="project-title" itemprop="name">
-                            E-Commerce<br>
-                            <span class="name-proyecto" itemprop="alternateName">Web - VRdistribución</span>
-                        </h3>
-                    </div>
-                </div>
-
-                <div class="project-content">
-                    <p class="project-description" data-key="project-descrip3" itemprop="description">
-                        {{'PROYECTOS.CARD3' | translate}}
-                    </p>
-
-                    <div class="project-tech" itemprop="keywords">
-                        <span class="tech-tag">HTML5</span>
-                        <span class="tech-tag">CSS3</span>
-                        <span class="tech-tag">JavaScript</span>
-                        <span class="tech-tag">RxJS</span>
-                        <span class="tech-tag">PostgreSQL</span>
-                    </div>
-
-                    <div class="project-links">
-                        <a href="https://vrdistribucion.com/" target="_blank" rel="noopener noreferrer"
-                            class="project-link demo" itemprop="url">
-                            <i class="fas fa-external-link-alt" aria-hidden="true"></i>
-                            Live Demo
-                        </a>
-                        <button class="project-link code" (click)="openModal('assets/vrdistribucion-code.webp')"
-                            aria-label="Ver código del proyecto VRdistribución">
-                            <i class="fab fa-github" aria-hidden="true"></i>
-                            Source Code
-                        </button>
-                    </div>
-                </div>
-            </article>
+        <div class="project-image">
+          <div class="project-image-content">
+            <img
+              class="img-project"
+              [src]="getProjectImageConfig('assets/opt-angular-logo.webp', 'Logo de Angular - Framework para Wikikar').src"
+              [alt]="getProjectImageConfig('assets/opt-angular-logo.webp', 'Logo de Angular - Framework para Wikikar').alt"
+              [width]="getProjectImageConfig('assets/opt-angular-logo.webp', 'Logo de Angular - Framework para Wikikar').width"
+              [height]="getProjectImageConfig('assets/opt-angular-logo.webp', 'Logo de Angular - Framework para Wikikar').height"
+              [loading]="getProjectImageConfig('assets/opt-angular-logo.webp', 'Logo de Angular - Framework para Wikikar').loading"
+              [sizes]="getProjectImageConfig('assets/opt-angular-logo.webp', 'Logo de Angular - Framework para Wikikar').sizes"
+              [srcset]="getProjectImageConfig('assets/opt-angular-logo.webp', 'Logo de Angular - Framework para Wikikar').srcset"
+              itemprop="screenshot"
+            />
+            <h3 class="project-title" itemprop="name">
+              Angular <br />
+              <span class="name-proyecto" itemprop="alternateName">Web - Wikikar</span>
+            </h3>
+          </div>
         </div>
-    </div>
+
+        <div class="project-content">
+          <p class="project-description" data-key="project-descrip1" itemprop="description">
+            {{ 'PROYECTOS.CARD1' | translate }}
+          </p>
+
+          <div class="project-tech" itemprop="keywords">
+            <span class="tech-tag">Angular</span>
+            <span class="tech-tag">Node</span>
+            <span class="tech-tag">Firebase</span>
+            <span class="tech-tag">Api</span>
+            <span class="tech-tag">Material</span>
+            <span class="tech-tag">Postman</span>
+          </div>
+
+          <div class="project-links">
+            <button class="project-link demo" (click)="openModal('assets/wiki.webp')" aria-label="Ver demo del proyecto Wikikar">
+              <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+              Live Demo
+            </button>
+            <a
+              href="https://github.com/Antonio-DelaRua/WIKIKAR"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="project-link code"
+              itemprop="codeRepository"
+            >
+              <i class="fab fa-github" aria-hidden="true"></i>
+              Source Code
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Proyecto 2 - Selina IA -->
+      <article class="project-card" itemscope itemtype="https://schema.org/SoftwareApplication">
+        <meta itemprop="applicationCategory" content="Desktop Application" />
+        <meta itemprop="operatingSystem" content="Windows, Linux, macOS" />
+
+        <div class="project-image">
+          <div class="project-image-content">
+            <img
+              class="img-project"
+              src="assets/Python.svg"
+              alt="Logo de Python - Lenguaje para Selina IA"
+              width="353"
+              height="200"
+              loading="lazy"
+              itemprop="screenshot"
+            />
+            <h3 class="project-title" itemprop="name">
+              Python<br />
+              <span class="name-proyecto" itemprop="alternateName">App - Selina IA</span>
+            </h3>
+          </div>
+        </div>
+
+        <div class="project-content">
+          <p class="project-description" data-key="project-descrip2" itemprop="description">
+            {{ 'PROYECTOS.CARD2' | translate }}
+          </p>
+
+          <div class="project-tech" itemprop="keywords">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Langchain</span>
+            <span class="tech-tag">Tkinter</span>
+            <span class="tech-tag">IA</span>
+            <span class="tech-tag">Ollama</span>
+            <span class="tech-tag">Sqlite</span>
+          </div>
+
+          <div class="project-links">
+            <button class="project-link demo" (click)="openModal('assets/Chat0.webp')" aria-label="Ver demo de la aplicación Selina IA">
+              <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+              Live Demo
+            </button>
+            <a
+              href="https://github.com/Antonio-DelaRua/Selina_IA"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="project-link code"
+              itemprop="codeRepository"
+            >
+              <i class="fab fa-github" aria-hidden="true"></i>
+              Source Code
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Proyecto 3 - VRdistribución -->
+      <article class="project-card" itemscope itemtype="https://schema.org/WebApplication">
+        <meta itemprop="applicationCategory" content="E-Commerce" />
+        <meta itemprop="operatingSystem" content="Web" />
+
+        <div class="project-image">
+          <div class="project-image-content">
+            <img
+              class="img-project"
+              src="assets/ecom1.webp"
+              alt="Tienda online VRdistribución - Plataforma e-commerce"
+              width="353"
+              height="200"
+              loading="lazy"
+              itemprop="screenshot"
+            />
+            <h3 class="project-title" itemprop="name">
+              E-Commerce<br />
+              <span class="name-proyecto" itemprop="alternateName">Web - VRdistribución</span>
+            </h3>
+          </div>
+        </div>
+
+        <div class="project-content">
+          <p class="project-description" data-key="project-descrip3" itemprop="description">
+            {{ 'PROYECTOS.CARD3' | translate }}
+          </p>
+
+          <div class="project-tech" itemprop="keywords">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">RxJS</span>
+            <span class="tech-tag">PostgreSQL</span>
+          </div>
+
+          <div class="project-links">
+            <a
+              href="https://vrdistribucion.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="project-link demo"
+              itemprop="url"
+            >
+              <i class="fas fa-external-link-alt" aria-hidden="true"></i>
+              Live Demo
+            </a>
+            <button class="project-link code" (click)="openModal('assets/vrd.webp')" aria-label="Ver código del proyecto VRdistribución">
+              <i class="fab fa-github" aria-hidden="true"></i>
+              Source Code
+            </button>
+          </div>
+        </div>
+      </article>
+    </ng-template>
+  </div>
 </section>

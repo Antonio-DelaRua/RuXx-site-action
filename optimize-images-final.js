@@ -16,17 +16,17 @@ const imagesConfig = [
     name: 'gradient.webp',
     displayWidth: 800, // Asumiendo que es para fondo
     displayHeight: 600,
-    maxWidth: 1600,
-    maxHeight: 1200,
-    quality: 50 // Gradiente puede tener alta compresión
+    maxWidth: 800, // Reducir para mejor compresión
+    maxHeight: 600,
+    quality: 40 // Mayor compresión para gradientes
   },
   {
     name: 'angular.webp',
     displayWidth: 353,
     displayHeight: 200,
-    maxWidth: 706, // 2x para retina
-    maxHeight: 400,
-    quality: 70
+    maxWidth: 353, // Usar tamaño exacto de display
+    maxHeight: 200,
+    quality: 80 // Mejor calidad para logos
   },
   {
     name: 'angular-logo.webp',
@@ -40,49 +40,49 @@ const imagesConfig = [
     name: 'deve.webp',
     displayWidth: 353,
     displayHeight: 200,
-    maxWidth: 706,
-    maxHeight: 400,
-    quality: 70
+    maxWidth: 353,
+    maxHeight: 200,
+    quality: 80
   },
   {
     name: 'piyon2.webp',
     displayWidth: 353,
     displayHeight: 200,
-    maxWidth: 706,
-    maxHeight: 400,
-    quality: 70
+    maxWidth: 353,
+    maxHeight: 200,
+    quality: 80
   },
   {
     name: 'javascript.webp',
     displayWidth: 353,
     displayHeight: 200,
-    maxWidth: 706,
-    maxHeight: 400,
-    quality: 70
+    maxWidth: 353,
+    maxHeight: 200,
+    quality: 80
   },
   {
     name: 'typescript.webp',
     displayWidth: 353,
     displayHeight: 200,
-    maxWidth: 706,
-    maxHeight: 400,
-    quality: 70
+    maxWidth: 353,
+    maxHeight: 200,
+    quality: 80
   },
   {
     name: 'html.webp',
     displayWidth: 353,
     displayHeight: 200,
-    maxWidth: 706,
-    maxHeight: 400,
-    quality: 70
+    maxWidth: 353,
+    maxHeight: 200,
+    quality: 80
   },
   {
     name: 'robitroll.webp',
     displayWidth: 100,
     displayHeight: 100,
-    maxWidth: 200, // 2x para retina
-    maxHeight: 200,
-    quality: 70
+    maxWidth: 100, // Usar tamaño exacto de display
+    maxHeight: 100,
+    quality: 85 // Mejor calidad para iconos pequeños
   }
 ];
 

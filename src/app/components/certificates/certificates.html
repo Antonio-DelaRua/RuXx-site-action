@@ -32,7 +32,7 @@
         </button>
         <button class="tech-filter" [class.active]="activeFilter === 'python'" data-tech="python"
             (click)="filterCertificates('python')">
-            <img src="/assets/Python.svg"alt="Angular" class="tech-filter-logo" loading="lazy" width="40"
+            <img src="assets/Python.svg" alt="Python" class="tech-filter-logo" loading="lazy" width="40"
                 height="40">
             {{'CERTIFICATES.FILTERS.PYTHON' | translate}} <!-- Cambiar esto -->
         </button>
@@ -53,7 +53,13 @@
         <div class="certificate-card" *ngFor="let cert of filteredCertificates" [attr.data-tech]="cert.tech"
             (click)="viewCertificate(cert)">
             <div class="certificate-image">
-                <img [src]="cert.image" [alt]="cert.titleKey | translate"> <!-- Cambiar esto -->
+                <img [src]="getCertificateImageConfig(cert.image).src"
+                     [alt]="cert.titleKey | translate"
+                     [width]="getCertificateImageConfig(cert.image).width"
+                     [height]="getCertificateImageConfig(cert.image).height"
+                     [loading]="getCertificateImageConfig(cert.image).loading"
+                     [sizes]="getCertificateImageConfig(cert.image).sizes"
+                     [srcset]="getCertificateImageConfig(cert.image).srcset">
                 <div class="certificate-overlay">
                     <div class="overlay-content">
                         <i class="fas fa-expand-arrows-alt"></i>

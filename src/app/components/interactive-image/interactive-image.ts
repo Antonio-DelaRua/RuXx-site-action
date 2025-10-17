@@ -2,8 +2,9 @@ import { Component, ElementRef, OnInit, ViewChild, AfterViewChecked, ChangeDetec
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { LanguageService } from '../../services/language-service'; 
+import { LanguageService } from '../../services/language-service';
 import { SendChat } from '../../services/send-chat';
+import { BreakpointService } from '../../services/breakpoints';
 
 @Component({
   selector: 'app-interactive-image',
@@ -15,7 +16,7 @@ import { SendChat } from '../../services/send-chat';
 export class InteractiveImageComponent implements OnInit, AfterViewChecked {
   @ViewChild('chatMessages') private chatMessagesContainer!: ElementRef;
   @ViewChild('chatInput') private chatInput!: ElementRef; // Para manejar el input
-  
+
   isActivated = false;
   isChatOpen = false;
   chatMessage = '';
@@ -23,6 +24,7 @@ export class InteractiveImageComponent implements OnInit, AfterViewChecked {
   showImage = false;
   showHint = false;
   loading = false;
+  isMobile = false;
   private clickTimeout: any = null;
   private shouldScroll = false; // Control para el scroll automático
 
@@ -30,7 +32,8 @@ export class InteractiveImageComponent implements OnInit, AfterViewChecked {
     public translate: TranslateService,
     private languageService: LanguageService,
     private sendChatService: SendChat,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private breakpointService: BreakpointService
   ) {}
 
   ngOnInit() {
@@ -38,6 +41,11 @@ export class InteractiveImageComponent implements OnInit, AfterViewChecked {
       this.translate.use(lang);
     });
     this.translate.use(this.languageService.currentLang);
+
+    // Suscribirse a los cambios de breakpoint
+    this.breakpointService.isMobile$.subscribe(isMobile => {
+      this.isMobile = isMobile;
+    });
   }
 
   activateChatbot() {
