@@ -17,7 +17,7 @@
         <button class="tech-filter" [class.active]="activeFilter === 'angular'" data-tech="angular"
             (click)="filterCertificates('angular')">
             <img src="assets/opt-angular-logo.webp" alt="Angular" class="tech-filter-logo" loading="lazy" width="40"
-                height="40">
+                height="40" fetchpriority="low">
             {{'CERTIFICATES.FILTERS.ANGULAR' | translate}}
         </button>
         <button class="tech-filter" [class.active]="activeFilter === 'javascript'" data-tech="javascript"
@@ -59,7 +59,8 @@
                      [height]="getCertificateImageConfig(cert.image).height"
                      [loading]="getCertificateImageConfig(cert.image).loading"
                      [sizes]="getCertificateImageConfig(cert.image).sizes"
-                     [srcset]="getCertificateImageConfig(cert.image).srcset">
+                     [srcset]="getCertificateImageConfig(cert.image).srcset"
+                     fetchpriority="low">
                 <div class="certificate-overlay">
                     <div class="overlay-content">
                         <i class="fas fa-expand-arrows-alt"></i>

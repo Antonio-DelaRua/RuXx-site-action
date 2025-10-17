@@ -61,12 +61,38 @@ export class ImageOptimizationService {
   }
 
   /**
+   * Genera múltiples tamaños de imagen para responsive design
+   */
+  generateResponsiveImages(baseSrc: string, width: number, height: number): { src: string, width: number, height: number }[] {
+    const breakpoints = [480, 768, 1024, 1200];
+    const images: { src: string, width: number, height: number }[] = [];
+
+    // Agregar tamaño original
+    images.push({ src: baseSrc, width, height });
+
+    // Generar versiones más pequeñas
+    breakpoints.forEach(bp => {
+      if (bp < width) {
+        const scaledWidth = Math.min(bp, width);
+        const scaledHeight = Math.round((scaledWidth / width) * height);
+        images.push({
+          src: baseSrc.replace('.webp', `-${scaledWidth}.webp`),
+          width: scaledWidth,
+          height: scaledHeight
+        });
+      }
+    });
+
+    return images;
+  }
+
+  /**
    * Obtiene la URL de imagen optimizada basada en el breakpoint actual
    */
   getResponsiveImageUrl(baseSrc: string, isMobile: boolean): string {
     if (isMobile) {
       // Para móviles, usar versión más pequeña si existe
-      return baseSrc;
+      return baseSrc.replace('.webp', '-mobile.webp');
     }
     return baseSrc;
   }

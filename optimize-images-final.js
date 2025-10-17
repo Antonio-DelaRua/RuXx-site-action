@@ -18,7 +18,7 @@ const imagesConfig = [
     displayHeight: 600,
     maxWidth: 800, // Reducir para mejor compresión
     maxHeight: 600,
-    quality: 40 // Mayor compresión para gradientes
+    quality: 20 // Mayor compresión para gradientes
   },
   {
     name: 'angular.webp',

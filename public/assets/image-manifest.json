@@ -1,5 +1,5 @@
 {
-  "generated": "2025-10-17T16:50:21.123Z",
+  "generated": "2025-10-17T16:58:18.169Z",
   "images": [
     {
       "original": "spain-flag.webp",
@@ -13,9 +13,9 @@
       "original": "gradient.webp",
       "optimized": "opt-gradient.webp",
       "originalSize": 93620,
-      "optimizedSize": 79086,
-      "savings": 14534,
-      "savingsPercent": "15.5"
+      "optimizedSize": 70232,
+      "savings": 23388,
+      "savingsPercent": "25.0"
     },
     {
       "original": "angular.webp",
