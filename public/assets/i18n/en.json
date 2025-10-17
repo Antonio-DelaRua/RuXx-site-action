@@ -125,6 +125,6 @@
     "SEND": "Send",
     "PLACEHOLDER": "Write your message...",
     "WELCOME_MESSAGE": "Hello! How can I help you?",
-    "CHATBOX.TYPING": "Searching info..."
+    "TYPING": "Searching info..."
   }
 }

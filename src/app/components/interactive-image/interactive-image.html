@@ -1,7 +1,7 @@
 <!-- interactive-image.html -->
 <div class="interactive-container" [class.activated]="isActivated">
   <img 
-    src="assets/robitroll.png" 
+    src="assets/robitroll.webp" 
     alt="Chatbot" 
     class="interactive-image"
     (click)="onImageClick($event)"
@@ -27,7 +27,7 @@
           {{ message }}
         </div>
         <div *ngIf="loading" class="message ai">
-          {{ 'CHATBOX.CHATBOX.TYPING' | translate }}
+          Buscando información...
         </div>
       </div>
       
