@@ -1,31 +1,10 @@
 <section>
-  <app-navbar></app-navbar>
-  <app-hero></app-hero>
-  <app-interactive-image></app-interactive-image>
-
-  <div id="proyectos-section">
-    <ng-container *ngIf="loadProyectos">
-      <app-proyectos></app-proyectos>
-    </ng-container>
-  </div>
-
-  <div id="learning-path-section">
-    <ng-container *ngIf="loadLearningPath">
-      <app-learning-path></app-learning-path>
-    </ng-container>
-  </div>
-
-  <div id="certificates-section">
-    <ng-container *ngIf="loadCertificates">
-      <app-certificates></app-certificates>
-    </ng-container>
-  </div>
-
-  <div id="contact-section">
-    <ng-container *ngIf="loadContact">
-      <app-contact></app-contact>
-    </ng-container>
-  </div>
-
-  <app-footer></app-footer>
+<app-navbar></app-navbar>
+<app-hero></app-hero>
+<app-interactive-image></app-interactive-image>
+<app-proyectos></app-proyectos>
+<app-learning-path></app-learning-path>
+<app-certificates></app-certificates>
+<app-contact></app-contact>
+<app-footer></app-footer>
 </section>
