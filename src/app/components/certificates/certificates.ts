@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service';
-import { BreakpointService } from '../../services/breakpoints';
 import { ImageOptimizationService, ImageConfig } from '../../services/image-optimization.service';
 
 interface Certificate {
@@ -21,7 +20,6 @@ interface Certificate {
   styleUrl: './certificates.css'
 })
 export class Certificates implements OnInit {
-  isMobile = false;
   activeFilter: string = 'all';
 
   certificates: Certificate[] = [
@@ -80,7 +78,6 @@ export class Certificates implements OnInit {
   constructor(
     public translate: TranslateService,
     private languageService: LanguageService,
-    private breakpointService: BreakpointService,
     private imageOptimizationService: ImageOptimizationService
   ) {}
 
@@ -99,14 +96,15 @@ export class Certificates implements OnInit {
   }
 
   viewCertificate(certificate: Certificate): void {
-    this.createModal(certificate);
+    const config = this.getCertificateImageConfig(certificate.image);
+    this.createModal(certificate, config);
   }
 
   getCertificateImageConfig(image: string): ImageConfig {
     return this.imageOptimizationService.getCertificateImageConfig(image);
   }
 
-  private createModal(certificate: Certificate): void {
+  private createModal(certificate: Certificate, config?: ImageConfig): void {
     const modal = document.createElement('div');
     modal.style.cssText = `
       position: fixed;
@@ -130,6 +128,9 @@ export class Certificates implements OnInit {
       border-radius: 10px;
       overflow: hidden;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     `;
 
     const closeBtn = document.createElement('button');
@@ -153,13 +154,20 @@ export class Certificates implements OnInit {
     `;
 
     const img = document.createElement('img');
-    img.src = certificate.image;
+    img.src = config ? config.src : certificate.image;
     img.alt = this.translate.instant(certificate.titleKey);
     img.style.cssText = `
       max-width: 100%;
       max-height: 100%;
       display: block;
+      object-fit: contain;
     `;
+
+    // Set dimensions immediately if available to prevent reflow
+    if (config && config.width && config.height) {
+      img.width = config.width;
+      img.height = config.height;
+    }
 
     modalContent.appendChild(img);
     modalContent.appendChild(closeBtn);
@@ -174,8 +182,9 @@ export class Certificates implements OnInit {
       closeModal();
     });
 
-    this.breakpointService.isMobile$.subscribe(isMobile => {
-      this.isMobile = isMobile;
-    });
+    // Remove unused breakpoint subscription that could cause reflow
+    // this.breakpointService.isMobile$.subscribe(isMobile => {
+    //   this.isMobile = isMobile;
+    // });
   }
   }

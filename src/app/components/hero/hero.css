@@ -1,8 +1,10 @@
-/* Gradient and layer blur effect */
 .image-gradient {
   position: absolute;
   top: 0;
   right: 0;
+  width: 40rem;          /* ajusta tamaño */
+  height: 40rem;
+  background: url('/assets/opt-gradient.webp') no-repeat center / cover;
   opacity: 0.5;
   z-index: -1;
 }

@@ -11,6 +11,14 @@
     <!-- Preload para fuentes críticas con font-display swap -->
     <link rel="preload" href="https://fonts.cdnfonts.com/css/orbitron?font-display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.cdnfonts.com/css/orbitron?font-display=swap"></noscript>
+    <link rel="preload"
+      as="image"
+      href="/assets/opt-opt-gradient.webp"
+      imagesrcset="/assets/opt-gradient-400.webp 400w, /assets/opt-gradient-800.webp 800w, /assets/opt-gradient-1200.webp 1200w"
+      imagesizes="(max-width: 600px) 100vw, 33vw">
+    <!-- Preload critical i18n files -->
+    <link rel="preload" href="/assets/i18n/es.json" as="fetch" crossorigin>
+    <link rel="preload" href="/assets/i18n/en.json" as="fetch" crossorigin>
 
     <!-- Estilos mínimos -->
     <style>
