@@ -75,6 +75,14 @@ const imagesConfig = [
     maxWidth: 706,
     maxHeight: 400,
     quality: 70
+  },
+  {
+    name: 'robitroll.webp',
+    displayWidth: 100,
+    displayHeight: 100,
+    maxWidth: 200, // 2x para retina
+    maxHeight: 200,
+    quality: 70
   }
 ];
 

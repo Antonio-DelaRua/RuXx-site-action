@@ -27,7 +27,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.ANGULAR_BASIC',
       issuer: 'OpenBootCamp - 2022',
       tech: 'angular',
-      image: 'assets/angular.webp',
+      image: 'assets/opt-angular.webp',
       year: '2022'
     },
     {
@@ -35,7 +35,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.WEB_DESIGN',
       issuer: 'freeCodeCamp - 2023',
       tech: 'web',
-      image: 'assets/deve.webp',
+      image: 'assets/opt-deve.webp',
       year: '2023'
     },
     {
@@ -43,7 +43,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.MODERN_JAVASCRIPT',
       issuer: 'OpenBootCamp - 2022',
       tech: 'javascript',
-      image: 'assets/javascript.webp',
+      image: 'assets/opt-javascript.webp',
       year: '2022'
     },
     {
@@ -51,7 +51,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.HTML',
       issuer: 'OpenBootCamp - 2022',
       tech: 'HTML',
-      image: 'assets/html.webp',
+      image: 'assets/opt-html.webp',
       year: '2022'
     },
     {
@@ -59,7 +59,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.PYTHON',
       issuer: 'Udemy - 2025',
       tech: 'python',
-      image: 'assets/piyon2.webp',
+      image: 'assets/opt-piyon2.webp',
       year: '2025'
     },
     {
@@ -67,7 +67,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.TYPESCRIPT',
       issuer: 'OpenBootCamp - 2022',
       tech: 'typescript',
-      image: 'assets/typescript.webp',
+      image: 'assets/opt-typescript.webp',
       year: '2022'
     }
   ];

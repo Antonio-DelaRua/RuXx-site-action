@@ -67,7 +67,7 @@ export class NavbarComponent implements OnInit {
   /** Para mostrar la bandera correcta */
   get currentFlag(): string {
     return this.langService.currentLang === 'es'
-      ? 'assets/spain-flag.webp'
+      ? 'assets/opt-spain-flag.webp'
       : 'assets/uk-flag.webp';
   }
 

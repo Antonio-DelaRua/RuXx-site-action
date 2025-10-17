@@ -1,0 +1,85 @@
+{
+  "generated": "2025-10-17T15:45:52.235Z",
+  "images": [
+    {
+      "original": "spain-flag.webp",
+      "optimized": "opt-spain-flag.webp",
+      "originalSize": 173460,
+      "optimizedSize": 220,
+      "savings": 173240,
+      "savingsPercent": "99.9"
+    },
+    {
+      "original": "gradient.webp",
+      "optimized": "opt-gradient.webp",
+      "originalSize": 93620,
+      "optimizedSize": 82994,
+      "savings": 10626,
+      "savingsPercent": "11.4"
+    },
+    {
+      "original": "angular.webp",
+      "optimized": "opt-angular.webp",
+      "originalSize": 32646,
+      "optimizedSize": 12690,
+      "savings": 19956,
+      "savingsPercent": "61.1"
+    },
+    {
+      "original": "angular-logo.webp",
+      "optimized": "opt-angular-logo.webp",
+      "originalSize": 27942,
+      "optimizedSize": 2718,
+      "savings": 25224,
+      "savingsPercent": "90.3"
+    },
+    {
+      "original": "deve.webp",
+      "optimized": "opt-deve.webp",
+      "originalSize": 25844,
+      "optimizedSize": 15520,
+      "savings": 10324,
+      "savingsPercent": "39.9"
+    },
+    {
+      "original": "piyon2.webp",
+      "optimized": "opt-piyon2.webp",
+      "originalSize": 17506,
+      "optimizedSize": 10848,
+      "savings": 6658,
+      "savingsPercent": "38.0"
+    },
+    {
+      "original": "javascript.webp",
+      "optimized": "opt-javascript.webp",
+      "originalSize": 17216,
+      "optimizedSize": 10234,
+      "savings": 6982,
+      "savingsPercent": "40.6"
+    },
+    {
+      "original": "typescript.webp",
+      "optimized": "opt-typescript.webp",
+      "originalSize": 16546,
+      "optimizedSize": 10296,
+      "savings": 6250,
+      "savingsPercent": "37.8"
+    },
+    {
+      "original": "html.webp",
+      "optimized": "opt-html.webp",
+      "originalSize": 14550,
+      "optimizedSize": 7672,
+      "savings": 6878,
+      "savingsPercent": "47.3"
+    },
+    {
+      "original": "robitroll.webp",
+      "optimized": "opt-robitroll.webp",
+      "originalSize": 31442,
+      "optimizedSize": 7716,
+      "savings": 23726,
+      "savingsPercent": "75.5"
+    }
+  ]
+}
