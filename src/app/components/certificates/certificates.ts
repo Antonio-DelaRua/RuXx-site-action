@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service';
+import { ImageOptimizationService, ImageConfig } from '../../services/image-optimization.service';
 
 interface Certificate {
   id: number;
@@ -27,7 +28,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.ANGULAR_BASIC',
       issuer: 'OpenBootCamp - 2022',
       tech: 'angular',
-      image: 'assets/angular.webp',
+      image: 'assets/opt-angular.webp',
       year: '2022'
     },
     {
@@ -35,7 +36,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.WEB_DESIGN',
       issuer: 'freeCodeCamp - 2023',
       tech: 'web',
-      image: 'assets/deve.webp',
+      image: 'assets/opt-deve.webp',
       year: '2023'
     },
     {
@@ -43,7 +44,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.MODERN_JAVASCRIPT',
       issuer: 'OpenBootCamp - 2022',
       tech: 'javascript',
-      image: 'assets/javascript.webp',
+      image: 'assets/opt-javascript.webp',
       year: '2022'
     },
     {
@@ -51,7 +52,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.HTML',
       issuer: 'OpenBootCamp - 2022',
       tech: 'HTML',
-      image: 'assets/html.webp',
+      image: 'assets/opt-html.webp',
       year: '2022'
     },
     {
@@ -59,7 +60,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.PYTHON',
       issuer: 'Udemy - 2025',
       tech: 'python',
-      image: 'assets/piyon2.webp',
+      image: 'assets/opt-piyon2.webp',
       year: '2025'
     },
     {
@@ -67,7 +68,7 @@ export class Certificates implements OnInit {
       titleKey: 'TITLES.TYPESCRIPT',
       issuer: 'OpenBootCamp - 2022',
       tech: 'typescript',
-      image: 'assets/typescript.webp',
+      image: 'assets/opt-typescript.webp',
       year: '2022'
     }
   ];
@@ -76,7 +77,8 @@ export class Certificates implements OnInit {
 
   constructor(
     public translate: TranslateService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private imageOptimizationService: ImageOptimizationService
   ) {}
 
   ngOnInit() {
@@ -94,10 +96,15 @@ export class Certificates implements OnInit {
   }
 
   viewCertificate(certificate: Certificate): void {
-    this.createModal(certificate);
+    const config = this.getCertificateImageConfig(certificate.image);
+    this.createModal(certificate, config);
   }
 
-  private createModal(certificate: Certificate): void {
+  getCertificateImageConfig(image: string): ImageConfig {
+    return this.imageOptimizationService.getCertificateImageConfig(image);
+  }
+
+  private createModal(certificate: Certificate, config?: ImageConfig): void {
     const modal = document.createElement('div');
     modal.style.cssText = `
       position: fixed;
@@ -121,6 +128,9 @@ export class Certificates implements OnInit {
       border-radius: 10px;
       overflow: hidden;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     `;
 
     const closeBtn = document.createElement('button');
@@ -144,13 +154,20 @@ export class Certificates implements OnInit {
     `;
 
     const img = document.createElement('img');
-    img.src = certificate.image;
+    img.src = config ? config.src : certificate.image;
     img.alt = this.translate.instant(certificate.titleKey);
     img.style.cssText = `
       max-width: 100%;
       max-height: 100%;
       display: block;
+      object-fit: contain;
     `;
+
+    // Set dimensions immediately if available to prevent reflow
+    if (config && config.width && config.height) {
+      img.width = config.width;
+      img.height = config.height;
+    }
 
     modalContent.appendChild(img);
     modalContent.appendChild(closeBtn);
@@ -164,5 +181,10 @@ export class Certificates implements OnInit {
       e.stopPropagation();
       closeModal();
     });
+
+    // Remove unused breakpoint subscription that could cause reflow
+    // this.breakpointService.isMobile$.subscribe(isMobile => {
+    //   this.isMobile = isMobile;
+    // });
   }
-}
+  }

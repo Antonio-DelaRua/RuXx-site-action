@@ -29,6 +29,7 @@ export const appConfig: ApplicationConfig = {
       },
     },
 
+
     // ✅ Proper way to register ngx-translate in standalone Angular
     importProvidersFrom(
       TranslateModule.forRoot({
@@ -38,6 +39,7 @@ export const appConfig: ApplicationConfig = {
           useFactory: HttpLoaderFactory,
           deps: [HttpClient],
         },
+        defaultLanguage: 'es', // Preload Spanish by default
       })
     ),
   ],

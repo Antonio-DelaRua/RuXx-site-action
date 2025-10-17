@@ -249,11 +249,7 @@
     margin-bottom: 1.5rem;
 }
 
-@media (max-width: 480px) {
-    .step-skills {
-        display: none;
-    }
-}
+/* Merged media queries below */
 
 
 .skill-tag {
@@ -280,32 +276,13 @@
     gap: 10px;
 }
 
-@media (max-width: 480px) {
-    .step-progress {
-        display: none;
-    }
-}
+/* Merged media queries below */
 
-@media (max-width: 480px) {
-    .step-title {
-        font-size: medium;
-        color:#f1e3e3;
-    }
-}
+/* Merged media queries below */
 
-@media (max-width: 480px) {
-    .step-period {
-        font-size: x-small;
-        color:#127477;
-    }
-}
+/* Merged media queries below */
 
-@media (max-width: 480px) {
-    .step-description {
-        font-size: 12px;
-      
-    }
-}
+/* Merged media queries below */
 
 
 .progress-bar {
@@ -641,10 +618,12 @@
 
     .step-title {
         font-size: 1rem !important;
+        color:#f1e3e3;
     }
 
     .step-period {
         font-size: 0.75rem !important;
+        color:#127477;
     }
 
     .step-description {
@@ -659,6 +638,11 @@
 
     .step-skills {
         gap: 0.3rem;
+        display: none;
+    }
+
+    .step-progress {
+        display: none;
     }
 }
 
@@ -667,8 +651,30 @@
     .step-content:hover::before {
         display: none; /* Eliminar efecto de shine en móvil */
     }
-    
+
     .step-content:hover .step-icon {
         transform: none; /* Eliminar escala en iconos */
+    }
+
+    .step-skills {
+        display: flex !important; /* Forzar display en móvil */
+    }
+
+    .step-progress {
+        display: flex !important; /* Forzar display en móvil */
+    }
+
+    .step-title {
+        font-size: 1.1rem !important; /* Tamaño consistente */
+        color: white;
+    }
+
+    .step-period {
+        font-size: 0.8rem !important; /* Tamaño consistente */
+        color: #b366ff;
+    }
+
+    .step-description {
+        font-size: 0.85rem !important; /* Tamaño consistente */
     }
 }

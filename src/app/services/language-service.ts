@@ -11,15 +11,18 @@ export class LanguageService {
   public currentLang$ = this.currentLangSubject.asObservable();
 
   constructor(private translate: TranslateService) {
-    // Configuración inicial
+    // Configuración inicial - preload Spanish
     this.translate.setDefaultLang('es');
-    
+
     // Recuperar idioma guardado o usar el del navegador
     const savedLang = localStorage.getItem('userLang');
     const browserLang = this.translate.getBrowserLang();
     const initialLang = savedLang || browserLang || 'es';
-    
-    this.switch(initialLang);
+
+    // Preload the initial language
+    this.translate.use(initialLang);
+    this.currentLangSubject.next(initialLang);
+    localStorage.setItem('userLang', initialLang);
   }
 
   get currentLang(): string {
@@ -27,8 +30,10 @@ export class LanguageService {
   }
 
   switch(lang: string) {
-    this.translate.use(lang);
-    this.currentLangSubject.next(lang);
-    localStorage.setItem('userLang', lang);
+    // Preload the language before switching
+    this.translate.use(lang).subscribe(() => {
+      this.currentLangSubject.next(lang);
+      localStorage.setItem('userLang', lang);
+    });
   }
 }

@@ -1,31 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service';
+import { BreakpointService } from '../../services/breakpoints';
+import { ImageOptimizationService, ImageConfig } from '../../services/image-optimization.service';
+import { Observable, Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-proyectos',
   standalone: true,
   imports: [CommonModule, TranslateModule],
   templateUrl: './proyectos.html',
-  styleUrl: './proyectos.css'
+  styleUrls: ['./proyectos.css'] // ✅ corregido plural
 })
-export class Proyectos implements OnInit {
+export class Proyectos implements OnInit, OnDestroy {
+  // Ahora es un observable, no un booleano
+  isMobile$: Observable<boolean>;
+  private destroy$ = new Subject<void>();
 
   constructor(
     public translate: TranslateService,
-    private languageService: LanguageService 
-  ) {}
+    private languageService: LanguageService,
+    private breakpointService: BreakpointService,
+    private imageOptimizationService: ImageOptimizationService
+  ) {
+    // Se asigna directamente el observable desde el servicio
+    this.isMobile$ = this.breakpointService.isMobile$;
+  }
 
   get PROYECTOS() {
     return this.translate.instant('PROYECTOS');
   }
 
   ngOnInit() {
-    // Suscribirse a los cambios de idioma del servicio
-    this.languageService.currentLang$.subscribe(lang => {
-      this.translate.use(lang);
-    });
+    // ✅ Solo necesitamos manejar la traducción manualmente
+    this.languageService.currentLang$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(lang => this.translate.use(lang));
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  getProjectImageConfig(image: string, alt: string): ImageConfig {
+    return this.imageOptimizationService.getProjectImageConfig(image, alt);
   }
 
   openModal(imagePath: string): void {
@@ -93,7 +113,6 @@ export class Proyectos implements OnInit {
     document.body.appendChild(modal);
 
     const closeModal = () => document.body.removeChild(modal);
-
     modal.addEventListener('click', closeModal);
     closeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
