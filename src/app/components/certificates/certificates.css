@@ -87,6 +87,7 @@
     white-space: nowrap;
     min-width: auto;
     flex-shrink: 0;
+    
 }
 
 .tech-filter:hover {

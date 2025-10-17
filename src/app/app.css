@@ -1,0 +1,14 @@
+      app-root { 
+        display: block; 
+        min-height: 100vh;
+      }
+      
+      /* Ocultar contenido inicial hasta que Angular cargue */
+      .app-loading {
+        opacity: 0;
+        transition: opacity 0.3s ease-in;
+      }
+      
+      .app-loaded {
+        opacity: 1;
+      }
