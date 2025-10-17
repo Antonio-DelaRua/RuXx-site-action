@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild, AfterViewChecked, ChangeDetec
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { HttpClientModule } from '@angular/common/http';
 import { LanguageService } from '../../services/language-service';
 import { SendChat } from '../../services/send-chat';
 import { BreakpointService } from '../../services/breakpoints';
@@ -9,13 +10,13 @@ import { BreakpointService } from '../../services/breakpoints';
 @Component({
   selector: 'app-interactive-image',
   standalone: true,
-  imports: [FormsModule, CommonModule, TranslateModule],
+  imports: [FormsModule, CommonModule, TranslateModule, HttpClientModule],
   templateUrl: './interactive-image.html',
   styleUrls: ['./interactive-image.css'],
 })
 export class InteractiveImageComponent implements OnInit, AfterViewChecked {
   @ViewChild('chatMessages') private chatMessagesContainer!: ElementRef;
-  @ViewChild('chatInput') private chatInput!: ElementRef; // Para manejar el input
+  @ViewChild('chatInput') private chatInput!: ElementRef;
 
   isActivated = false;
   isChatOpen = false;
@@ -26,7 +27,7 @@ export class InteractiveImageComponent implements OnInit, AfterViewChecked {
   loading = false;
   isMobile = false;
   private clickTimeout: any = null;
-  private shouldScroll = false; // Control para el scroll automático
+  private shouldScroll = false;
 
   constructor(
     public translate: TranslateService,
@@ -42,7 +43,6 @@ export class InteractiveImageComponent implements OnInit, AfterViewChecked {
     });
     this.translate.use(this.languageService.currentLang);
 
-    // Suscribirse a los cambios de breakpoint
     this.breakpointService.isMobile$.subscribe(isMobile => {
       this.isMobile = isMobile;
     });
@@ -102,10 +102,9 @@ export class InteractiveImageComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  // Método auxiliar para forzar scroll después de actualizaciones
   private triggerScroll() {
     this.shouldScroll = true;
-    this.cdRef.detectChanges(); // Forzar detección de cambios
+    this.cdRef.detectChanges();
   }
 
   openChat() {
@@ -113,7 +112,8 @@ export class InteractiveImageComponent implements OnInit, AfterViewChecked {
     this.showHint = false;
     this.translate.get('CHATBOX.WELCOME_MESSAGE').subscribe((message: string) => {
       this.messages.push(`🤖 ${message}`);
-      this.triggerScroll(); // Scroll después del mensaje de bienvenida
+      this.triggerScroll();
+      this.focusInput();
     });
   }
 
@@ -123,7 +123,6 @@ export class InteractiveImageComponent implements OnInit, AfterViewChecked {
     this.chatMessage = '';
   }
 
-  // Manejar tecla Enter en el input
   onKeyPress(event: KeyboardEvent) {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
@@ -139,47 +138,69 @@ export class InteractiveImageComponent implements OnInit, AfterViewChecked {
     this.chatMessage = '';
     this.loading = true;
     
-    // Scroll después del mensaje del usuario
     this.triggerScroll();
 
     try {
+      console.log('🔄 Enviando mensaje a n8n...');
       const response = await this.sendChatService.getData(userMessage);
+      console.log('✅ Respuesta recibida de n8n:', response);
 
-      let aiMessage = 'No response';
+      let aiMessage = 'No se recibió respuesta del asistente.';
       
+      // Manejo de respuesta
       if (typeof response === 'string') {
         aiMessage = response;
       } else if (response?.output) {
         aiMessage = response.output;
-      } else if (response?.data) {
-        aiMessage = response.data;
+      } else if (response?.text) {
+        aiMessage = response.text;
+      } else if (response?.message) {
+        aiMessage = response.message;
+      } else if (response?.response) {
+        aiMessage = response.response;
+      } else if (response?.body) {
+        aiMessage = response.body;
       } else if (response) {
-        aiMessage = JSON.stringify(response);
+        const stringProperties = Object.values(response).filter(val => typeof val === 'string');
+        if (stringProperties.length > 0) {
+          aiMessage = stringProperties[0] as string;
+        } else {
+          aiMessage = JSON.stringify(response);
+        }
       }
 
+      console.log('📝 Mensaje extraído:', aiMessage);
       this.messages.push(`🤖 IA: ${aiMessage}`);
       
     } catch (error: any) {
-      console.error('Error enviando mensaje:', error);
+      console.error('❌ Error enviando mensaje:', error);
       
-      if (error.message?.includes('Workflow no activado') || error.status === 404) {
-        this.messages.push('⚠️ El asistente no está disponible en este momento. Por favor, intenta más tarde.');
-      } else {
-        this.messages.push('⚠️ Error de conexión. Verifica tu internet e intenta nuevamente.');
+      let errorMessage = '⚠️ Error de conexión. Verifica tu internet e intenta nuevamente.';
+      
+      if (error?.status === 0 || error?.message?.includes('CORS')) {
+        errorMessage = '⚠️ Error de CORS: El servidor no permite conexiones desde localhost.';
+      } else if (error?.message?.includes('Workflow no activado') || error?.status === 404) {
+        errorMessage = '⚠️ El asistente no está disponible en este momento. Por favor, intenta más tarde.';
+      } else if (error?.status === 500) {
+        errorMessage = '⚠️ Error interno del servidor. Contacta al administrador.';
+      } else if (error?.error?.message) {
+        errorMessage = `⚠️ Error: ${error.error.message}`;
+      } else if (error?.message) {
+        errorMessage = `⚠️ Error: ${error.message}`;
       }
+      
+      this.messages.push(errorMessage);
     } finally {
       this.loading = false;
-      // Scroll después de la respuesta
       setTimeout(() => this.triggerScroll(), 100);
     }
   }
 
-  // Focus en el input cuando se abre el chat
   focusInput() {
     setTimeout(() => {
       if (this.chatInput?.nativeElement) {
         this.chatInput.nativeElement.focus();
       }
-    }, 300);
+    }, 100);
   }
 }
