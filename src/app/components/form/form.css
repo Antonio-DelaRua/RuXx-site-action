@@ -1,31 +1,16 @@
 /* Contenedor del formulario como sección profesional */
 .form-wrapper {
-  padding: 1.5rem 2rem; /* 1.5rem arriba/abajo, 2rem izquierda/derecha */
+  padding: 1.5rem 2rem;
   max-width: 600px;
   margin: 0 auto;
   position: relative;
-  min-height: auto; /* Elimina cualquier altura mínima */
-
+  min-height: auto;
 }
 
 /* Header del formulario */
 .form-header {
   text-align: center;
   margin-bottom: 3rem;
-  position: relative;
-}
-
-.form-title {
-  font-size: 2.5rem;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 2rem;
-  background: linear-gradient(to right, #fafafa, #7f42a7, #6600c5, #5300a0, #fafafa);
-  background-size: 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: titleGradient 3s linear infinite;
   position: relative;
 }
 
@@ -81,9 +66,14 @@
 }
 
 /* Contenedor de inputs profesional */
-.input-container {
+.form-group {
   position: relative;
   margin-bottom: 2rem;
+}
+
+.input-container {
+  position: relative;
+  margin-bottom: 0; /* Eliminamos el margin-bottom aquí */
 }
 
 /* Labels flotantes */
@@ -158,17 +148,34 @@
   color: #07BDC4;
 }
 
-/* Feedback de validación profesional */
+/* 🔥 FEEDBACK DE VALIDACIÓN - AHORA ARRIBA DEL LABEL 🔥 */
 .invalid-feedback {
   display: block;
   font-size: 0.9rem;
-  margin-top: 0.5rem;
-  padding: 0.75rem;
+  margin-top: -0.5rem; /* Posiciona la alerta más arriba */
+  margin-bottom: 0.5rem; /* Espacio entre alerta e input */
+  padding: 0.5rem 0.75rem;
   border-radius: 6px;
-  background: #fef2f2;
-  border: 1px solid #fecaca;
+
   color: #dc2626;
   animation: fadeInUp 0.3s ease;
+  position: relative;
+  z-index: 10;
+  order: -1; /* Coloca las alertas antes del input-container */
+}
+
+/* Contenedor principal del form-group con flexbox */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-container {
+  order: 1; /* Input después de las alertas */
+}
+
+.invalid-feedback {
+  order: 0; /* Alertas antes del input */
 }
 
 .animated-feedback {
@@ -178,7 +185,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
@@ -276,6 +283,13 @@
 
   .input-icon {
     right: 1.2rem;
+  }
+
+  .invalid-feedback {
+    margin-top: -0.25rem;
+    margin-bottom: 0.25rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
   }
 }
 
