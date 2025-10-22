@@ -135,6 +135,15 @@ async def health_check():
     """Endpoint de verificación de salud"""
     return {"status": "healthy", "service": "Audio Book API"}
 
-if __name__ == "__main__":
+def main():
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        "api:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+        reload_dirs=["."],
+        reload_excludes=["./uploads/*", "./audio_files/*"],
+        reload_delay=2
+    )
+

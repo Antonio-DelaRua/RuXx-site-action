@@ -1,58 +1,95 @@
-<div class="container mt-4">
-      <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-          <h4 class="mb-0">📚 Subir Libro para AudioLibro</h4>
+<div class="full-screen-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">📚 Lector de Audiolibros</h1>
+      <p class="page-subtitle">Convierte tus libros en audio con IA</p>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <!-- Área de subida de archivos -->
+    <div class="upload-section">
+      <div class="upload-area">
+        <div class="upload-icon">📄</div>
+        <h3>Selecciona tu archivo</h3>
+        <p>Arrastra y suelta un archivo PDF o TXT, o haz clic para seleccionar</p>
+        <input
+          #fileInput
+          type="file"
+          class="file-input"
+          (change)="onFileSelected($event)"
+          accept=".pdf,.txt"
+          [disabled]="isUploading"
+        >
+        <button
+          type="button"
+          class="btn btn-primary btn-lg upload-btn"
+          (click)="fileInput.click()"
+          [disabled]="isUploading"
+        >
+          <i class="fas fa-upload"></i> Seleccionar Archivo
+        </button>
+        <small class="file-formats">Formatos soportados: PDF y TXT (máx. 10MB)</small>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div *ngIf="isUploading" class="progress-section">
+      <div class="progress-container">
+        <div class="progress-header">
+          <h4>Procesando tu archivo...</h4>
+          <span class="progress-percentage">{{ uploadProgress }}%</span>
         </div>
-        
-        <div class="card-body">
-          <!-- Área de subida de archivos -->
-          <div class="mb-4">
-            <label class="form-label">Seleccionar archivo (PDF o TXT):</label>
-            <input 
-              type="file" 
-              class="form-control" 
-              (change)="onFileSelected($event)"
-              accept=".pdf,.txt"
-              [disabled]="isUploading"
-            >
-            <div class="form-text">
-              Formatos soportados: PDF y TXT
-            </div>
-          </div>
+        <div class="progress">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+            [style.width]="uploadProgress + '%'"
+          ></div>
+        </div>
+        <p class="progress-text">Extrayendo texto y generando audio...</p>
+      </div>
+    </div>
 
-          <!-- Progress Bar -->
-          <div *ngIf="isUploading" class="mb-3">
-            <div class="progress">
-              <div 
-                class="progress-bar progress-bar-striped progress-bar-animated" 
-                [style.width]="uploadProgress + '%'"
-              >
-                {{ uploadProgress }}%
-              </div>
-            </div>
-            <small class="text-muted">Procesando archivo...</small>
+    <!-- Resultado del procesamiento -->
+    <div *ngIf="uploadResult" class="result-section">
+      <div class="result-card">
+        <div class="result-header">
+          <div class="success-icon">✅</div>
+          <h3>¡Archivo procesado exitosamente!</h3>
+        </div>
+        <div class="result-details">
+          <div class="detail-item">
+            <span class="detail-label">Archivo:</span>
+            <span class="detail-value">{{ uploadResult.original_filename }}</span>
           </div>
-
-          <!-- Información del archivo procesado -->
-          <div *ngIf="uploadResult" class="alert alert-success">
-            <h5>✅ Archivo procesado exitosamente!</h5>
-            <p><strong>Archivo:</strong> {{ uploadResult.original_filename }}</p>
-            <p><strong>Texto extraído:</strong> {{ uploadResult.text_length }} caracteres</p>
-            <p><strong>Vista previa:</strong> {{ uploadResult.text_preview }}</p>
+          <div class="detail-item">
+            <span class="detail-label">Texto extraído:</span>
+            <span class="detail-value">{{ uploadResult.text_length }} caracteres</span>
           </div>
-
-          <!-- Reproductor de audio -->
-          <div *ngIf="uploadResult">
-            <app-audio-player 
-              [audioUrl]="getAudioUrl()"
-              [title]="uploadResult.original_filename"
-            ></app-audio-player>
-          </div>
-
-          <!-- Mensajes de error -->
-          <div *ngIf="errorMessage" class="alert alert-danger">
-            {{ errorMessage }}
+          <div class="detail-item">
+            <span class="detail-label">Vista previa:</span>
+            <span class="detail-value text-preview">{{ uploadResult.text_preview }}</span>
           </div>
         </div>
       </div>
+
+      <!-- Reproductor de audio -->
+      <div class="audio-player-section">
+        <h4>🎵 Tu Audiolibro</h4>
+        <app-audio-player
+          [audioUrl]="getAudioUrl()"
+          [title]="uploadResult.original_filename"
+        ></app-audio-player>
+      </div>
     </div>
+
+    <!-- Mensajes de error -->
+    <div *ngIf="errorMessage" class="error-section">
+      <div class="error-card">
+        <div class="error-icon">❌</div>
+        <h4>Error al procesar el archivo</h4>
+        <p>{{ errorMessage }}</p>
+      </div>
+    </div>
+  </main>
+</div>
