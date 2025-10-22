@@ -1,0 +1,58 @@
+<div class="container mt-4">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">📚 Subir Libro para AudioLibro</h4>
+        </div>
+        
+        <div class="card-body">
+          <!-- Área de subida de archivos -->
+          <div class="mb-4">
+            <label class="form-label">Seleccionar archivo (PDF o TXT):</label>
+            <input 
+              type="file" 
+              class="form-control" 
+              (change)="onFileSelected($event)"
+              accept=".pdf,.txt"
+              [disabled]="isUploading"
+            >
+            <div class="form-text">
+              Formatos soportados: PDF y TXT
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div *ngIf="isUploading" class="mb-3">
+            <div class="progress">
+              <div 
+                class="progress-bar progress-bar-striped progress-bar-animated" 
+                [style.width]="uploadProgress + '%'"
+              >
+                {{ uploadProgress }}%
+              </div>
+            </div>
+            <small class="text-muted">Procesando archivo...</small>
+          </div>
+
+          <!-- Información del archivo procesado -->
+          <div *ngIf="uploadResult" class="alert alert-success">
+            <h5>✅ Archivo procesado exitosamente!</h5>
+            <p><strong>Archivo:</strong> {{ uploadResult.original_filename }}</p>
+            <p><strong>Texto extraído:</strong> {{ uploadResult.text_length }} caracteres</p>
+            <p><strong>Vista previa:</strong> {{ uploadResult.text_preview }}</p>
+          </div>
+
+          <!-- Reproductor de audio -->
+          <div *ngIf="uploadResult">
+            <app-audio-player 
+              [audioUrl]="getAudioUrl()"
+              [title]="uploadResult.original_filename"
+            ></app-audio-player>
+          </div>
+
+          <!-- Mensajes de error -->
+          <div *ngIf="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+        </div>
+      </div>
+    </div>

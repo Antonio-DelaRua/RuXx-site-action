@@ -1,0 +1,65 @@
+ <div class="card mt-3">
+      <div class="card-header">
+        <h5 class="card-title mb-0">🎵 {{ title }}</h5>
+      </div>
+      <div class="card-body">
+        <!-- Controles básicos -->
+        <div class="d-flex align-items-center mb-3">
+          <button 
+            class="btn btn-outline-primary me-2" 
+            (click)="togglePlay()"
+            [disabled]="!audioUrl"
+          >
+            {{ isPlaying ? '⏸️ Pausar' : '▶️ Reproducir' }}
+          </button>
+          
+          <button 
+            class="btn btn-outline-secondary me-2" 
+            (click)="stop()"
+            [disabled]="!audioUrl"
+          >
+            ⏹️ Detener
+          </button>
+
+          <span class="badge bg-info">{{ currentTimeFormatted }}</span>
+          <span class="mx-2">/</span>
+          <span class="badge bg-secondary">{{ durationFormatted }}</span>
+        </div>
+
+        <!-- Barra de progreso -->
+        <div class="mb-3">
+          <input 
+            type="range" 
+            class="form-range" 
+            [value]="currentTime"
+            [max]="duration"
+            (input)="seekTo($event)"
+            [disabled]="!audioUrl"
+          >
+        </div>
+
+        <!-- Controles de volumen -->
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <small class="text-muted">Volumen:</small>
+          </div>
+          <div class="col">
+            <input 
+              type="range" 
+              class="form-range" 
+              min="0" max="1" step="0.1"
+              [value]="volume"
+              (input)="setVolume($event)"
+            >
+          </div>
+          <div class="col-auto">
+            <span class="badge bg-light text-dark">{{ volume * 100 | number:'1.0-0' }}%</span>
+          </div>
+        </div>
+
+        <!-- Estado -->
+        <div *ngIf="!audioUrl" class="alert alert-warning mt-3">
+          No hay audio disponible para reproducir
+        </div>
+      </div>
+    </div>
