@@ -39,13 +39,7 @@
   letter-spacing: -0.5px;
 }
 
-.page-subtitle {
-  font-size: 1.2rem;
-  color: #fff;
-  font-weight: 400;
-  margin: 0;
-  letter-spacing: 0.5px;
-}
+
 
 /* Main content */
 .main-content {
@@ -201,7 +195,7 @@
 .progress-percentage {
   font-size: 1.2rem;
   font-weight: 700;
-  color: #667eea;
+  color: #a3990d;
   background: rgba(102, 126, 234, 0.1);
   padding: 0.4rem 0.8rem;
   border-radius: 50px;
@@ -376,9 +370,9 @@
 }
 
 .btn-outline-primary {
-  border-color: #667eea;
+  border-color: #A29A3C;
   color: #fff;
-  background: rgba(51, 51, 53, 0.801);
+  background: rgba(155, 155, 155, 0.801);
 }
 
 .btn-outline-primary:hover {
@@ -391,9 +385,9 @@
 
 
 .btn-outline-secondary {
-  border-color: #667eea;
+  border-color: #A29A3C;
   color: #fff;
-  background: rgba(51, 51, 53, 0.801);
+  background: rgba(155, 155, 155, 0.801);
 }
 
 .btn-outline-secondary:hover {

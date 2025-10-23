@@ -2,7 +2,7 @@
   <header class="page-header">
     <div class="header-content">
       <h1 class="page-title">📚 Nobt-ibuk Audiolibros</h1>
-      <p class="page-subtitle">Convierte tus libros en audio en segundos</p>
+      
     </div>
   </header>
 
@@ -75,7 +75,7 @@
 
       <!-- Reproductor de audio (ocupa el 100% del ancho) -->
       <div class="audio-player-full-width">
-        <h4>🎵 Tu Audiolibro</h4>
+        <h4>🎵 Nobt-ibuk</h4>
         <div class="card mt-3">
           <div class="card-header">
             <h5 class="card-title mb-0">🎵 {{ uploadResult.original_filename }}</h5>
@@ -99,9 +99,11 @@
                 ⏹️ Detener
               </button>
 
-              <span class="badge bg-info time-display">{{ currentTimeFormatted }}</span>
-              <span class="mx-2">/</span>
-              <span class="badge bg-secondary time-display">{{ durationFormatted }}</span>
+              <div class="ms-auto d-flex align-items-center">
+                <span class="badge bg-info time-display">{{ currentTimeFormatted }}</span>
+                <span class="mx-2">/</span>
+                <span class="badge bg-secondary time-display">{{ durationFormatted }}</span>
+              </div>
             </div>
 
             <!-- Barra de progreso MEJORADA -->
