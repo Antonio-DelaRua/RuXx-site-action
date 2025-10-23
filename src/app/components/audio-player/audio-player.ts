@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './audio-player.html',
   styleUrls: ['./audio-player.css']
 })
-export class AudioPlayerComponent implements OnInit, OnDestroy {
+export class AudioPlayerComponent implements OnInit, OnDestroy, OnChanges {
   @Input() audioUrl!: string;
   @Input() title = 'Audio Libro';
 
@@ -25,12 +25,22 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['audioUrl'] && this.audioUrl) {
+      this.setupAudio();
+    }
+  }
+
   ngOnDestroy() {
     this.audio.pause();
     this.audio = new Audio();
   }
 
   private setupAudio(): void {
+    // Reset previous audio
+    this.audio.pause();
+    this.audio = new Audio();
+
     this.audio.src = this.audioUrl;
     this.audio.load();
 

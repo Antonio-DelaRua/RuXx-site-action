@@ -15,7 +15,7 @@ app = FastAPI(title="Audio Book API")
 # Configurar CORS para permitir requests desde Angular
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:4200"],  # URL de Angular
+    allow_origins=["http://localhost:4200", "http://localhost:4201"],  # URLs de Angular
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -40,8 +40,10 @@ class AudioBookProcessor:
                 reader = PyPDF2.PdfReader(file)
                 text = ""
                 for page in reader.pages:
-                    text += page.extract_text() + "\n"
-                return text
+                    page_text = page.extract_text()
+                    if page_text:  # Solo agregar si hay texto
+                        text += page_text + "\n"
+                return text.strip() if text else "No se pudo extraer texto del PDF. El archivo puede contener solo imágenes o estar protegido."
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error leyendo PDF: {str(e)}")
     
@@ -93,7 +95,14 @@ async def upload_file(file: UploadFile = File(...)):
             text = processor.extract_text_from_pdf(upload_path)
         else:  # .txt
             text = processor.extract_text_from_txt(upload_path)
-        
+
+        # Verificar que hay texto para convertir
+        if not text or text.strip() == "":
+            raise HTTPException(
+                status_code=400,
+                detail="No se pudo extraer texto del archivo. El archivo puede estar vacío, contener solo imágenes o estar protegido."
+            )
+
         # Convertir texto a audio
         processor.text_to_speech(text, audio_path)
         
@@ -142,8 +151,10 @@ def main():
         host="0.0.0.0",
         port=8000,
         reload=True,
-        reload_dirs=["."],
-        reload_excludes=["./uploads/*", "./audio_files/*"],
-        reload_delay=2
+
     )
+
+if __name__ == "__main__":
+    main()
+
 

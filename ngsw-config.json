@@ -5,6 +5,7 @@
     {
       "name": "app",
       "installMode": "prefetch",
+      "updateMode": "prefetch",
       "resources": {
         "files": [
           "/favicon.ico",
@@ -22,7 +23,7 @@
       "resources": {
         "files": [
           "/assets/**",
-          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+          "/*.(eot|svg|cur|jpg|jpeg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
       },
       "cacheConfig": {
@@ -33,15 +34,43 @@
   ],
   "dataGroups": [
     {
-      "name": "api",
+      "name": "Audio Book API",
+      "urls": [
+        "http://localhost:8000/**"
+      ],
+      "cacheConfig": {
+        "maxSize": 50,
+        "maxAge": "3d",
+        "strategy": "performance",
+        "timeout": "10s"
+      }
+    },
+    {
+      "name": "google-fonts",
+      "urls": [
+        "https://fonts.googleapis.com/**",
+        "https://fonts.gstatic.com/**"
+      ],
+      "cacheConfig": {
+        "maxSize": 30,
+        "maxAge": "30d",
+        "strategy": "performance"
+      }
+    },
+    {
+      "name": "cdn-fonts",
       "urls": [
         "https://fonts.cdnfonts.com/**"
       ],
       "cacheConfig": {
-        "maxSize": 100,
-        "maxAge": "7d",
-        "strategy": "freshness"
+        "maxSize": 30,
+        "maxAge": "30d",
+        "strategy": "performance"
       }
     }
+  ],
+  "navigationUrls": [
+    { "positive": true, "regex": "^\\/.*$" },
+    { "positive": false, "regex": "^\\/api\\/.*$" }
   ]
 }
