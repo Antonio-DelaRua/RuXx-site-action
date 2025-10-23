@@ -1,24 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AudioBookService, UploadResponse, UploadProgress } from '../../services/audio-book';
-import { AudioPlayerComponent } from '../audio-player/audio-player';
 
 @Component({
   selector: 'app-file-upload',
   standalone: true,
-  imports: [CommonModule, FormsModule, AudioPlayerComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './file-upload.html',
   styleUrls: ['./file-upload.css']
 })
-export class FileUploadComponent {
+export class FileUploadComponent implements OnChanges, OnDestroy {
   selectedFile: File | null = null;
   isUploading = false;
   uploadProgress = 0;
   uploadResult: UploadResponse | null = null;
   errorMessage = '';
 
+  // Audio player properties
+  private audio = new Audio();
+  isPlaying = false;
+  currentTime = 0;
+  duration = 0;
+  volume = 1;
+  audioUrl = '';
+
   constructor(private audioBookService: AudioBookService) {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Not used, but for interface
+  }
+
+  ngOnDestroy() {
+    this.audio.pause();
+    this.audio = new Audio();
+  }
 
   onFileSelected(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -50,6 +66,12 @@ export class FileUploadComponent {
     this.isUploading = true;
     this.uploadProgress = 0;
     this.uploadResult = null;
+    this.audioUrl = '';
+    this.audio.pause();
+    this.audio = new Audio();
+    this.isPlaying = false;
+    this.currentTime = 0;
+    this.duration = 0;
 
     this.audioBookService.uploadFileWithProgress(this.selectedFile)
       .subscribe({
@@ -62,6 +84,8 @@ export class FileUploadComponent {
             this.uploadResult = response;
             this.isUploading = false;
             this.uploadProgress = 100;
+            this.audioUrl = this.getAudioUrl();
+            this.setupAudio();
           }
         },
         error: (error: any) => {
@@ -77,5 +101,75 @@ export class FileUploadComponent {
     return this.audioBookService.getAudioUrl(this.uploadResult.file_id);
   }
 
-  
+  // Audio player methods
+  private setupAudio(): void {
+    if (!this.audioUrl) return;
+    // Reset previous audio
+    this.audio.pause();
+    this.audio = new Audio();
+
+    this.audio.src = this.audioUrl;
+    this.audio.load();
+
+    this.audio.ontimeupdate = () => {
+      this.currentTime = this.audio.currentTime;
+    };
+
+    this.audio.onloadedmetadata = () => {
+      this.duration = this.audio.duration;
+    };
+
+    this.audio.onended = () => {
+      this.isPlaying = false;
+    };
+
+    this.audio.onerror = (error) => {
+      console.error('Error en audio:', error);
+      this.isPlaying = false;
+    };
+  }
+
+  togglePlay(): void {
+    if (this.isPlaying) {
+      this.audio.pause();
+    } else {
+      this.audio.play().catch(error => {
+        console.error('Error al reproducir:', error);
+      });
+    }
+    this.isPlaying = !this.isPlaying;
+  }
+
+  stop(): void {
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    this.isPlaying = false;
+  }
+
+  seekTo(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const newTime = parseFloat(target.value);
+    this.audio.currentTime = newTime;
+    this.currentTime = newTime;
+  }
+
+  setVolume(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.volume = parseFloat(target.value);
+    this.audio.volume = this.volume;
+  }
+
+  get currentTimeFormatted(): string {
+    return this.formatTime(this.currentTime);
+  }
+
+  get durationFormatted(): string {
+    return this.formatTime(this.duration);
+  }
+
+  private formatTime(seconds: number): string {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
 }
