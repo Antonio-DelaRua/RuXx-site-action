@@ -109,6 +109,7 @@ export class FileUploadComponent implements OnChanges, OnDestroy {
     this.audio = new Audio();
 
     this.audio.src = this.audioUrl;
+    this.audio.preload = 'metadata';
     this.audio.load();
 
     this.audio.ontimeupdate = () => {
@@ -117,6 +118,11 @@ export class FileUploadComponent implements OnChanges, OnDestroy {
 
     this.audio.onloadedmetadata = () => {
       this.duration = this.audio.duration;
+      console.log('Audio loaded. Duration:', this.duration);
+    };
+
+    this.audio.oncanplay = () => {
+      console.log('Audio can play. Duration:', this.audio.duration, 'ReadyState:', this.audio.readyState);
     };
 
     this.audio.onended = () => {
@@ -149,8 +155,23 @@ export class FileUploadComponent implements OnChanges, OnDestroy {
   seekTo(event: Event): void {
     const target = event.target as HTMLInputElement;
     const newTime = parseFloat(target.value);
-    this.audio.currentTime = newTime;
+    if (this.audio.readyState >= 2) {
+      const oldTime = this.audio.currentTime;
+      this.audio.currentTime = newTime;
+      console.log('Seek from', oldTime, 'to', newTime, 'Actual currentTime:', this.audio.currentTime);
+      // Force update after a short delay to see if it sticks
+      setTimeout(() => {
+        console.log('After delay, currentTime is:', this.audio.currentTime);
+      }, 100);
+    } else {
+      console.warn('Audio not ready for seeking. ReadyState:', this.audio.readyState);
+    }
     this.currentTime = newTime;
+  }
+
+  onSeekInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.currentTime = parseFloat(target.value);
   }
 
   setVolume(event: Event): void {

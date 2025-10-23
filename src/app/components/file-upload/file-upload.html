@@ -1,8 +1,8 @@
 <div class="full-screen-container">
   <header class="page-header">
     <div class="header-content">
-      <h1 class="page-title">📚 Lector de Audiolibros</h1>
-      <p class="page-subtitle">Convierte tus libros en audio con IA</p>
+      <h1 class="page-title">📚 Nobt-ibuk Audiolibros</h1>
+      <p class="page-subtitle">Convierte tus libros en audio en segundos</p>
     </div>
   </header>
 
@@ -54,8 +54,9 @@
       <div class="result-card">
         <div class="result-header">
           <div class="success-icon">✅</div>
-          <h3>¡Archivo procesado exitosamente!</h3>
+          <h3 >¡Archivo procesado exitosamente!</h3>
         </div>
+        <br>
         <div class="result-details">
           <div class="detail-item">
             <span class="detail-label">Archivo:</span>
@@ -110,7 +111,7 @@
                 class="form-range"
                 [value]="currentTime"
                 [max]="duration || 0"
-                (input)="seekTo($event)"
+                (input)="onSeekInput($event)"
                 (change)="seekTo($event)"
                 [disabled]="!audioUrl"
                 step="0.1"

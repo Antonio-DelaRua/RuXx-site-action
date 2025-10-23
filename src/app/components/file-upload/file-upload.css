@@ -14,7 +14,7 @@
 
 /* Header styles */
 .page-header {
-  background: rgba(255, 255, 255, 0.95);
+  
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   padding: 2rem 0;
@@ -33,16 +33,15 @@
   font-size: 3rem;
   font-weight: 800;
   margin: 0 0 0.5rem 0;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  color:#fff;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -0.5px;
 }
 
 .page-subtitle {
   font-size: 1.2rem;
-  color: #64748b;
+  color: #fff;
   font-weight: 400;
   margin: 0;
   letter-spacing: 0.5px;
@@ -131,7 +130,7 @@
 }
 
 .upload-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #a3990d 0%, #a29fa5 100%);
   margin-right: 2rem;
   border: none;
   border-radius: 50px;
@@ -219,7 +218,7 @@
 
 .progress-bar {
   transition: width 0.4s ease;
-  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #a3990d 0%, #a29fa5 100%);
   position: relative;
   overflow: hidden;
 }
@@ -258,7 +257,7 @@
 }
 
 .result-header h3 {
-  color: #10b981;
+  color: #161616;
   margin: 0;
   font-size: 1.3rem;
   font-weight: 700;
@@ -346,7 +345,7 @@
 }
 
 .card-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #a3990d 0%, #a29fa5 100%);
   color: white;
   border-radius: 0 !important;
   border-bottom: none;
@@ -378,28 +377,30 @@
 
 .btn-outline-primary {
   border-color: #667eea;
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.1);
+  color: #fff;
+  background: rgba(51, 51, 53, 0.801);
 }
 
 .btn-outline-primary:hover {
-  background-color: #667eea;
-  border-color: #667eea;
+  background-color: #A29A3C;
+  border-color: #A29E90;
   transform: translateY(-1px);
   box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
 }
 
+
+
 .btn-outline-secondary {
-  border-color: #64748b;
-  color: #64748b;
-  background: rgba(100, 116, 139, 0.1);
+  border-color: #667eea;
+  color: #fff;
+  background: rgba(51, 51, 53, 0.801);
 }
 
 .btn-outline-secondary:hover {
-  background-color: #64748b;
-  border-color: #64748b;
+  background-color: #A29A3C;
+  border-color: #A29E90;
   transform: translateY(-1px);
-  box-shadow: 0 6px 15px rgba(100, 116, 139, 0.3);
+  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.3);
 }
 
 .btn:disabled {
@@ -414,6 +415,9 @@
   padding: 0.4rem 0.8rem;
   font-size: 0.8rem;
   font-weight: 600;
+  margin-left: auto;
+  
+  
 }
 
 .bg-info {
