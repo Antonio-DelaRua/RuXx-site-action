@@ -7,9 +7,27 @@
   </header>
 
   <main class="main-content">
-    <!-- Área de subida de archivos -->
-    <div class="upload-section">
-      <div class="upload-area">
+    <!-- Progress Bar -->
+    <div *ngIf="isUploading" class="progress-section">
+      <div class="progress-container">
+        <div class="progress-header">
+          <h4>Procesando tu archivo...</h4>
+          <span class="progress-percentage">{{ uploadProgress }}%</span>
+        </div>
+        <div class="progress">
+          <div
+            class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+            [style.width]="uploadProgress + '%'"
+          ></div>
+        </div>
+        <p class="progress-text">Extrayendo texto y generando audio...</p>
+      </div>
+    </div>
+
+    <!-- Layout principal cuando hay resultado -->
+    <div *ngIf="uploadResult" class="content-layout">
+      <!-- Área de subida de archivos -->
+      <div class="upload-section">
         <div class="upload-icon">📄</div>
         <h3>Selecciona tu archivo</h3>
         <p>Arrastra y suelta un archivo PDF o TXT, o haz clic para seleccionar</p>
@@ -31,27 +49,8 @@
         </button>
         <small class="file-formats">Formatos soportados: PDF y TXT (máx. 10MB)</small>
       </div>
-    </div>
 
-    <!-- Progress Bar -->
-    <div *ngIf="isUploading" class="progress-section">
-      <div class="progress-container">
-        <div class="progress-header">
-          <h4>Procesando tu archivo...</h4>
-          <span class="progress-percentage">{{ uploadProgress }}%</span>
-        </div>
-        <div class="progress">
-          <div
-            class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-            [style.width]="uploadProgress + '%'"
-          ></div>
-        </div>
-        <p class="progress-text">Extrayendo texto y generando audio...</p>
-      </div>
-    </div>
-
-    <!-- Resultado del procesamiento -->
-    <div *ngIf="uploadResult" class="result-section">
+      <!-- Resultado del procesamiento -->
       <div class="result-card">
         <div class="result-header">
           <div class="success-icon">✅</div>
@@ -73,8 +72,8 @@
         </div>
       </div>
 
-      <!-- Reproductor de audio -->
-      <div class="audio-player-section">
+      <!-- Reproductor de audio (ocupa el 100% del ancho) -->
+      <div class="audio-player-full-width">
         <h4>🎵 Tu Audiolibro</h4>
         <div class="card mt-3">
           <div class="card-header">
@@ -99,24 +98,26 @@
                 ⏹️ Detener
               </button>
 
-              <span class="badge bg-info">{{ currentTimeFormatted }}</span>
+              <span class="badge bg-info time-display">{{ currentTimeFormatted }}</span>
               <span class="mx-2">/</span>
-              <span class="badge bg-secondary">{{ durationFormatted }}</span>
+              <span class="badge bg-secondary time-display">{{ durationFormatted }}</span>
             </div>
 
-            <!-- Barra de progreso -->
+            <!-- Barra de progreso MEJORADA -->
             <div class="mb-3">
               <input
                 type="range"
                 class="form-range"
                 [value]="currentTime"
-                [max]="duration"
+                [max]="duration || 0"
                 (input)="seekTo($event)"
+                (change)="seekTo($event)"
                 [disabled]="!audioUrl"
+                step="0.1"
               >
             </div>
 
-            <!-- Controles de volumen -->
+            <!-- Controles de volumen MEJORADOS -->
             <div class="row align-items-center">
               <div class="col-auto">
                 <small class="text-muted">Volumen:</small>
@@ -125,9 +126,12 @@
                 <input
                   type="range"
                   class="form-range"
-                  min="0" max="1" step="0.1"
+                  min="0" 
+                  max="1" 
+                  step="0.1"
                   [value]="volume"
                   (input)="setVolume($event)"
+                  (change)="setVolume($event)"
                 >
               </div>
               <div class="col-auto">
@@ -144,12 +148,45 @@
       </div>
     </div>
 
+    <!-- Estado inicial (sin resultado) -->
+    <div *ngIf="!uploadResult && !isUploading && !errorMessage" class="upload-container">
+      <!-- Área de subida de archivos -->
+      <div class="upload-section">
+        <div class="upload-icon">📄</div>
+        <h3>Selecciona tu archivo</h3>
+        <p>Arrastra y suelta un archivo PDF o TXT, o haz clic para seleccionar</p>
+        <input
+          #fileInput
+          type="file"
+          class="file-input"
+          (change)="onFileSelected($event)"
+          accept=".pdf,.txt"
+          [disabled]="isUploading"
+        >
+        <button
+          type="button"
+          class="btn btn-primary btn-lg upload-btn"
+          (click)="fileInput.click()"
+          [disabled]="isUploading"
+        >
+          <i class="fas fa-upload"></i> Seleccionar Archivo
+        </button>
+        <small class="file-formats">Formatos soportados: PDF y TXT (máx. 10MB)</small>
+      </div>
+    </div>
+
     <!-- Mensajes de error -->
     <div *ngIf="errorMessage" class="error-section">
       <div class="error-card">
         <div class="error-icon">❌</div>
         <h4>Error al procesar el archivo</h4>
         <p>{{ errorMessage }}</p>
+        <button
+          class="btn btn-outline-primary mt-3"
+          (click)="errorMessage = ''"
+        >
+          Intentar de nuevo
+        </button>
       </div>
     </div>
   </main>
