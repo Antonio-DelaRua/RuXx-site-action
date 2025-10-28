@@ -193,4 +193,22 @@ export class FileUploadComponent implements OnChanges, OnDestroy {
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   }
+
+  cleanupAllAudioFiles(): void {
+    this.audioBookService.cleanupAudioFiles().subscribe({
+      next: (response) => {
+        console.log('Cleanup completed:', response);
+        alert(`¡Limpieza completada! Se eliminaron ${response.deleted_files?.length || 0} archivos de audio.`);
+        // Reset current audio state
+        this.uploadResult = null;
+        this.audioUrl = '';
+        this.audio.pause();
+        this.isPlaying = false;
+      },
+      error: (error) => {
+        console.error('Error during cleanup:', error);
+        alert('Error al limpiar los archivos de audio');
+      }
+    });
+  }
 }

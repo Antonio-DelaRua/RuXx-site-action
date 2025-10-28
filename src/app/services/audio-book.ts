@@ -79,6 +79,13 @@ export class AudioBookService {
     return `${this.apiUrl}/audio/${fileId}.mp3`;
   }
 
+  cleanupAudioFiles(): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/audio/cleanup`).pipe(
+      timeout(15000),
+      catchError(this.handleError.bind(this))
+    );
+  }
+
   healthCheck(): Observable<any> {
     return this.http.get(`${this.apiUrl}/health`).pipe(
       timeout(5000),

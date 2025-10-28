@@ -139,6 +139,25 @@ async def get_audio_file(filename: str):
         filename=f"audiobook_{filename}"
     )
 
+@app.delete("/audio/cleanup")
+async def cleanup_audio_files():
+    """Endpoint para eliminar todos los archivos de audio"""
+    try:
+        deleted_files = []
+        if os.path.exists(AUDIO_DIR):
+            for filename in os.listdir(AUDIO_DIR):
+                if filename.endswith('.mp3'):
+                    file_path = os.path.join(AUDIO_DIR, filename)
+                    os.remove(file_path)
+                    deleted_files.append(filename)
+
+        return {
+            "message": f"Eliminados {len(deleted_files)} archivos de audio",
+            "deleted_files": deleted_files
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error limpiando archivos: {str(e)}")
+
 @app.get("/health")
 async def health_check():
     """Endpoint de verificación de salud"""
