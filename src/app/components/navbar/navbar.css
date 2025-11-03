@@ -319,7 +319,8 @@ nav a:hover {
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
+    
   }
 
   .logout-btn:hover {

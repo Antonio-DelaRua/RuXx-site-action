@@ -50,19 +50,60 @@
 
 .banner-right button {
  position: relative;
-  width: 18rem;
-  height: 2.5rem;
-  border-radius: 50px;
-  background: linear-gradient(to right, #656565, #7f42a7, #6600c5, #5300a0, #fafafa, #757575, #656565);
-  background-size: 200%;
-  animation: animationGradient 2.5s linear infinite;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-}
+   width: 15rem;
+   height: 2.5rem;
+   border-radius: 50px;
+background: linear-gradient(
+  to right,
+  #3e290f,  /* más oscuro */
+  #5C3D17,  /* base */
+  #7a5321,  /* un poco más cálido */
+  #9b6d30,  /* dorado suave */
+  #c19157,  /* tono arena claro */
+  #5C3D17,  /* vuelve al base */
+  #3e290f   /* cierre con contraste */
+);
+   background-size: 200%;
+   animation: animationGradient 2.5s linear infinite;
+   box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+   border: none;
+   cursor: pointer;
+   color: white;
+   font-weight: 600;
+   font-size: 1rem;
+   transition: all 0.3s ease;
+   position: relative;
+   overflow: hidden;
+ }
 
-.banner-right button:hover {
-  background-color: #f3f3f3;
-  transform: scale(1.05);
-}
+ .banner-right button::before {
+   content: '';
+   position: absolute;
+   inset: 3px 3px 3px 3px;
+   background-color: black;
+   border-radius: 50px;
+   transition: 0.5s ease;
+   z-index: 1;
+ }
+
+ .banner-right button span {
+   position: relative;
+   z-index: 2;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 100%;
+   height: 100%;
+ }
+
+ .banner-right button:hover::before {
+   color: #5300a0;
+ }
+
+ .banner-right button:hover {
+   transform: scale(1.05);
+   box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+ }
 
 /* --- Lado derecho --- */
 .banner-right {
@@ -73,6 +114,13 @@
   padding: 1.5rem;
   border-radius: 10px;
   backdrop-filter: blur(6px);
+}
+
+/* --- Animación del gradiente --- */
+@keyframes animationGradient {
+  to {
+    background-position: 200%;
+  }
 }
 
 /* --- Responsivo --- */
