@@ -41,3 +41,19 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Environment files with sensitive data
+src/environments/
+!src/environments/environment.ts.example
+!src/environments/environment.prod.ts.example
+
+# Firebase configuration
+.firebase/
+firebase-debug.log
+firestore-debug.log
+
+# API keys and secrets
+*.key
+*.pem
+secrets.json
+config.local.json

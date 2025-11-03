@@ -9,6 +9,7 @@ import { Footer } from '../../components/footer/footer';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { InteractiveImageComponent } from "../../components/interactive-image/interactive-image";
+import { Audiolibro } from '../../components/audiolibro/audiolibro';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ import { InteractiveImageComponent } from "../../components/interactive-image/in
     Hero,
     Proyectos,
     RutalearningComponent,
+    Audiolibro,
     Certificates,
     Contact,
     Footer,

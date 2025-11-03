@@ -16,6 +16,21 @@
       <a (click)="scrollToSection('certificates')">{{ 'NAV.CERTIFICATES' | translate }}</a>
       <a (click)="scrollToSection('contact')">{{ 'NAV.CONTACT' | translate }}</a>
 
+      <!-- Enlace a Audiolibros -->
+      <a *ngIf="isAuthenticated" (click)="goToAudiobooks()" class="audiobooks-link">
+        <i class="fas fa-book"></i> Audiolibros
+      </a>
+
+      <!-- Estado de autenticación -->
+      <div class="auth-section" *ngIf="isAuthenticated">
+        <span class="user-info">
+          <i class="fas fa-user"></i> {{ userName }}
+        </span>
+        <button class="logout-btn" (click)="logout()" title="Cerrar sesión">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+
       <!-- Dropdown de Idiomas CORREGIDO -->
       <div class="language-dropdown" (click)="$event.stopPropagation()">
         <button class="language-btn" (click)="toggleLanguageMenu($event)" [class.active]="isLanguageMenuOpen"

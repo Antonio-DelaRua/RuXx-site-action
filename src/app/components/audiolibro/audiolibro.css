@@ -1,0 +1,92 @@
+/* --- Fondo parallax --- */
+.banner {
+  position: relative;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+  background-image: url('/assets/lizaru.jpg'); /* Cambia por tu imagen */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; /* Parallax effect */
+}
+
+/* --- Capa semitransparente --- */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 20, 20, 0.5);
+  z-index: 1;
+}
+
+/* --- Contenido principal --- */
+.banner-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  max-width: 1100px;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+/* --- Lado izquierdo --- */
+.banner-left {
+  flex: 1 1 45%;
+}
+
+.banner-left h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.banner-right button {
+ position: relative;
+  width: 18rem;
+  height: 2.5rem;
+  border-radius: 50px;
+  background: linear-gradient(to right, #656565, #7f42a7, #6600c5, #5300a0, #fafafa, #757575, #656565);
+  background-size: 200%;
+  animation: animationGradient 2.5s linear infinite;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+}
+
+.banner-right button:hover {
+  background-color: #f3f3f3;
+  transform: scale(1.05);
+}
+
+/* --- Lado derecho --- */
+.banner-right {
+  flex: 1 1 45%;
+  text-align: left;
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+}
+
+/* --- Responsivo --- */
+@media (max-width: 768px) {
+  .banner-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .banner-right {
+    text-align: center;
+  }
+
+  .banner-left h1 {
+    font-size: 2.2rem;
+  }
+}

@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { FileUploadComponent } from './components/file-upload/file-upload';
+import { LoginComponent } from './components/login/login';
+import { AuthGuard } from './guards/auth.guard';
 
 
 export const routes: Routes = [
@@ -9,10 +11,17 @@ export const routes: Routes = [
       import('./pages/home/home').then(m => m.Home)
   },
 
-   { 
-    path: 'libro', 
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Iniciar Sesión'
+  },
+
+   {
+    path: 'libro',
     component: FileUploadComponent,
-    title: 'Lector de Audiolibros'
+    title: 'Lector de Audiolibros',
+    canActivate: [AuthGuard]
   },
 
   {

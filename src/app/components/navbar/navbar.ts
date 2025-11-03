@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LanguageService } from '../../services/language-service'; // <-- Importa tu servicio
 import { BreakpointService } from '../../services/breakpoints';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -16,10 +18,14 @@ export class NavbarComponent implements OnInit {
   isMobileMenuOpen = false;
   isLanguageMenuOpen = false;
   isMobile = false;
+  isAuthenticated = false;
+  userName = '';
 
   constructor(
     public langService: LanguageService,
-    private breakpointService: BreakpointService
+    private breakpointService: BreakpointService,
+    private authService: AuthService,
+    private router: Router
   ) {} // <-- Inyección del servicio
 
   ngOnInit() {
@@ -28,6 +34,12 @@ export class NavbarComponent implements OnInit {
     // Suscribirse a los cambios de breakpoint
     this.breakpointService.isMobile$.subscribe(isMobile => {
       this.isMobile = isMobile;
+    });
+
+    // Suscribirse al estado de autenticación
+    this.authService.user$.subscribe(user => {
+      this.isAuthenticated = !!user;
+      this.userName = user?.displayName || user?.email || '';
     });
   }
 
@@ -81,5 +93,18 @@ export class NavbarComponent implements OnInit {
       : 'assets/uk-flag.webp';
   }
 
-  
+  async logout() {
+    try {
+      await this.authService.logout();
+      this.router.navigate(['/']);
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  }
+
+  goToAudiobooks() {
+    this.router.navigate(['/libro']);
+    this.closeMenus();
+  }
+
 }
