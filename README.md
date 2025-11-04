@@ -3,7 +3,7 @@
 [![Angular](https://img.shields.io/badge/Angular-17-red.svg)](https://angular.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue.svg)](https://www.typescriptlang.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green.svg)](https://fastapi.tiangolo.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Licencia: No Comercial](https://img.shields.io/badge/Licencia-No%20Comercial-orange.svg)](LICENSE)
 
 ![Vista previa del portfolio](./public/assets/RuXxDeV1.webp)
 
