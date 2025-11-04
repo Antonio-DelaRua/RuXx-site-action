@@ -239,6 +239,15 @@
   z-index: 3;
 }
 
+.btn-loading.active,
+.btn-success.active {
+  display: block;
+}
+
+.btn-text.hidden {
+  display: none;
+}
+
 .loading-dots span {
   display: inline-block;
   width: 6px;

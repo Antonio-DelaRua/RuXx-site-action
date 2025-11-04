@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { LanguageService } from '../../services/language-service'; 
+import { LanguageService } from '../../services/language-service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import emailjs from '@emailjs/browser';
 
 
 
@@ -15,13 +16,14 @@ import { CommonModule } from '@angular/common';
 })
 export class Form implements OnInit{
 
-  
- contactForm: FormGroup;
+  contactForm: FormGroup;
+  isLoading = false;
+  isSuccess = false;
 
   constructor(
     private fb: FormBuilder,
     public translate: TranslateService,
-    private languageService: LanguageService 
+    private languageService: LanguageService
     ) {
     this.contactForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(2)]],
@@ -29,13 +31,39 @@ export class Form implements OnInit{
       subject: ['', Validators.required],
       message: ['', [Validators.required, Validators.minLength(10)]]
     });
+
+    // Initialize EmailJS with your public key
+    emailjs.init('47clf-2HxwKqq2ACT');
   }
 
   onSubmit() {
     if (this.contactForm.valid) {
-      // Aquí integrarías tu servicio para enviar el correo
-      alert('¡Mensaje enviado! (Esta es una simulación)');
-      this.contactForm.reset();
+      this.isLoading = true;
+      this.isSuccess = false;
+
+      const templateParams = {
+        from_name: this.contactForm.value.name,
+        from_email: this.contactForm.value.email,
+        subject: this.contactForm.value.subject,
+        message: this.contactForm.value.message,
+        to_name: 'RuXx Developer', // Your name or recipient name
+      };
+
+      emailjs.send('service_umv0e6s', 'template_p1cqn4u', templateParams)
+        .then((response) => {
+          console.log('SUCCESS!', response.status, response.text);
+          this.isLoading = false;
+          this.isSuccess = true;
+          this.contactForm.reset();
+          // Reset success state after 3 seconds
+          setTimeout(() => {
+            this.isSuccess = false;
+          }, 3000);
+        }, (error) => {
+          console.log('FAILED...', error);
+          this.isLoading = false;
+          alert('Error al enviar el mensaje. Por favor, inténtalo de nuevo.');
+        });
     } else {
       // Marcar todos los campos como "touched" para mostrar errores de validación
       Object.keys(this.contactForm.controls).forEach(key => {

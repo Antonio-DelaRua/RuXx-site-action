@@ -81,16 +81,16 @@
     </div>
 
     <!-- Botón de envío -->
-    <button type="submit" class="btn submit-btn" [disabled]="contactForm.invalid">
-      <span class="btn-text">{{'FORM.SENDMESSAGE' | translate}}</span>
-      <div class="btn-loading">
+    <button type="submit" class="btn submit-btn" [disabled]="contactForm.invalid || isLoading">
+      <span class="btn-text" [class.hidden]="isLoading || isSuccess">{{'FORM.SENDMESSAGE' | translate}}</span>
+      <div class="btn-loading" [class.active]="isLoading">
         <div class="loading-dots">
           <span></span>
           <span></span>
           <span></span>
         </div>
       </div>
-      <div class="btn-success">
+      <div class="btn-success" [class.active]="isSuccess">
         <i class="fas fa-check"></i>
       </div>
     </button>
