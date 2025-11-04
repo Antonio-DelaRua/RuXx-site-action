@@ -1,47 +1,81 @@
-# Portfolio - Desarrollador Frontend
+# 🚀 RuXx Portfolio & Audio Book API
+
+[![Angular](https://img.shields.io/badge/Angular-17-red.svg)](https://angular.io/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue.svg)](https://www.typescriptlang.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.104-green.svg)](https://fastapi.tiangolo.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![Vista previa del portfolio](./public/assets/RuXxDeV1.webp)
 
-## 🚀 Sobre el Proyecto
+Un portfolio moderno de desarrollador frontend construido con **Angular**, acompañado de una API segura para conversión de texto a audio desarrollada con **FastAPI**.
 
-Este es el portfolio personal de un desarrollador frontend, construido con Angular. El sitio web es completamente responsivo y está optimizado para dispositivos móviles y tablets, ofreciendo una experiencia de usuario fluida en todas las plataformas.
+## 📋 Tabla de Contenidos
 
-El portfolio incluye secciones para mostrar proyectos, certificados, habilidades técnicas, y un formulario de contacto. Además, cuenta con funcionalidades interactivas como un reproductor de audio y optimización de imágenes.
+- [🎯 Características](#-características)
+- [🛠️ Tecnologías](#️-tecnologías)
+- [📦 Instalación](#-instalación)
+- [🚀 Uso](#-uso)
+- [📖 Ejemplos](#-ejemplos)
+- [🎧 Audio Book API](#-audio-book-api-secure-edition)
+- [🤝 Contribuciones](#-contribuciones)
+- [📄 Licencia](#-licencia)
+- [📧 Contacto](#-contacto)
 
-## ✨ Características
+## 🎯 Características
 
-- **Diseño Responsivo**: Adaptable a móviles, tablets y escritorio.
-- **Internacionalización (i18n)**: Soporte para múltiples idiomas (español e inglés).
-- **Componentes Interactivos**: Incluye un reproductor de audio, imágenes interactivas y formularios dinámicos.
-- **Optimización de Imágenes**: Servicio integrado para mejorar el rendimiento de las imágenes.
-- **Secciones Principales**:
-  - Hero: Presentación inicial.
-  - Proyectos: Galería de trabajos realizados.
-  - Certificados: Credenciales y logros.
-  - Contacto: Formulario para comunicación.
-  - Ruta de Aprendizaje: Sección educativa.
+### Portfolio Frontend
+- **🎨 Diseño Responsivo**: Optimizado para móviles, tablets y escritorio
+- **🌍 Internacionalización (i18n)**: Soporte para español e inglés
+- **🎵 Componentes Interactivos**: Reproductor de audio, imágenes interactivas y formularios dinámicos
+- **🖼️ Optimización de Imágenes**: Servicio integrado para mejorar rendimiento
+- **📱 PWA**: Service Worker para experiencia offline
+- **🔧 Secciones Principales**:
+  - **Hero**: Presentación inicial con animaciones
+  - **Proyectos**: Galería de trabajos realizados
+  - **Certificados**: Credenciales y logros profesionales
+  - **Contacto**: Formulario de comunicación integrado
+  - **Ruta de Aprendizaje**: Sección educativa interactiva
 
-## 🛠 Tecnologías Utilizadas
+### Audio Book API
+- **🔒 Seguridad Avanzada**: Validación MIME, antivirus ClamAV, límites de tamaño
+- **⚡ Procesamiento Seguro**: Extracción de texto en subprocesos aislados con timeouts
+- **🧹 Limpieza Automática**: Eliminación de archivos temporales
+- **🔑 Autenticación**: Endpoints protegidos con API Key
+- **📊 Logging**: Registro completo de actividades para auditoría
 
-- **Framework**: Angular
-- **Lenguajes**: TypeScript, HTML, CSS, SCSS
+## 🛠️ Tecnologías
+
+### Frontend (Portfolio)
+- **Framework**: Angular 17+
+- **Lenguajes**: TypeScript, HTML5, SCSS
 - **Herramientas**:
   - Angular CLI
+  - Angular i18n
+  - Firebase Auth
   - Service Worker (PWA)
-  - Optimización de Imágenes
-- **Dependencias**: Ver `package.json` para la lista completa.
+- **Dependencias**: Ver [`package.json`](package.json)
+
+### Backend (API)
+- **Framework**: FastAPI
+- **Lenguajes**: Python 3.8+
+- **Bibliotecas**:
+  - PyPDF2 (extracción PDF)
+  - pyttsx3 (TTS)
+  - python-magic (validación MIME)
+  - clamd (antivirus)
+  - multiprocessing (aislamiento)
 
 ## 📦 Instalación
 
-Sigue estos pasos para instalar y ejecutar el proyecto localmente:
+### Portfolio Frontend
 
 1. **Clona el repositorio**:
    ```bash
-   git clone https://github.com/tu-usuario/RuXx-site-action.git
+   git clone https://github.com/RuXx/RuXx-site-action.git
    cd RuXx-site-action
    ```
 
-2. **Instala las dependencias**:
+2. **Instala dependencias**:
    ```bash
    npm install
    ```
@@ -51,216 +85,154 @@ Sigue estos pasos para instalar y ejecutar el proyecto localmente:
    ng serve
    ```
 
-4. **Abre tu navegador** y ve a `http://localhost:4200`.
+4. **Accede**: Abre `http://localhost:4200` en tu navegador.
+
+### Audio Book API
+
+1. **Instala dependencias Python**:
+   ```bash
+   pip install fastapi uvicorn PyPDF2 pyttsx3 python-magic clamd
+   ```
+
+2. **Configura ClamAV** (opcional para producción):
+   ```bash
+   docker run -d --name clamav -p 3310:3310 mkodockx/docker-clamav:alpine
+   ```
+
+3. **Ejecuta la API**:
+   ```bash
+   uvicorn api:app --host 0.0.0.0 --port 8000 --reload
+   ```
 
 ## 🚀 Uso
 
-Una vez instalado, puedes:
+### Portfolio
+- Navega por secciones: Hero, Proyectos, Certificados, Contacto
+- Cambia idioma con controles i18n
+- Interactúa con reproductor de audio y elementos dinámicos
+- Envía mensajes vía formulario de contacto
 
-- Navegar por las diferentes secciones del portfolio.
-- Cambiar el idioma usando los controles de internacionalización.
-- Interactuar con el reproductor de audio y las imágenes.
-- Enviar mensajes a través del formulario de contacto.
-
-Para construir la aplicación para producción:
+**Construcción para producción**:
 ```bash
-ng build --prod
+ng build --configuration production
 ```
 
-Los archivos generados estarán en la carpeta `dist/`.
+### API
+- **Subir archivo**: `POST /upload-file/` con FormData
+- **Obtener audio**: `GET /audio/{file_id}.mp3`
+- **Limpiar audios**: `DELETE /audio/cleanup` (requiere API Key)
+- **Health check**: `GET /health`
 
 ## 📖 Ejemplos
 
-### Agregar un Nuevo Proyecto
+### Agregar Proyecto al Portfolio
+Edita `src/app/components/proyectos/proyectos.ts`:
 
-Para agregar un nuevo proyecto a la sección de proyectos, edita el archivo `src/app/components/proyectos/proyectos.ts` y añade un nuevo objeto al array de proyectos.
+```typescript
+export class ProyectosComponent {
+  proyectos = [
+    // ... proyectos existentes
+    {
+      titulo: 'Nuevo Proyecto',
+      descripcion: 'Descripción del proyecto',
+      imagen: 'assets/proyecto.jpg',
+      enlace: 'https://github.com/usuario/proyecto'
+    }
+  ];
+}
+```
 
-### Personalizar el Tema
+### Personalizar Tema
+Modifica `src/styles.css` o componentes individuales:
 
-Modifica los estilos en `src/styles.css` o en los archivos CSS de componentes individuales para cambiar colores, fuentes, etc.
+```scss
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+}
+```
+
+### Uso de la API
+```python
+import requests
+
+# Subir archivo
+files = {'file': open('documento.pdf', 'rb')}
+response = requests.post('http://127.0.0.1:8000/upload-file/', files=files)
+data = response.json()
+audio_url = data['audio_url']
+```
+
+## 🎧 Audio Book API (Secure Edition)
+
+API robusta para conversión de documentos a audio con medidas de seguridad avanzadas.
+
+### 🛡️ Medidas de Seguridad
+
+| Medida | Descripción |
+|--------|-------------|
+| **Validación MIME** | Verificación real del tipo de archivo con `python-magic` |
+| **Límite de Tamaño** | Máximo configurable (10MB por defecto) |
+| **Antivirus ClamAV** | Escaneo automático de malware |
+| **Aislamiento de Procesos** | Extracción en subprocesos con timeout |
+| **Limpieza Automática** | Eliminación de archivos temporales |
+| **API Key** | Autenticación para endpoints administrativos |
+| **UUIDs** | Nombres de archivos aleatorios |
+| **Cabeceras Seguras** | Headers HTTP para prevenir ataques |
+| **CORS Restringido** | Dominios permitidos explícitamente |
+| **Logging** | Registro de actividades para auditoría |
+
+### ⚙️ Variables de Entorno
+
+| Variable | Descripción | Ejemplo |
+|----------|-------------|---------|
+| `MAX_UPLOAD_SIZE` | Tamaño máximo en bytes | `10485760` |
+| `ADMIN_KEY` | Clave para endpoints admin | `secure_key_here` |
+| `CLAMAV_HOST` | Host ClamAV | `clamav` |
+| `CLAMAV_PORT` | Puerto ClamAV | `3310` |
+
+### 🧪 Endpoints
+
+| Método | Endpoint | Descripción | Seguridad |
+|--------|----------|-------------|----------|
+| `POST` | `/upload-file/` | Subir PDF/TXT para conversión | Validación completa |
+| `GET` | `/audio/{file_id}.mp3` | Descargar audio generado | Archivos aislados |
+| `DELETE` | `/audio/cleanup` | Limpiar todos los audios | API Key requerida |
+| `GET` | `/health` | Estado de la API | Público |
+
+### 🚀 Despliegue en Producción
+
+- Usa HTTPS con NGINX/Traefik/Caddy
+- Configura variables de entorno de forma segura
+- Ejecuta ClamAV en contenedor Docker
+- Desactiva `--reload` en producción
+- Monitorea logs y almacenamiento
 
 ## 🤝 Contribuciones
 
-¡Las contribuciones son bienvenidas! Si deseas mejorar este proyecto:
+¡Contribuciones bienvenidas! Sigue estos pasos:
 
-1. Haz un fork del repositorio.
-2. Crea una rama para tu feature (`git checkout -b feature/nueva-funcionalidad`).
-3. Realiza tus cambios y haz commit (`git commit -am 'Agrega nueva funcionalidad'`).
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`).
-5. Abre un Pull Request.
+1. **Fork** el repositorio
+2. **Crea** una rama: `git checkout -b feature/nueva-funcionalidad`
+3. **Commit** cambios: `git commit -m 'Agrega nueva funcionalidad'`
+4. **Push** a la rama: `git push origin feature/nueva-funcionalidad`
+5. **Abre** un Pull Request
 
-Por favor, asegúrate de que tu código siga las mejores prácticas de Angular y esté bien documentado.
+Asegúrate de seguir las mejores prácticas de Angular y FastAPI.
 
 ## 📄 Licencia
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+Este proyecto está bajo la **Licencia MIT**. Ver [`LICENSE`](LICENSE) para detalles.
 
 ## 📧 Contacto
 
-Si tienes preguntas o sugerencias, puedes contactarme a través de:
+**Antonio De la Rua Fernández**
 
-- Email: tu-email@example.com
-- LinkedIn: [Tu Perfil](https://linkedin.com/in/tu-perfil)
-- Sitio Web: [Tu Portfolio](https://tu-portfolio.com)
-
----
-# 🎧 Audio Book API (Secure Edition)
-
-Una API desarrollada con **FastAPI** que permite subir archivos `.pdf` o `.txt`, extraer su texto y convertirlo en audio (`.mp3`) mediante **pyttsx3**.
-
-> ⚡ Esta versión incluye un conjunto completo de **medidas de seguridad y buenas prácticas** para evitar vulnerabilidades comunes en servicios de subida y procesamiento de archivos.
+- **Email**: [ruxxdeveloper@gmail.com](mailto:ruxxdeveloper@gmail.com)
+- **LinkedIn**: [Tu Perfil](https://www.linkedin.com/in/antonio-de-la-rua-fernandez-508b98243/)
+- **Sitio Web**: [Tu Portfolio](https://ruxx.devspn.tech/)
+- **GitHub**: [@RuXx](https://github.com/Antonio-DelaRua)
 
 ---
 
-## 🛡️ Medidas de Seguridad Implementadas
-
-### 1️⃣ Validación de tipo de archivo (MIME y extensión)
-- Solo se permiten archivos **PDF** y **TXT**.
-- Se valida tanto la **extensión** como el **tipo MIME real** usando `python-magic`.
-- Evita que un atacante suba archivos maliciosos disfrazados.
-
-```python
-verify_mime(upload_path)
-2️⃣ Límite de tamaño máximo (MAX_UPLOAD_SIZE)
-Configurable mediante variable de entorno.
-
-Por defecto, máximo 10 MB (10485760 bytes).
-
-Evita ataques de denegación de servicio (DoS) por subida de archivos grandes.
-
-python
-Copiar código
-MAX_UPLOAD_SIZE = int(os.getenv("MAX_UPLOAD_SIZE", 10 * 1024 * 1024))
-3️⃣ Escaneo antivirus con ClamAV
-Cada archivo subido se analiza con ClamAV antes de procesarse.
-
-Si se detecta malware, se rechaza automáticamente con error 400.
-
-El antivirus se ejecuta en un contenedor Docker aislado, evitando riesgos en el host.
-
-python
-Copiar código
-scan_with_clamav(upload_path)
-4️⃣ Aislamiento y timeout en la extracción de PDFs
-La extracción de texto se realiza en un subproceso separado (multiprocessing).
-
-Se aplica un tiempo límite (timeout) para evitar bloqueos por archivos maliciosos o PDF corruptos.
-
-Si el proceso excede el tiempo configurado, se cancela automáticamente.
-
-5️⃣ Limpieza de archivos temporales
-Todos los archivos subidos se eliminan una vez procesados.
-
-En caso de error durante la conversión, los archivos temporales también se eliminan.
-
-Evita filtraciones o acumulación de datos sensibles.
-
-6️⃣ Endpoint /audio/cleanup protegido con API Key
-Requiere una clave privada segura definida en la variable de entorno ADMIN_KEY.
-
-Previene accesos no autorizados que podrían eliminar archivos de otros usuarios.
-
-La clave no está incluida en el código y debe mantenerse privada.
-
-python
-Copiar código
-if api_key != ADMIN_KEY:
-    raise HTTPException(status_code=401, detail="No autorizado")
-7️⃣ Nombres de archivos aleatorios (UUID)
-Todos los archivos se renombran con identificadores únicos (UUID) antes de ser procesados.
-
-Evita ataques de enumeración y acceso no autorizado a otros archivos.
-
-python
-Copiar código
-file_id = str(uuid.uuid4())
-8️⃣ Cabeceras HTTP seguras
-Añadidas mediante middleware para reforzar la seguridad del navegador y reducir el riesgo de ataques XSS o clickjacking.
-
-python
-Copiar código
-response.headers["X-Content-Type-Options"] = "nosniff"
-response.headers["X-Frame-Options"] = "DENY"
-response.headers["Referrer-Policy"] = "no-referrer"
-response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
-9️⃣ CORS restringido
-Solo se permiten peticiones desde dominios explícitamente definidos (por ejemplo, tu aplicación Angular local).
-
-python
-Copiar código
-allow_origins=[
-    "http://localhost:4200",
-    "http://localhost:4201"
-]
-🔟 Registro de actividad (logging)
-Se registra cada subida con el nombre del archivo e IP de origen del cliente.
-
-Permite auditoría y detección de patrones sospechosos o abusos.
-
-⚙️ Variables de entorno
-Variable	Descripción	Ejemplo
-MAX_UPLOAD_SIZE	Tamaño máximo permitido para archivos en bytes	10485760
-ADMIN_KEY	Clave privada para acceder a /audio/cleanup	************
-CLAMAV_HOST	Host del servicio ClamAV (opcional)	clamav
-CLAMAV_PORT	Puerto ClamAV (opcional)	3310
-
-⚠️ Importante: Nunca publiques tu ADMIN_KEY ni la incluyas en tu repositorio.
-Usa un archivo .env privado o configura la variable directamente en tu entorno de ejecución.
-
-🐳 Integración con Docker (ClamAV)
-Ejecuta ClamAV en un contenedor aislado:
-
-bash
-Copiar código
-docker run -d --name clamav -p 3310:3310 mkodockx/docker-clamav:alpine
-O usa docker-compose.yml:
-
-yaml
-Copiar código
-version: "3.8"
-
-services:
-  clamav:
-    image: mkodockx/docker-clamav:alpine
-    container_name: clamav
-    ports:
-      - "3310:3310"
-🧪 Endpoints principales
-Método	Ruta	Descripción	Seguridad
-POST	/upload-file/	Sube un archivo .pdf o .txt para convertirlo en audio	Validación, antivirus, límite de tamaño
-GET	/audio/{file_id}.mp3	Obtiene el audio generado	Archivos aislados
-DELETE	/audio/cleanup	Limpia todos los audios generados	Requiere X-API-Key
-GET	/health	Comprueba el estado de la API	Público
-
-🚀 Despliegue seguro en producción
-Usa HTTPS (por ejemplo, con NGINX, Traefik o Caddy).
-
-Configura las variables de entorno en tu servidor (no en el código fuente).
-
-Ejecuta el servicio ClamAV en contenedor Docker o en otro host seguro.
-
-Desactiva --reload en producción (uvicorn api:app --host 0.0.0.0 --port 8000).
-
-Monitorea logs y tamaño del almacenamiento regularmente.
-
-🧠 Stack técnico
-FastAPI — Framework web principal
-
-Uvicorn — Servidor ASGI
-
-PyPDF2 — Extracción de texto de PDF
-
-pyttsx3 — Conversión de texto a voz
-
-python-magic — Validación de tipo MIME
-
-clamd — Escaneo antivirus
-
-multiprocessing — Aislamiento de tareas
-
-🩵 Autor
-Desarrollador Full Stack
-(Clave y datos privados excluidos para seguridad)
-
-
-¡Gracias por visitar mi portfolio! Espero que te inspire en tus propios proyectos.
+⭐ **¡Gracias por visitar mi portfolio!** Espero que te inspire en tus proyectos.
