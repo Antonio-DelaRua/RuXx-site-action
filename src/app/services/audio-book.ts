@@ -76,7 +76,7 @@ export class AudioBookService {
   }
 
   getAudioUrl(fileId: string): string {
-    return `${this.apiUrl}/audio/${fileId}.mp3`;
+    return `${this.apiUrl}/audio/${fileId}.mp3?nocache=${Date.now()}`;
   }
 
   cleanupAudioFiles(): Observable<any> {

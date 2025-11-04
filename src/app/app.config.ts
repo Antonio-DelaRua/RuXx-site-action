@@ -9,6 +9,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ApiKeyInterceptor } from './api-key.interceptor';
 
 
 
@@ -24,6 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi()),
     FormsModule,
     HttpClientModule,
+    { provide: HTTP_INTERCEPTORS, useClass: ApiKeyInterceptor, multi: true },
 
     // Firebase configuration
     provideFirebaseApp(() => initializeApp(environment.firebase)),
