@@ -22,7 +22,7 @@ export interface UploadProgress {
   providedIn: 'root'
 })
 export class AudioBookService {
-  private apiUrl = 'http://localhost:8000';
+  private apiUrl = 'http://127.0.0.1:8000';
   private uploadTimeout = 300000; // 5 minutos para conversión larga
   private audioTimeout = 30000; // 30 segundos para cargar audio
 

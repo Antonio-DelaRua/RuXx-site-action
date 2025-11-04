@@ -104,5 +104,163 @@ Si tienes preguntas o sugerencias, puedes contactarme a través de:
 - Sitio Web: [Tu Portfolio](https://tu-portfolio.com)
 
 ---
+# 🎧 Audio Book API (Secure Edition)
+
+Una API desarrollada con **FastAPI** que permite subir archivos `.pdf` o `.txt`, extraer su texto y convertirlo en audio (`.mp3`) mediante **pyttsx3**.
+
+> ⚡ Esta versión incluye un conjunto completo de **medidas de seguridad y buenas prácticas** para evitar vulnerabilidades comunes en servicios de subida y procesamiento de archivos.
+
+---
+
+## 🛡️ Medidas de Seguridad Implementadas
+
+### 1️⃣ Validación de tipo de archivo (MIME y extensión)
+- Solo se permiten archivos **PDF** y **TXT**.
+- Se valida tanto la **extensión** como el **tipo MIME real** usando `python-magic`.
+- Evita que un atacante suba archivos maliciosos disfrazados.
+
+```python
+verify_mime(upload_path)
+2️⃣ Límite de tamaño máximo (MAX_UPLOAD_SIZE)
+Configurable mediante variable de entorno.
+
+Por defecto, máximo 10 MB (10485760 bytes).
+
+Evita ataques de denegación de servicio (DoS) por subida de archivos grandes.
+
+python
+Copiar código
+MAX_UPLOAD_SIZE = int(os.getenv("MAX_UPLOAD_SIZE", 10 * 1024 * 1024))
+3️⃣ Escaneo antivirus con ClamAV
+Cada archivo subido se analiza con ClamAV antes de procesarse.
+
+Si se detecta malware, se rechaza automáticamente con error 400.
+
+El antivirus se ejecuta en un contenedor Docker aislado, evitando riesgos en el host.
+
+python
+Copiar código
+scan_with_clamav(upload_path)
+4️⃣ Aislamiento y timeout en la extracción de PDFs
+La extracción de texto se realiza en un subproceso separado (multiprocessing).
+
+Se aplica un tiempo límite (timeout) para evitar bloqueos por archivos maliciosos o PDF corruptos.
+
+Si el proceso excede el tiempo configurado, se cancela automáticamente.
+
+5️⃣ Limpieza de archivos temporales
+Todos los archivos subidos se eliminan una vez procesados.
+
+En caso de error durante la conversión, los archivos temporales también se eliminan.
+
+Evita filtraciones o acumulación de datos sensibles.
+
+6️⃣ Endpoint /audio/cleanup protegido con API Key
+Requiere una clave privada segura definida en la variable de entorno ADMIN_KEY.
+
+Previene accesos no autorizados que podrían eliminar archivos de otros usuarios.
+
+La clave no está incluida en el código y debe mantenerse privada.
+
+python
+Copiar código
+if api_key != ADMIN_KEY:
+    raise HTTPException(status_code=401, detail="No autorizado")
+7️⃣ Nombres de archivos aleatorios (UUID)
+Todos los archivos se renombran con identificadores únicos (UUID) antes de ser procesados.
+
+Evita ataques de enumeración y acceso no autorizado a otros archivos.
+
+python
+Copiar código
+file_id = str(uuid.uuid4())
+8️⃣ Cabeceras HTTP seguras
+Añadidas mediante middleware para reforzar la seguridad del navegador y reducir el riesgo de ataques XSS o clickjacking.
+
+python
+Copiar código
+response.headers["X-Content-Type-Options"] = "nosniff"
+response.headers["X-Frame-Options"] = "DENY"
+response.headers["Referrer-Policy"] = "no-referrer"
+response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+9️⃣ CORS restringido
+Solo se permiten peticiones desde dominios explícitamente definidos (por ejemplo, tu aplicación Angular local).
+
+python
+Copiar código
+allow_origins=[
+    "http://localhost:4200",
+    "http://localhost:4201"
+]
+🔟 Registro de actividad (logging)
+Se registra cada subida con el nombre del archivo e IP de origen del cliente.
+
+Permite auditoría y detección de patrones sospechosos o abusos.
+
+⚙️ Variables de entorno
+Variable	Descripción	Ejemplo
+MAX_UPLOAD_SIZE	Tamaño máximo permitido para archivos en bytes	10485760
+ADMIN_KEY	Clave privada para acceder a /audio/cleanup	************
+CLAMAV_HOST	Host del servicio ClamAV (opcional)	clamav
+CLAMAV_PORT	Puerto ClamAV (opcional)	3310
+
+⚠️ Importante: Nunca publiques tu ADMIN_KEY ni la incluyas en tu repositorio.
+Usa un archivo .env privado o configura la variable directamente en tu entorno de ejecución.
+
+🐳 Integración con Docker (ClamAV)
+Ejecuta ClamAV en un contenedor aislado:
+
+bash
+Copiar código
+docker run -d --name clamav -p 3310:3310 mkodockx/docker-clamav:alpine
+O usa docker-compose.yml:
+
+yaml
+Copiar código
+version: "3.8"
+
+services:
+  clamav:
+    image: mkodockx/docker-clamav:alpine
+    container_name: clamav
+    ports:
+      - "3310:3310"
+🧪 Endpoints principales
+Método	Ruta	Descripción	Seguridad
+POST	/upload-file/	Sube un archivo .pdf o .txt para convertirlo en audio	Validación, antivirus, límite de tamaño
+GET	/audio/{file_id}.mp3	Obtiene el audio generado	Archivos aislados
+DELETE	/audio/cleanup	Limpia todos los audios generados	Requiere X-API-Key
+GET	/health	Comprueba el estado de la API	Público
+
+🚀 Despliegue seguro en producción
+Usa HTTPS (por ejemplo, con NGINX, Traefik o Caddy).
+
+Configura las variables de entorno en tu servidor (no en el código fuente).
+
+Ejecuta el servicio ClamAV en contenedor Docker o en otro host seguro.
+
+Desactiva --reload en producción (uvicorn api:app --host 0.0.0.0 --port 8000).
+
+Monitorea logs y tamaño del almacenamiento regularmente.
+
+🧠 Stack técnico
+FastAPI — Framework web principal
+
+Uvicorn — Servidor ASGI
+
+PyPDF2 — Extracción de texto de PDF
+
+pyttsx3 — Conversión de texto a voz
+
+python-magic — Validación de tipo MIME
+
+clamd — Escaneo antivirus
+
+multiprocessing — Aislamiento de tareas
+
+🩵 Autor
+Desarrollador Full Stack
+(Clave y datos privados excluidos para seguridad)
+
 
 ¡Gracias por visitar mi portfolio! Espero que te inspire en tus propios proyectos.
