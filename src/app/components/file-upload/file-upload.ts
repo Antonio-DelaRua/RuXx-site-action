@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import { AudioBookService, UploadResponse, UploadProgress } from '../../services/audio-book';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-file-upload',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './file-upload.html',
   styleUrls: ['./file-upload.css']
 })

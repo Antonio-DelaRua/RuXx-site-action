@@ -670,3 +670,25 @@
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #5a6fd8, #6b46c1);
 }
+
+
+
+
+.back-home-btn {
+  position: absolute;
+  right: 3rem; /* pegado a la izquierda */
+  top: 50%;
+  transform: translateY(-50%); /* centra verticalmente */
+  background-color: #fff;
+  color: rgb(65, 64, 64);
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.back-home-btn:hover {
+  background-color: #a0a0a0;
+}
