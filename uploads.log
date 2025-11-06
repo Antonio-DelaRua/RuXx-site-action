@@ -56,3 +56,12 @@
 2025-11-06 20:02:59,000 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
 2025-11-06 20:02:59,001 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
 2025-11-06 20:05:00,679 INFO Uploaded processed: file_id=b884d000-fbf5-40cf-a941-b9180e1fa197, original=matatrolls.txt, size=1477572810, audio=b884d000-fbf5-40cf-a941-b9180e1fa197.mp3
+2025-11-06 21:32:43,228 INFO Upload request: filename=Matatrolls.pdf, ext=.pdf, ip=127.0.0.1
+2025-11-06 21:36:50,255 INFO Upload request: filename=matatrolls.txt, ext=.txt, ip=127.0.0.1
+2025-11-06 21:36:51,178 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-11-06 21:36:51,179 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
+2025-11-06 21:39:14,950 INFO Uploaded processed: file_id=93161a5e-948b-4497-bf81-c513c80c2f13, original=matatrolls.txt, size=2023375588, audio=93161a5e-948b-4497-bf81-c513c80c2f13.mp3
+2025-11-06 21:56:30,520 INFO Upload request: filename=archivo_sin_saltos.txt, ext=.txt, ip=127.0.0.1
+2025-11-06 21:56:31,494 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-11-06 21:56:31,494 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
+2025-11-06 21:58:36,413 INFO Uploaded processed: file_id=4ef7552b-58bc-4b72-ad5d-a81dff0fdc93, original=archivo_sin_saltos.txt, size=1748548846, audio=4ef7552b-58bc-4b72-ad5d-a81dff0fdc93.mp3

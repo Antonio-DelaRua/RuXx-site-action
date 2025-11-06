@@ -21,6 +21,24 @@ import pyttsx3
 import magic  # pip install python-magic (or python-magic-bin on Windows)
 import clamd  # pip install clamd
 
+import re
+
+def prepare_text_for_tts(text: str) -> str:
+    """
+    Mejora el texto para pyttsx3: añade pausas naturales y limpia saltos raros.
+    """
+    # Reemplaza saltos de línea por pausas largas
+    text = re.sub(r'\n+', '. ', text)
+    
+    # Añade una pequeña pausa después de comas y puntos
+    text = re.sub(r'([,;:])', r'\1 ', text)
+    text = re.sub(r'([.?!])', r'\1  ', text)
+
+    # Elimina espacios repetidos
+    text = re.sub(r'\s+', ' ', text)
+
+    return text.strip()
+
 # Config
 UPLOAD_DIR = Path("uploads")
 AUDIO_DIR = Path("audio_files")
@@ -165,7 +183,8 @@ def tts_worker(text: str, output_path: str, q: Queue):
         engine = pyttsx3.init()
         engine.setProperty('rate', 150)
         engine.setProperty('volume', 0.9)
-        engine.save_to_file(text, output_path)
+        processed_text = prepare_text_for_tts(text)
+        engine.save_to_file(processed_text, output_path)
         engine.runAndWait()
         q.put({"ok": True})
     except Exception as e:
