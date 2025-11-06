@@ -7,7 +7,7 @@
   justify-content: center;
   color: white;
   overflow: hidden;
-  background-image: url('/assets/audioli.jpg'); /* Cambia por tu imagen */
+  background-image: url('/assets/audiolibro.jpg'); /* Cambia por tu imagen */
   background-size: cover;
   background-position: center;
   background-attachment: fixed; /* Parallax effect */

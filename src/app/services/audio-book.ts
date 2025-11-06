@@ -24,8 +24,10 @@ export interface UploadProgress {
 export class AudioBookService {
   private apiUrl = 'http://127.0.0.1:8000';
   private uploadTimeout = 300000; // 5 minutos para conversión larga
-  private audioTimeout = 30000; // 30 segundos para cargar audio
+  private audioTimeout = 60000; // 60 segundos para cargar audio
 
+
+  
   constructor(private http: HttpClient) { }
 
   uploadFile(file: File): Observable<UploadResponse> {
@@ -77,6 +79,14 @@ export class AudioBookService {
 
   getAudioUrl(fileId: string): string {
     return `${this.apiUrl}/audio/${fileId}.mp3?nocache=${Date.now()}`;
+  }
+
+    getAudio(fileId: string): Observable<Blob> {
+    const audioUrl = `${this.apiUrl}/audio/${fileId}.mp3?nocache=${Date.now()}`;
+    return this.http.get(audioUrl, { responseType: 'blob' }).pipe(
+      timeout(this.audioTimeout),
+      catchError(this.handleError.bind(this))
+    );
   }
 
   cleanupAudioFiles(): Observable<any> {

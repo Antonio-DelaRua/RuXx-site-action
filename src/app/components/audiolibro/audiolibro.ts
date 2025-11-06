@@ -18,4 +18,16 @@ import { trigger, style, animate, transition } from '@angular/animations';
     ]),
   ],
 })
-export class Audiolibro {}
+export class Audiolibro {
+  isLoaded = false;
+
+  constructor() {}
+
+  ngOnInit(): void {
+    // 🔹 Puedes activar animaciones o cargar datos aquí
+    setTimeout(() => {
+      this.isLoaded = true;
+    }, 300);
+  }
+}
+

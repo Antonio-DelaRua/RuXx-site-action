@@ -15,3 +15,44 @@
 2025-11-04 03:29:19,243 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
 2025-11-04 03:29:19,243 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
 2025-11-04 03:29:20,363 INFO Uploaded processed: file_id=c16f21a6-f687-4919-ab75-a408f73c0dd7, original=comandos.txt, size=3004892, audio=c16f21a6-f687-4919-ab75-a408f73c0dd7.mp3
+2025-11-04 15:53:31,663 INFO Upload request: filename=comandos.txt, ext=.txt, ip=127.0.0.1
+2025-11-04 15:53:34,002 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-11-04 15:53:34,002 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
+2025-11-04 15:53:34,936 INFO Uploaded processed: file_id=84455a15-5628-495f-8906-974255f2fd9c, original=comandos.txt, size=3004892, audio=84455a15-5628-495f-8906-974255f2fd9c.mp3
+2025-11-04 15:54:07,433 INFO Cleanup executed, deleted: ['84455a15-5628-495f-8906-974255f2fd9c.mp3']
+2025-11-04 16:14:09,358 INFO Upload request: filename=comandos.txt, ext=.txt, ip=127.0.0.1
+2025-11-04 16:14:10,404 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-11-04 16:14:10,405 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
+2025-11-04 16:14:10,993 INFO Uploaded processed: file_id=55a1f8ee-3398-4acc-9192-67362c518d0f, original=comandos.txt, size=3004892, audio=55a1f8ee-3398-4acc-9192-67362c518d0f.mp3
+2025-11-04 20:57:50,172 INFO Upload request: filename=requeriments.txt, ext=.txt, ip=127.0.0.1
+2025-11-04 20:57:51,241 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-11-04 20:57:51,242 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
+2025-11-04 20:57:51,936 INFO Uploaded processed: file_id=54a1da45-d625-434e-bb4d-7324901ce598, original=requeriments.txt, size=1505260, audio=54a1da45-d625-434e-bb4d-7324901ce598.mp3
+2025-11-05 19:38:36,926 INFO Upload request: filename=Matatrolls.pdf, ext=.pdf, ip=127.0.0.1
+2025-11-05 19:38:39,023 ERROR Error al escanear con ClamAV: Error 10061 connecting 127.0.0.1:3310. No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+2025-11-05 19:38:54,356 INFO Upload request: filename=Matatrolls.pdf, ext=.pdf, ip=127.0.0.1
+2025-11-05 19:39:41,854 INFO Upload request: filename=Matatrolls.pdf, ext=.pdf, ip=127.0.0.1
+2025-11-05 20:16:34,619 INFO Upload request: filename=Matatrolls.pdf, ext=.pdf, ip=127.0.0.1
+2025-11-05 21:07:23,226 INFO Upload request: filename=matatrolls.txt, ext=.txt, ip=127.0.0.1
+2025-11-05 21:07:24,299 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-11-05 21:07:24,300 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
+2025-11-06 18:28:35,960 INFO Upload request: filename=matatrolls.txt, ext=.txt, ip=127.0.0.1
+2025-11-06 18:28:37,321 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-11-06 18:28:37,321 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
+2025-11-06 19:06:32,162 INFO Chunk 1/1 recibido: matatrolls.txt
+2025-11-06 19:06:32,182 INFO Chunk 1/1 recibido: matatrolls.txt
+2025-11-06 19:06:52,342 INFO Chunk 1/1 recibido: matatrolls.txt
+2025-11-06 19:06:52,364 INFO Chunk 1/1 recibido: matatrolls.txt
+2025-11-06 19:15:52,821 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-11-06 19:15:52,828 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
+2025-11-06 19:20:24,516 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-11-06 19:20:24,517 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
+2025-11-06 19:43:58,084 INFO Upload request: filename=Matatrolls.pdf, ext=.pdf, ip=127.0.0.1
+2025-11-06 19:47:34,938 INFO Upload request: filename=Matatrolls.pdf, ext=.pdf, ip=127.0.0.1
+2025-11-06 19:51:39,224 INFO Upload request: filename=Matatrolls.pdf, ext=.pdf, ip=127.0.0.1
+2025-11-06 19:54:10,700 INFO Upload request: filename=Matatrolls.pdf, ext=.pdf, ip=127.0.0.1
+2025-11-06 19:58:51,378 INFO Upload request: filename=Matatrolls.pdf, ext=.pdf, ip=127.0.0.1
+2025-11-06 20:02:57,453 INFO Upload request: filename=matatrolls.txt, ext=.txt, ip=127.0.0.1
+2025-11-06 20:02:59,000 INFO Imported existing <module 'comtypes.gen' from 'C:\\Users\\RuXx\\Desktop\\RuXx-site-action\\.venv\\Lib\\site-packages\\comtypes\\gen\\__init__.py'>
+2025-11-06 20:02:59,001 INFO Using writeable comtypes cache directory: 'C:\Users\RuXx\Desktop\RuXx-site-action\.venv\Lib\site-packages\comtypes\gen'
+2025-11-06 20:05:00,679 INFO Uploaded processed: file_id=b884d000-fbf5-40cf-a941-b9180e1fa197, original=matatrolls.txt, size=1477572810, audio=b884d000-fbf5-40cf-a941-b9180e1fa197.mp3

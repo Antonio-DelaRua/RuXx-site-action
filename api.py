@@ -232,7 +232,7 @@ async def upload_file(file: UploadFile = File(...), request: Request = None):
 
         # Extraer texto
         if file_extension == '.pdf':
-            text = extract_text_from_pdf_with_timeout(str(tmp_path), timeout=20)
+            text = extract_text_from_pdf_with_timeout(str(tmp_path), timeout=220)
         else:  # .txt
             text = read_text_file(str(tmp_path))
 
@@ -241,7 +241,7 @@ async def upload_file(file: UploadFile = File(...), request: Request = None):
 
         # Generar audio en ubicación temporal
         tmp_audio_path = Path(tmp_dir) / f"{file_id}.mp3"
-        text_to_speech_with_timeout(text, str(tmp_audio_path), timeout=90)
+        text_to_speech_with_timeout(text, str(tmp_audio_path), timeout=190)
 
         # Mover audio a carpeta final con nombre opaco
         final_audio_name = f"{file_id}.mp3"
