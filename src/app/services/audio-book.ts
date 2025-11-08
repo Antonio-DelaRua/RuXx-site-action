@@ -5,11 +5,14 @@ import { map, catchError, timeout } from 'rxjs/operators';
 
 
 export interface UploadResponse {
-  file_id: string;
-  original_filename: string;
+  file_id?: string;
+  original_filename?: string;
   text_length: number;
-  audio_url: string;
-  text_preview: string;
+  audio_url?: string;
+  text_preview?: string;
+  id: number;
+  title: string;
+  upload_date: string;
 }
 
 export interface UploadProgress {
@@ -30,12 +33,9 @@ export class AudioBookService {
   
   constructor(private http: HttpClient) { }
 
-  uploadFile(file: File): Observable<UploadResponse> {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    return this.http.post<UploadResponse>(
-      `${this.apiUrl}/upload-file/`, 
+  uploadFile(formData: FormData): Observable<any> {
+    return this.http.post<any>(
+      `${this.apiUrl}/upload`,
       formData
     ).pipe(
       timeout(this.uploadTimeout),

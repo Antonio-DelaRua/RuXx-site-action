@@ -1,18 +1,40 @@
-<section class="banner">
-  <div class="overlay"></div>
 
-  <div class="banner-content">
-    <div class="banner-left" @fadeInUp>
-      <h1>Descubre mi audiolibro personal</h1>
-      <p>Es una herramienta que convierte archivos PDF o TXT en audiolibros automáticamente.</p>
-      
-    </div>
 
-    <div class="banner-right" @fadeInUp>
-      <p>🔒 Para acceder al lector debes iniciar sesión con tu cuenta google</p>
-      <button routerLink="/libro">
-        <span>AudioLibro</span>
-      </button>
+<section class="books-section" *ngIf="books.length > 0">
+  <div class="container">
+    <h2>Mis Audiolibros</h2>
+    <div class="books-grid">
+      <div class="book-card" *ngFor="let book of books" @fadeInUp>
+        <div class="book-header">
+          <h3>{{ book.title }}</h3>
+          <small>{{ book.upload_date | date:'short' }}</small>
+        </div>
+        <div class="book-details">
+          <p>{{ book.text_length }} caracteres</p>
+        </div>
+        <div class="book-actions">
+          <button
+            class="btn btn-primary"
+            (click)="playBook(book)"
+            [disabled]="isPlaying && currentPlayingBook?.id !== book.id">
+            <span *ngIf="currentPlayingBook?.id === book.id && isPlaying">⏸️ Pausar</span>
+            <span *ngIf="currentPlayingBook?.id !== book.id || !isPlaying">▶️ Reproducir</span>
+          </button>
+          <button class="btn btn-danger" (click)="deleteBook(book)">
+            🗑️ Eliminar
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
+
+<section class="empty-state" *ngIf="books.length === 0">
+  <div class="container">
+    <h2>No hay libros aún</h2>
+    <p>Sube tu primer archivo PDF o TXT para comenzar.</p>
+    <button routerLink="/upload" class="btn btn-primary">
+      Subir Libro
+    </button>
   </div>
 </section>

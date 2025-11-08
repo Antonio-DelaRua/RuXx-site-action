@@ -1,131 +1,197 @@
-/* --- Fondo parallax --- */
+/* Banner styles */
 .banner {
   position: relative;
-  height: 50vh;
+  height: 60vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
+  text-align: center;
   overflow: hidden;
-  background-image: url('/assets/audiolibro.jpg'); /* Cambia por tu imagen */
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed; /* Parallax effect */
 }
 
-/* --- Capa semitransparente --- */
 .overlay {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(20, 20, 20, 0.5);
-  z-index: 1;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-/* --- Contenido principal --- */
 .banner-content {
   position: relative;
   z-index: 2;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
-  max-width: 1100px;
-  flex-wrap: wrap;
-  gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 2rem;
 }
 
-/* --- Lado izquierdo --- */
-.banner-left {
-  flex: 1 1 45%;
+.banner-left, .banner-right {
+  flex: 1;
+  padding: 2rem;
 }
 
 .banner-left h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
 }
 
-.banner-right button {
- position: relative;
-   width: 15rem;
-   height: 2.5rem;
-   border-radius: 50px;
-background: linear-gradient(to right, #656565, #7f42a7, #6600c5, #5300a0, #fafafa, #757575, #656565);
-   background-size: 200%;
-   animation: animationGradient 2.5s linear infinite;
-   box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-   border: none;
-   cursor: pointer;
-   color: white;
-   font-weight: 600;
-   font-size: 1rem;
-   transition: all 0.3s ease;
-   position: relative;
-   overflow: hidden;
- }
-
- .banner-right button::before {
-   content: '';
-   position: absolute;
-   inset: 3px 3px 3px 3px;
-   background-color: black;
-   border-radius: 50px;
-   transition: 0.5s ease;
-   z-index: 1;
- }
-
- .banner-right button span {
-   position: relative;
-   z-index: 2;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   width: 100%;
-   height: 100%;
- }
-
- .banner-right button:hover::before {
-   color: #5300a0;
- }
-
- .banner-right button:hover {
-   transform: scale(1.05);
-   box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
- }
-
-/* --- Lado derecho --- */
-.banner-right {
-  flex: 1 1 45%;
-  text-align: left;
+.banner-left p {
   font-size: 1.2rem;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.banner button {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.banner button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+/* Books section */
+.books-section {
+  padding: 4rem 0;
+  background: #f8f9fa;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.books-section h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #333;
+  font-size: 2.5rem;
+}
+
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.book-card {
+  background: white;
   border-radius: 10px;
-  backdrop-filter: blur(6px);
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* --- Animación del gradiente --- */
-@keyframes animationGradient {
-  to {
-    background-position: 200%;
-  }
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* --- Responsivo --- */
+.book-header h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  font-size: 1.3rem;
+}
+
+.book-header small {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.book-details p {
+  margin: 1rem 0;
+  color: #555;
+}
+
+.book-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.btn-primary {
+  background: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #0056b3;
+}
+
+.btn-danger {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #c82333;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Empty state */
+.empty-state {
+  padding: 4rem 0;
+  text-align: center;
+  background: white;
+}
+
+.empty-state h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .banner-content {
     flex-direction: column;
     text-align: center;
   }
 
-  .banner-right {
-    text-align: center;
+  .banner-left h1 {
+    font-size: 2rem;
   }
 
-  .banner-left h1 {
-    font-size: 2.2rem;
+  .books-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .book-actions {
+    flex-direction: column;
   }
 }

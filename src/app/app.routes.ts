@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { FileUploadComponent } from './components/file-upload/file-upload';
 import { LoginComponent } from './components/login/login';
+import { Audiolibro } from './components/audiolibro/audiolibro';
 import { AuthGuard } from './guards/auth.guard';
 
 
@@ -19,8 +20,15 @@ export const routes: Routes = [
 
    {
     path: 'libro',
+    component: Audiolibro,
+    title: 'Mis Audiolibros',
+    canActivate: [AuthGuard]
+  },
+
+  {
+    path: 'upload',
     component: FileUploadComponent,
-    title: 'Lector de Audiolibros',
+    title: 'Subir Audiolibro',
     canActivate: [AuthGuard]
   },
 

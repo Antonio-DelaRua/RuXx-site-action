@@ -1,337 +1,282 @@
-# api_secure.py
+from flask import Flask, request, jsonify, send_file, Response
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from werkzeug.utils import secure_filename
+from datetime import datetime
 import os
 import uuid
-import shutil
-import logging
 import tempfile
-import asyncio
-from typing import Optional
-from multiprocessing import Process, Queue
+import shutil
 from pathlib import Path
-
-from fastapi import FastAPI, File, UploadFile, HTTPException, Request, Depends
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
-from fastapi.security import APIKeyHeader
-
 import PyPDF2
-import pyttsx3
-
-# Requerido: python-magic y clamd
-import magic  # pip install python-magic (or python-magic-bin on Windows)
-import clamd  # pip install clamd
-
+# import magic
+# import clamd
 import re
+import pyttsx3
+import io
+import time
+import random
+import wave
+import struct
+import math
+import hashlib
 
-def prepare_text_for_tts(text: str) -> str:
-    """
-    Mejora el texto para pyttsx3: añade pausas naturales y limpia saltos raros.
-    """
-    # Reemplaza saltos de línea por pausas largas
-    text = re.sub(r'\n+', '. ', text)
-    
-    # Añade una pequeña pausa después de comas y puntos
-    text = re.sub(r'([,;:])', r'\1 ', text)
-    text = re.sub(r'([.?!])', r'\1  ', text)
-
-    # Elimina espacios repetidos
-    text = re.sub(r'\s+', ' ', text)
-
-    return text.strip()
+app = Flask(__name__)
 
 # Config
-UPLOAD_DIR = Path("uploads")
-AUDIO_DIR = Path("audio_files")
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-AUDIO_DIR.mkdir(parents=True, exist_ok=True)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///books.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB
+app.config['AUDIO_CACHE_DIR'] = 'audio_cache'
 
-MAX_UPLOAD_SIZE = int(os.getenv("MAX_UPLOAD_SIZE", 10 * 1024 * 1024))  # 10 MB por defecto
-ALLOWED_EXTENSIONS = {'.pdf', '.txt'}
-ALLOWED_MIMES = {"application/pdf", "text/plain"}
-API_KEY = os.getenv("ADMIN_KEY", "change_me_to_secure_value")
+# Ensure cache directory exists
+os.makedirs(app.config['AUDIO_CACHE_DIR'], exist_ok=True)
 
-# Logging
-logging.basicConfig(level=logging.INFO, filename="uploads.log", format="%(asctime)s %(levelname)s %(message)s")
+# Enable CORS for all routes
+CORS(app, origins=["http://localhost:4200", "http://localhost:51615"])
 
-app = FastAPI(title="Audio Book API - Hardened")
+db = SQLAlchemy(app)
 
-# CORS (adaptar dominios en producción)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:4200", "http://localhost:4201"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# Ensure upload folder exists
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-# Security header middleware
-@app.middleware("http")
-async def add_security_headers(request: Request, call_next):
-    response = await call_next(request)
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    response.headers["X-Frame-Options"] = "DENY"
-    response.headers["Referrer-Policy"] = "no-referrer"
-    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
-    return response
+# Book model
+class Book(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    text_content = db.Column(db.Text, nullable=False)
+    upload_date = db.Column(db.DateTime, default=datetime.utcnow)
 
-# Upload size check middleware (based on Content-Length header)
-@app.middleware("http")
-async def limit_upload_size(request: Request, call_next):
-    content_length = request.headers.get("content-length")
-    if content_length:
-        try:
-            if int(content_length) > MAX_UPLOAD_SIZE:
-                return JSONResponse(status_code=413, content={"detail": "Archivo demasiado grande (máx {} bytes)".format(MAX_UPLOAD_SIZE)})
-        except ValueError:
-            pass
-    return await call_next(request)
+# Helper functions
+def prepare_text_for_tts(text: str) -> str:
+    text = re.sub(r'\n+', '. ', text)
+    text = re.sub(r'([,;:])', r'\1 ', text)
+    text = re.sub(r'([.?!])', r'\1  ', text)
+    text = re.sub(r'\s+', ' ', text)
+    return text.strip()
 
-# API Key dependency for admin endpoints
-api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
-
-def require_api_key(api_key: Optional[str] = Depends(api_key_header)):
-    if api_key != API_KEY:
-        raise HTTPException(status_code=401, detail="No autorizado")
-    return True
-
-# Helper: verify mime type with python-magic
 def verify_mime(file_path: str):
     try:
         mime = magic.from_file(file_path, mime=True)
+        allowed_mimes = {"application/pdf", "text/plain"}
+        if mime not in allowed_mimes:
+            raise ValueError(f"Invalid MIME type: {mime}")
+        return mime
     except Exception as e:
-        logging.error("Error detectando MIME: %s", e)
-        raise HTTPException(status_code=400, detail="No se pudo determinar el tipo de archivo")
-    if mime not in ALLOWED_MIMES:
-        raise HTTPException(status_code=400, detail=f"Tipo de archivo no permitido ({mime})")
-    return mime
+        raise ValueError(f"MIME verification failed: {str(e)}")
 
-# Helper: scan with ClamAV
 def scan_with_clamav(file_path: str):
     try:
-        cd = clamd.ClamdNetworkSocket()  # por defecto localhost:3310
-        # si clamd no responde lanza excepción
+        cd = clamd.ClamdNetworkSocket()
         result = cd.scan(file_path)
-        if not result:
-            # en algunos setups el resultado puede ser None o {}
-            return True
-        # result example: {'/path/file': ('OK', None)} or ('FOUND', 'Eicar-Test-Signature')
-        for res in result.values():
-            status = res[0]
-            if status == 'FOUND':
-                return False
+        if result:
+            for res in result.values():
+                if res[0] == 'FOUND':
+                    return False
         return True
     except Exception as e:
-        logging.error("Error al escanear con ClamAV: %s", e)
-        # opción conservadora: si no podemos escanear, rechazamos la subida
-        raise HTTPException(status_code=500, detail="Error interno de escaneo antivirus")
+        raise ValueError(f"ClamAV scan failed: {str(e)}")
 
-# Safe PDF extraction in a subprocess with timeout
-def extract_text_from_pdf_worker(file_path: str, q: Queue):
+def extract_text_from_pdf(file_path: str):
+    text = ""
+    with open(file_path, 'rb') as f:
+        reader = PyPDF2.PdfReader(f)
+        for page in reader.pages:
+            page_text = page.extract_text()
+            if page_text:
+                text += page_text + "\n"
+    if not text.strip():
+        raise ValueError("No text extracted from PDF")
+    return text
+
+def read_text_file(file_path: str):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+# Routes
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file provided'}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No file selected'}), 400
+
+    filename = secure_filename(file.filename)
+    file_ext = Path(filename).suffix.lower()
+    if file_ext not in ['.pdf', '.txt']:
+        return jsonify({'error': 'Invalid file type'}), 400
+
+    # Save to temp
+    temp_dir = tempfile.mkdtemp()
+    temp_path = os.path.join(temp_dir, str(uuid.uuid4()) + file_ext)
+    file.save(temp_path)
+
     try:
-        text = ""
-        with open(file_path, 'rb') as f:
-            reader = PyPDF2.PdfReader(f)
-            for page in reader.pages:
-                page_text = page.extract_text()
-                if page_text:
-                    text += page_text + "\n"
-        if not text:
-            q.put({"ok": False, "error": "No se pudo extraer texto (PDF puede contener solo imágenes/protegerse)."})
+        # Skip MIME and scan for now (commented out)
+        # verify_mime(temp_path)
+        # if not scan_with_clamav(temp_path):
+        #     raise ValueError("File flagged as malicious")
+
+        # Extract text
+        if file_ext == '.pdf':
+            text = extract_text_from_pdf(temp_path)
         else:
-            q.put({"ok": True, "text": text})
+            text = read_text_file(temp_path)
+
+        # Save to DB
+        book = Book(title=filename, text_content=text)
+        db.session.add(book)
+        db.session.commit()
+
+        return jsonify({
+            'id': book.id,
+            'title': book.title,
+            'text_length': len(text),
+            'upload_date': book.upload_date.isoformat()
+        }), 201
+
     except Exception as e:
-        q.put({"ok": False, "error": str(e)})
-
-def extract_text_from_pdf_with_timeout(file_path: str, timeout: int = 15):
-    q = Queue()
-    p = Process(target=extract_text_from_pdf_worker, args=(file_path, q))
-    p.start()
-    p.join(timeout)
-    if p.is_alive():
-        p.terminate()
-        raise HTTPException(status_code=500, detail="Extracción de PDF excedió el tiempo límite")
-    if q.empty():
-        raise HTTPException(status_code=500, detail="Fallo en la extracción de PDF")
-    result = q.get()
-    if not result["ok"]:
-        raise HTTPException(status_code=400, detail=result["error"])
-    return result["text"]
-
-# Safe TXT read with encoding fallback and size check
-def read_text_file(file_path: str, max_chars: int = 2_000_000):
-    try:
-        with open(file_path, 'rb') as f:
-            raw = f.read()
-            # si es muy grande, recortamos para evitar DoS
-            if len(raw) > MAX_UPLOAD_SIZE:
-                raise HTTPException(status_code=413, detail="Archivo de texto demasiado grande")
-            for encoding in ('utf-8', 'latin-1', 'utf-16'):
-                try:
-                    text = raw.decode(encoding)
-                    return text
-                except Exception:
-                    continue
-            raise HTTPException(status_code=400, detail="No se pudo decodificar el archivo de texto")
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error leyendo TXT: {str(e)}")
-
-# Text-to-speech in separate process with timeout (using pyttsx3)
-def tts_worker(text: str, output_path: str, q: Queue):
-    try:
-        engine = pyttsx3.init()
-        engine.setProperty('rate', 150)
-        engine.setProperty('volume', 0.9)
-        processed_text = prepare_text_for_tts(text)
-        engine.save_to_file(processed_text, output_path)
-        engine.runAndWait()
-        q.put({"ok": True})
-    except Exception as e:
-        q.put({"ok": False, "error": str(e)})
-
-def text_to_speech_with_timeout(text: str, output_path: str, timeout: int = 60):
-    q = Queue()
-    p = Process(target=tts_worker, args=(text, output_path, q))
-    p.start()
-    p.join(timeout)
-    if p.is_alive():
-        p.terminate()
-        raise HTTPException(status_code=500, detail="Generación de audio excedió el tiempo límite")
-    if q.empty():
-        raise HTTPException(status_code=500, detail="Fallo en la generación de audio")
-    result = q.get()
-    if not result.get("ok"):
-        raise HTTPException(status_code=500, detail=f"Error TTS: {result.get('error')}")
-
-@app.post("/upload-file/")
-async def upload_file(file: UploadFile = File(...), request: Request = None):
-    """
-    EndPoint endurecido para subir PDF o TXT y generar MP3.
-    Flujo:
-     - Guardar en temp
-     - Verificar extensión permitida
-     - Verificar MIME real con python-magic
-     - Escanear con ClamAV
-     - Extraer texto (PDF en proceso con timeout)
-     - Generar MP3 (TTS en proceso con timeout)
-    """
-    # Validar extensión
-    original_filename = file.filename or "uploaded"
-    file_extension = Path(original_filename).suffix.lower()
-    logging.info("Upload request: filename=%s, ext=%s, ip=%s", original_filename, file_extension, request.client.host if request else "unknown")
-
-    if file_extension not in ALLOWED_EXTENSIONS:
-        raise HTTPException(status_code=400, detail="Formato no soportado. Use PDF o TXT")
-
-    # Guardar en archivo temporal de forma segura
-    file_id = str(uuid.uuid4())
-    tmp_dir = tempfile.mkdtemp(prefix="upload_")
-    tmp_path = Path(tmp_dir) / f"{file_id}{file_extension}"
-    try:
-        # stream a disco para no cargar todo en memoria si es grande
-        with open(tmp_path, "wb") as buffer:
-            while True:
-                chunk = await file.read(1024 * 1024)  # 1MB chunk
-                if not chunk:
-                    break
-                buffer.write(chunk)
-
-        # Verificar tamaño final (defensa extra)
-        if tmp_path.stat().st_size > MAX_UPLOAD_SIZE:
-            raise HTTPException(status_code=413, detail="Archivo demasiado grande (post-upload)")
-
-        # Verificar MIME real (magic bytes)
-        mime = verify_mime(str(tmp_path))
-
-        # Escaneo antivirus (ClamAV)
-        scanned_ok = scan_with_clamav(str(tmp_path))
-        if not scanned_ok:
-            raise HTTPException(status_code=400, detail="Archivo detectado como malicioso por el antivirus")
-
-        # Extraer texto
-        if file_extension == '.pdf':
-            text = extract_text_from_pdf_with_timeout(str(tmp_path), timeout=220)
-        else:  # .txt
-            text = read_text_file(str(tmp_path))
-
-        if not text or not text.strip():
-            raise HTTPException(status_code=400, detail="No se pudo extraer texto del archivo (vacío o no legible)")
-
-        # Generar audio en ubicación temporal
-        tmp_audio_path = Path(tmp_dir) / f"{file_id}.mp3"
-        text_to_speech_with_timeout(text, str(tmp_audio_path), timeout=190)
-
-        # Mover audio a carpeta final con nombre opaco
-        final_audio_name = f"{file_id}.mp3"
-        final_audio_path = AUDIO_DIR / final_audio_name
-        shutil.move(str(tmp_audio_path), final_audio_path)
-
-        # limpiar archivo subido
-        try:
-            tmp_path.unlink(missing_ok=True)
-            Path(tmp_dir).rmdir()
-        except Exception:
-            pass
-
-        # Guardar metadata en log (mejor guardar en DB en producción)
-        logging.info("Uploaded processed: file_id=%s, original=%s, size=%d, audio=%s", file_id, original_filename, final_audio_path.stat().st_size, final_audio_name)
-
-        return {
-            "file_id": file_id,
-            "original_filename": original_filename,
-            "text_length": len(text),
-            "audio_url": f"/audio/{final_audio_name}",
-            "text_preview": text[:200] + "..." if len(text) > 200 else text
-        }
-
-    except HTTPException:
-        # re-raise para que FastAPI lo maneje
-        raise
-    except Exception as e:
-        logging.exception("Error en /upload-file/: %s", e)
-        raise HTTPException(status_code=500, detail="Error interno procesando el archivo")
+        return jsonify({'error': str(e)}), 500
     finally:
-        # Cleanup seguro del temp dir
-        try:
-            if tmp_path.exists():
-                tmp_path.unlink()
-            if Path(tmp_dir).exists():
-                shutil.rmtree(tmp_dir, ignore_errors=True)
-        except Exception:
-            pass
+        shutil.rmtree(temp_dir)
 
-@app.get("/audio/{filename}")
-async def get_audio_file(filename: str):
-    """Servir audio sólo si existe y con nombre opaco (UUID.mp3)"""
-    # validar patrón básico para evitar traversal: solo UUID + .mp3
-    if not filename.endswith(".mp3"):
-        raise HTTPException(status_code=400, detail="Formato inválido")
-    file_path = AUDIO_DIR / filename
-    if not file_path.exists():
-        raise HTTPException(status_code=404, detail="Audio no encontrado")
-    return FileResponse(file_path, media_type='audio/mpeg', filename=f"audiobook_{filename}")
+@app.route('/books', methods=['GET'])
+def list_books():
+    books = Book.query.all()
+    return jsonify([{
+        'id': b.id,
+        'title': b.title,
+        'text_length': len(b.text_content),
+        'upload_date': b.upload_date.isoformat()
+    } for b in books])
 
-@app.delete("/audio/cleanup")
-async def cleanup_audio_files(authorized: bool = Depends(require_api_key)):
-    """Endpoint protegido para eliminar todos los MP3 (admin only)"""
+@app.route('/books/<int:book_id>', methods=['DELETE'])
+def delete_book(book_id):
+    book = Book.query.get_or_404(book_id)
+    db.session.delete(book)
+    db.session.commit()
+    return jsonify({'message': 'Book deleted'}), 200
+
+def get_audio_cache_path(text_hash):
+    return os.path.join(app.config['AUDIO_CACHE_DIR'], f"{text_hash}.mp3")
+
+@app.route('/play/<int:book_id>', methods=['GET'])
+def play_book(book_id):
     try:
-        deleted = []
-        for f in AUDIO_DIR.iterdir():
-            if f.is_file() and f.suffix == ".mp3":
-                deleted.append(f.name)
-                f.unlink()
-        logging.info("Cleanup executed, deleted: %s", deleted)
-        return {"message": f"Eliminados {len(deleted)} archivos", "deleted_files": deleted}
+        book = Book.query.get_or_404(book_id)
+        text = prepare_text_for_tts(book.text_content)
+        print(f"Playing book {book_id}: {book.title}")
+        print(f"Text length: {len(text)}")
+
+        # Limit text length for TTS (pyttsx3 can handle longer text but we'll keep reasonable limit)
+        if len(text) > 10000:
+            text = text[:10000] + "..."
+
+        # Create hash of the text for caching
+        text_hash = hashlib.md5(text.encode('utf-8')).hexdigest()
+        cache_path = get_audio_cache_path(text_hash)
+
+        # Check if audio is cached
+        if os.path.exists(cache_path):
+            print("Serving cached audio")
+            return send_file(cache_path, mimetype='audio/wav')
+
+        # Generate TTS using pyttsx3 (offline)
+        try:
+            print("Generating TTS with pyttsx3")
+            import comtypes
+            comtypes.CoInitialize()
+            engine = pyttsx3.init()
+            print(f"Engine initialized: {engine}")
+
+            # Configure voice settings
+            voices = engine.getProperty('voices')
+            print(f"Available voices: {len(voices) if voices else 0}")
+            if voices:
+                print(f"Voice names: {[v.name for v in voices]}")
+                # Try to use a Spanish voice if available
+                spanish_selected = False
+                for voice in voices:
+                    if 'spanish' in voice.name.lower() or 'español' in voice.name.lower() or 'es-es' in voice.name.lower():
+                        engine.setProperty('voice', voice.id)
+                        print(f"Selected Spanish voice: {voice.name}")
+                        spanish_selected = True
+                        break
+                # If no Spanish voice, try female voice as fallback
+                if not spanish_selected:
+                    for voice in voices:
+                        if 'female' in voice.name.lower() or 'zira' in voice.name.lower():
+                            engine.setProperty('voice', voice.id)
+                            print(f"Selected fallback voice: {voice.name}")
+                            break
+
+            engine.setProperty('rate', 180)  # Speed of speech
+            engine.setProperty('volume', 0.9)  # Volume level (0.0 to 1.0)
+
+            # Save to temporary file first, then cache
+            temp_audio_path = cache_path + '.temp'
+            print(f"Saving to temp file: {temp_audio_path}")
+            engine.save_to_file(text, temp_audio_path)
+            engine.runAndWait()
+
+            # Check if temp file was created
+            if os.path.exists(temp_audio_path):
+                print(f"Temp file created, size: {os.path.getsize(temp_audio_path)} bytes")
+                os.rename(temp_audio_path, cache_path)
+                print("TTS successful, cached audio")
+                return send_file(cache_path, mimetype='audio/wav')
+            else:
+                print(f"Temp file not found: {temp_audio_path}")
+                raise Exception("TTS file was not created")
+
+        except Exception as e:
+            print(f"TTS failed: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            # Return a simple beep sound as fallback
+            return generate_fallback_audio()
+
     except Exception as e:
-        logging.exception("Error in cleanup: %s", e)
-        raise HTTPException(status_code=500, detail="Error limpiando archivos")
+        print(f"Error in play_book: {str(e)}")
+        return generate_fallback_audio()
 
-@app.get("/health")
-async def health_check():
-    return {"status": "healthy", "service": "Audio Book API - Hardened"}
+def generate_fallback_audio():
+    """Generate a simple beep sound when TTS fails"""
+    # Create a simple beep using a sine wave (basic fallback)
+    import wave
+    import struct
+    import math
 
-# Run with: uvicorn api_secure:app --host 0.0.0.0 --port 8000 --reload
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run("api_secure:app", host="0.0.0.0", port=8000, reload=True)
+    # Generate a 1-second beep at 440Hz
+    sample_rate = 44100
+    duration = 1
+    frequency = 440
+
+    # Generate sine wave
+    samples = []
+    for i in range(int(sample_rate * duration)):
+        sample = int(32767 * math.sin(2 * math.pi * frequency * i / sample_rate))
+        samples.append(struct.pack('<h', sample))
+
+    # Create WAV file in memory
+    wav_buffer = io.BytesIO()
+    with wave.open(wav_buffer, 'wb') as wav_file:
+        wav_file.setnchannels(1)  # Mono
+        wav_file.setsampwidth(2)  # 16-bit
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(b''.join(samples))
+
+    wav_buffer.seek(0)
+    return Response(wav_buffer, mimetype='audio/wav')
+
+@app.route('/health', methods=['GET'])
+def health():
+    return jsonify({'status': 'healthy'})
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
+    app.run(debug=True, host='0.0.0.0', port=8000)

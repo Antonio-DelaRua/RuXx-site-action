@@ -11,6 +11,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ApiKeyInterceptor } from './api-key.interceptor';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 
 
@@ -24,6 +25,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations(),
     FormsModule,
     HttpClientModule,
     { provide: HTTP_INTERCEPTORS, useClass: ApiKeyInterceptor, multi: true },

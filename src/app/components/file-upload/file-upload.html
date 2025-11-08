@@ -1,202 +1,103 @@
 <div class="full-screen-container">
 <header class="page-header">
-  <button class="back-home-btn" routerLink="/">
-    ⬅️ Home
+  <button class="back-home-btn" routerLink="/libro">
+    ⬅️ Mis Libros
   </button>
 
   <div class="header-content">
-    <h1 class="page-title">📚 Nobt - Audiolibro</h1>
+    <h1 class="page-title">📚 Subir Nuevo Audiolibro</h1>
   </div>
 </header>
 
-  <main class="main-content">
-    <!-- Progress Bar -->
-    <div *ngIf="isUploading" class="progress-section">
-      <div class="progress-container">
-        <div class="progress-header">
-          <h4>Procesando tu archivo...</h4>
-          <span class="progress-percentage">{{ uploadProgress }}%</span>
-        </div>
-        <div class="progress">
-          <div
-            class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-            [style.width]="uploadProgress + '%'"
-          ></div>
-        </div>
-        <p class="progress-text">Extrayendo texto y generando audio...</p>
+<main class="main-content">
+  <!-- Progress Bar -->
+  <div *ngIf="isUploading" class="progress-section">
+    <div class="progress-container">
+      <div class="progress-header">
+        <h4>Procesando tu archivo...</h4>
+        <span class="progress-percentage">{{ uploadProgress }}%</span>
+      </div>
+      <div class="progress">
+        <div
+          class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+          [style.width]="uploadProgress + '%'"
+        ></div>
+      </div>
+      <p class="progress-text">Extrayendo texto y guardando en la base de datos...</p>
+    </div>
+  </div>
+
+  <!-- Resultado del procesamiento -->
+  <div *ngIf="uploadResult" class="result-card">
+    <div class="result-header">
+      <div class="success-icon">✅</div>
+      <h3>¡Archivo procesado exitosamente!</h3>
+    </div>
+    <br>
+    <div class="result-details">
+      <div class="detail-item">
+        <span class="detail-label">Archivo:</span>
+        <span class="detail-value">{{ uploadResult.title }}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Texto extraído:</span>
+        <span class="detail-value">{{ uploadResult.text_length }} caracteres</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Fecha de subida:</span>
+        <span class="detail-value">{{ uploadResult.upload_date | date:'short' }}</span>
       </div>
     </div>
-
-    <!-- Layout principal cuando hay resultado -->
-    <div *ngIf="uploadResult" class="content-layout">
-      <!-- Área de subida de archivos -->
-      <div class="upload-section">
-        <div class="upload-icon">📄</div>
-        <h3>Selecciona tu archivo</h3>
-        <p>Arrastra y suelta un archivo PDF o TXT, o haz clic para seleccionar</p>
-        <input
-          #fileInput
-          type="file"
-          class="file-input"
-          (change)="onFileSelected($event)"
-          accept=".pdf,.txt"
-          [disabled]="isUploading"
-        >
-        <button
-          type="button"
-          class="btn btn-primary btn-lg upload-btn"
-          (click)="fileInput.click()"
-          [disabled]="isUploading"
-        >
-          <i class="fas fa-upload"></i> Seleccionar Archivo
-        </button>
-        <small class="file-formats">Formatos soportados: PDF y TXT (máx. 10MB)</small>
-      </div>
-
-      <!-- Resultado del procesamiento -->
-      <div class="result-card">
-        <div class="result-header">
-          <div class="success-icon">✅</div>
-          <h3 >¡Archivo procesado exitosamente!</h3>
-        </div>
-        <br>
-        <div class="result-details">
-          <div class="detail-item">
-            <span class="detail-label">Archivo:</span>
-            <span class="detail-value">{{ uploadResult.original_filename }}</span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Texto extraído:</span>
-            <span class="detail-value">{{ uploadResult.text_length }} caracteres</span>
-          </div>
-          <div class="detail-item">
-            <span class="detail-label">Vista previa:</span>
-            <span class="detail-value text-preview">{{ uploadResult.text_preview }}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Reproductor de audio (ocupa el 100% del ancho) -->
-      <div class="audio-player-full-width">
-        <h4>🎵 Nobt-ibuk</h4>
-        <div class="card mt-3">
-          <div class="card-header">
-            <h5 class="card-title mb-0">🎵 {{ uploadResult.original_filename }}</h5>
-          </div>
-          <div class="card-body">
-            <!-- Controles básicos -->
-            <div class="d-flex align-items-center mb-3">
-              <button
-                class="btn btn-outline-primary me-2"
-                (click)="togglePlay()"
-                [disabled]="!audioUrl"
-              >
-                {{ isPlaying ? '⏸️ Pausar' : '▶️ Reproducir' }}
-              </button>
-
-              <button
-                class="btn btn-outline-secondary me-2"
-                (click)="stop()"
-                [disabled]="!audioUrl"
-              >
-                ⏹️ Detener
-              </button>
-
-             
-
-              <div class="ms-auto d-flex align-items-center">
-                <span class="badge bg-info time-display">{{ currentTimeFormatted }}</span>
-                <span class="mx-2">/</span>
-                <span class="badge bg-secondary time-display">{{ durationFormatted }}</span>
-              </div>
-            </div>
-
-            <!-- Barra de progreso MEJORADA -->
-            <div class="mb-3">
-              <input
-                type="range"
-                class="form-range"
-                [value]="currentTime"
-                [max]="duration || 0"
-                (input)="onSeekInput($event)"
-                (change)="seekTo($event)"
-                [disabled]="!audioUrl"
-                step="0.1"
-              >
-            </div>
-
-            <!-- Controles de volumen MEJORADOS -->
-            <div class="row align-items-center">
-              <div class="col-auto">
-                <small class="text-muted">Volumen:</small>
-              </div>
-              <div class="col">
-                <input
-                  type="range"
-                  class="form-range"
-                  min="0" 
-                  max="1" 
-                  step="0.1"
-                  [value]="volume"
-                  (input)="setVolume($event)"
-                  (change)="setVolume($event)"
-                >
-              </div>
-              <div class="col-auto">
-                <span class="badge bg-light text-dark">{{ volume * 100 | number:'1.0-0' }}%</span>
-              </div>
-            </div>
-
-            <!-- Estado -->
-            <div *ngIf="!audioUrl" class="alert alert-warning mt-3">
-              No hay audio disponible para reproducir
-            </div>
-          </div>
-        </div>
-
-      </div>
+    <div class="result-actions">
+      <button routerLink="/libro" class="btn btn-primary">
+        Ver Mis Libros
+      </button>
+      <button (click)="uploadResult = null; selectedFile = null" class="btn btn-secondary">
+        Subir Otro
+      </button>
     </div>
+  </div>
 
-    <!-- Estado inicial (sin resultado) -->
-    <div *ngIf="!uploadResult && !isUploading && !errorMessage" class="upload-container">
-      <!-- Área de subida de archivos -->
-      <div class="upload-section">
-        <div class="upload-icon">📄</div>
-        <h3>Selecciona tu archivo</h3>
-        <p>Arrastra y suelta un archivo PDF o TXT, o haz clic para seleccionar</p>
-        <input
-          #fileInput
-          type="file"
-          class="file-input"
-          (change)="onFileSelected($event)"
-          accept=".pdf,.txt"
-          [disabled]="isUploading"
-        >
-        <button
-          type="button"
-          class="btn btn-primary btn-lg upload-btn"
-          (click)="fileInput.click()"
-          [disabled]="isUploading"
-        >
-          <i class="fas fa-upload"></i> Seleccionar Archivo
-        </button>
-        <small class="file-formats">Formatos soportados: PDF y TXT (máx. 10MB)</small>
-      </div>
+  <!-- Estado inicial (sin resultado) -->
+  <div *ngIf="!uploadResult && !isUploading && !errorMessage" class="upload-container">
+    <!-- Área de subida de archivos -->
+    <div class="upload-section">
+      <div class="upload-icon">📄</div>
+      <h3>Selecciona tu archivo</h3>
+      <p>Arrastra y suelta un archivo PDF o TXT, o haz clic para seleccionar</p>
+      <input
+        #fileInput
+        type="file"
+        class="file-input"
+        (change)="onFileSelected($event)"
+        accept=".pdf,.txt"
+        [disabled]="isUploading"
+      >
+      <button
+        type="button"
+        class="btn btn-primary btn-lg upload-btn"
+        (click)="fileInput.click()"
+        [disabled]="isUploading"
+      >
+        <i class="fas fa-upload"></i> Seleccionar Archivo
+      </button>
+      <small class="file-formats">Formatos soportados: PDF y TXT (máx. 10MB)</small>
     </div>
+  </div>
 
-    <!-- Mensajes de error -->
-    <div *ngIf="errorMessage" class="error-section">
-      <div class="error-card">
-        <div class="error-icon">❌</div>
-        <h4>Error al procesar el archivo</h4>
-        <p>{{ errorMessage }}</p>
-        <button
-          class="btn btn-outline-primary mt-3"
-          (click)="errorMessage = ''"
-        >
-          Intentar de nuevo
-        </button>
-      </div>
+  <!-- Mensajes de error -->
+  <div *ngIf="errorMessage" class="error-section">
+    <div class="error-card">
+      <div class="error-icon">❌</div>
+      <h4>Error al procesar el archivo</h4>
+      <p>{{ errorMessage }}</p>
+      <button
+        class="btn btn-outline-primary mt-3"
+        (click)="errorMessage = ''"
+      >
+        Intentar de nuevo
+      </button>
     </div>
-  </main>
+  </div>
+</main>
 </div>
