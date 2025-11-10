@@ -236,3 +236,6 @@ Este proyecto está bajo la **Licencia MIT**. Ver [`LICENSE`](LICENSE) para deta
 ---
 
 ⭐ **¡Gracias por visitar mi portfolio!** Espero que te inspire en tus proyectos.
+
+
+python add_book.py "Matatrolls" "archivo_sin_saltos.txt" "es una novela de fantasía gótica del universo de Warhammer que se centra en las aventuras del enano matador Gotrek Gurnisson y su compañero humano, Felix Jaeger." "/assets/matatrolls.jpg"

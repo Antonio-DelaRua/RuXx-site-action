@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { InteractiveImageComponent } from "../../components/interactive-image/interactive-image";
 import { Audiolibro } from '../../components/audiolibro/audiolibro';
 
+
 @Component({
   selector: 'app-home',
   standalone: true,

@@ -1,101 +1,127 @@
 <div class="full-screen-container">
 <header class="page-header">
-  <button class="back-home-btn" routerLink="/libro">
-    ⬅️ Mis Libros
+  <button class="back-home-btn" routerLink="/">
+    ⬅️ Inicio
   </button>
 
   <div class="header-content">
-    <h1 class="page-title">📚 Subir Nuevo Audiolibro</h1>
+    <h1 class="page-title">📚 Mis Audiolibros</h1>
   </div>
 </header>
 
 <main class="main-content">
-  <!-- Progress Bar -->
-  <div *ngIf="isUploading" class="progress-section">
-    <div class="progress-container">
-      <div class="progress-header">
-        <h4>Procesando tu archivo...</h4>
-        <span class="progress-percentage">{{ uploadProgress }}%</span>
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-section">
+    <div class="loading-spinner">Cargando libros...</div>
+  </div>
+
+  <!-- Books Grid -->
+  <div *ngIf="!isLoading && books.length > 0" class="books-grid">
+    <div *ngFor="let book of books" class="book-card-modern">
+      <div class="book-image-container">
+        <img [src]="book.image_url || '/assets/matatrolls.jpg'" [alt]="book.title" class="book-image" />
+        <div class="book-overlay">
+          <button
+            class="btn btn-play-overlay"
+            (click)="playBook(book)"
+            [disabled]="isPlaying && selectedBook?.id !== book.id"
+          >
+            <i class="fas" [class]="selectedBook?.id === book.id && isPlaying ? 'fa-pause' : 'fa-play'"></i>
+          </button>
+        </div>
       </div>
-      <div class="progress">
-        <div
-          class="progress-bar progress-bar-striped progress-bar-animated bg-success"
-          [style.width]="uploadProgress + '%'"
-        ></div>
+
+      <div class="book-content-modern">
+        <h3 class="book-title-modern">{{ book.title }}</h3>
+        <p class="book-description-modern">{{ book.description || 'Sin descripción disponible' }}</p>
+
+        <div class="book-stats">
+          <div class="stat-item">
+            <i class="fas fa-file-alt"></i>
+            <span>{{ getPagesCount(book.text_length) }} páginas</span>
+          </div>
+          <div class="stat-item">
+            <i class="fas fa-calendar"></i>
+            <span>{{ book.upload_date | date:'dd/MM/yyyy' }}</span>
+          </div>
+        </div>
+
+        <!-- Modern Audio Controls -->
+        <div *ngIf="selectedBook?.id === book.id" class="audio-controls-modern">
+          <div class="progress-container-modern">
+            <input
+              type="range"
+              class="audio-progress"
+              min="0"
+              [max]="audio.duration || 100"
+              [value]="audio.currentTime || 0"
+              (input)="seekAudio($event)"
+              step="0.1"
+            />
+            <div class="progress-bar-modern">
+              <div
+                class="progress-fill"
+                [style.width.%]="getProgressPercentage()"
+              ></div>
+            </div>
+          </div>
+
+          <div class="time-display">
+            <span class="current-time">{{ formatTime(audio.currentTime || 0) }}</span>
+            <span class="duration">{{ formatTime(audio.duration || 0) }}</span>
+          </div>
+
+          <div class="control-buttons">
+            <button class="btn btn-control" (click)="rewindAudio()">
+              <i class="fas fa-backward"></i>
+            </button>
+            <button
+              class="btn btn-control btn-play-main"
+              (click)="playBook(book)"
+            >
+              <i class="fas" [class]="isPlaying ? 'fa-pause' : 'fa-play'"></i>
+            </button>
+            <button class="btn btn-control" (click)="forwardAudio()">
+              <i class="fas fa-forward"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="book-actions-modern">
+          <button
+            class="btn btn-outline-primary action-btn"
+            (click)="playBook(book)"
+            [disabled]="isPlaying && selectedBook?.id !== book.id"
+          >
+            <i class="fas" [class]="selectedBook?.id === book.id && isPlaying ? 'fa-pause' : 'fa-play'"></i>
+            {{ selectedBook?.id === book.id && isPlaying ? 'Pausar' : 'Reproducir' }}
+          </button>
+          <button
+            class="btn btn-outline-danger action-btn"
+            (click)="deleteBook(book)"
+          >
+            <i class="fas fa-trash"></i> Eliminar
+          </button>
+        </div>
       </div>
-      <p class="progress-text">Extrayendo texto y guardando en la base de datos...</p>
     </div>
   </div>
 
-  <!-- Resultado del procesamiento -->
-  <div *ngIf="uploadResult" class="result-card">
-    <div class="result-header">
-      <div class="success-icon">✅</div>
-      <h3>¡Archivo procesado exitosamente!</h3>
-    </div>
-    <br>
-    <div class="result-details">
-      <div class="detail-item">
-        <span class="detail-label">Archivo:</span>
-        <span class="detail-value">{{ uploadResult.title }}</span>
-      </div>
-      <div class="detail-item">
-        <span class="detail-label">Texto extraído:</span>
-        <span class="detail-value">{{ uploadResult.text_length }} caracteres</span>
-      </div>
-      <div class="detail-item">
-        <span class="detail-label">Fecha de subida:</span>
-        <span class="detail-value">{{ uploadResult.upload_date | date:'short' }}</span>
-      </div>
-    </div>
-    <div class="result-actions">
-      <button routerLink="/libro" class="btn btn-primary">
-        Ver Mis Libros
-      </button>
-      <button (click)="uploadResult = null; selectedFile = null" class="btn btn-secondary">
-        Subir Otro
-      </button>
-    </div>
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && books.length === 0 && !errorMessage" class="empty-state">
+    <div class="empty-icon">📚</div>
+    <h3>No hay libros disponibles</h3>
+    <p>Los libros se agregan manualmente al sistema.</p>
   </div>
 
-  <!-- Estado inicial (sin resultado) -->
-  <div *ngIf="!uploadResult && !isUploading && !errorMessage" class="upload-container">
-    <!-- Área de subida de archivos -->
-    <div class="upload-section">
-      <div class="upload-icon">📄</div>
-      <h3>Selecciona tu archivo</h3>
-      <p>Arrastra y suelta un archivo PDF o TXT, o haz clic para seleccionar</p>
-      <input
-        #fileInput
-        type="file"
-        class="file-input"
-        (change)="onFileSelected($event)"
-        accept=".pdf,.txt"
-        [disabled]="isUploading"
-      >
-      <button
-        type="button"
-        class="btn btn-primary btn-lg upload-btn"
-        (click)="fileInput.click()"
-        [disabled]="isUploading"
-      >
-        <i class="fas fa-upload"></i> Seleccionar Archivo
-      </button>
-      <small class="file-formats">Formatos soportados: PDF y TXT (máx. 10MB)</small>
-    </div>
-  </div>
-
-  <!-- Mensajes de error -->
+  <!-- Error Message -->
   <div *ngIf="errorMessage" class="error-section">
     <div class="error-card">
       <div class="error-icon">❌</div>
-      <h4>Error al procesar el archivo</h4>
+      <h4>Error</h4>
       <p>{{ errorMessage }}</p>
-      <button
-        class="btn btn-outline-primary mt-3"
-        (click)="errorMessage = ''"
-      >
-        Intentar de nuevo
+      <button class="btn btn-outline-primary mt-3" (click)="loadBooks()">
+        Reintentar
       </button>
     </div>
   </div>

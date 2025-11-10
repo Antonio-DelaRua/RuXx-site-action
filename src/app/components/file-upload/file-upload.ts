@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { AudioBookService, UploadResponse, UploadProgress } from '../../services/audio-book';
+import { AudioBookService, Book } from '../../services/audio-book';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -12,74 +12,134 @@ import { RouterModule } from '@angular/router';
   templateUrl: './file-upload.html',
   styleUrls: ['./file-upload.css']
 })
-export class FileUploadComponent implements OnChanges, OnDestroy {
-  selectedFile: File | null = null;
-  isUploading = false;
-  uploadProgress = 0;
-  uploadResult: UploadResponse | null = null;
+export class FileUploadComponent implements OnInit, OnDestroy {
+  books: Book[] = [];
+  isLoading = false;
   errorMessage = '';
+  selectedBook: Book | null = null;
+  isPlaying = false;
+  audio = new Audio();
 
-  constructor(private audioBookService: AudioBookService) {}
+  constructor(private audioBookService: AudioBookService) {
+    // Audio event listeners
+    this.audio.addEventListener('loadedmetadata', () => {
+      // Force change detection when metadata loads
+      this.updateProgress();
+    });
 
-  ngOnChanges(changes: SimpleChanges) {
-    // Not used, but for interface
+    this.audio.addEventListener('timeupdate', () => {
+      this.updateProgress();
+    });
+
+    this.audio.addEventListener('ended', () => {
+      this.isPlaying = false;
+      this.selectedBook = null;
+    });
+
+    this.audio.addEventListener('error', () => {
+      this.isPlaying = false;
+      this.selectedBook = null;
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadBooks();
   }
 
   ngOnDestroy() {
-    // Cleanup if needed
+    // Cleanup audio
+    this.audio.pause();
+    this.audio.src = '';
   }
 
-  onFileSelected(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    const file: File = target.files?.[0] as File;
-
-    if (file) {
-      // Validar tipo de archivo
-      const allowedTypes = ['application/pdf', 'text/plain'];
-      if (!allowedTypes.includes(file.type) && !file.name.toLowerCase().endsWith('.txt')) {
-        this.errorMessage = 'Por favor, selecciona un archivo PDF o TXT';
-        return;
-      }
-
-      // Validar tamaño (max 10MB)
-      if (file.size > 10 * 1024 * 1024) {
-        this.errorMessage = 'El archivo es demasiado grande. Máximo 10MB';
-        return;
-      }
-
-      this.selectedFile = file;
-      this.errorMessage = '';
-      this.uploadFile();
-    }
+  getPagesCount(textLength: number): number {
+    // Rough estimation: ~2500 characters per page
+    return Math.ceil(textLength / 2500);
   }
 
-  uploadFile(): void {
-    if (!this.selectedFile) return;
+  getProgressPercentage(): number {
+    if (!this.audio.duration) return 0;
+    return (this.audio.currentTime / this.audio.duration) * 100;
+  }
 
-    this.isUploading = true;
-    this.uploadProgress = 0;
-    this.uploadResult = null;
+  formatTime(seconds: number): string {
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  }
 
-    // Use the new Flask endpoint
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
+  updateProgress(): void {
+    // Force change detection for progress updates
+    // This method is called by audio event listeners
+  }
 
-    this.audioBookService.uploadFile(formData).subscribe({
-      next: (response: any) => {
-        this.uploadResult = response;
-        this.isUploading = false;
-        this.uploadProgress = 100;
+  seekAudio(event: any): void {
+    const seekTime = event.target.value;
+    this.audio.currentTime = seekTime;
+  }
+
+  rewindAudio(): void {
+    this.audio.currentTime = Math.max(0, this.audio.currentTime - 10);
+  }
+
+  forwardAudio(): void {
+    this.audio.currentTime = Math.min(this.audio.duration || 0, this.audio.currentTime + 10);
+  }
+
+  loadBooks(): void {
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    this.audioBookService.getBooks().subscribe({
+      next: (books: Book[]) => {
+        this.books = books;
+        this.isLoading = false;
       },
       error: (error: any) => {
-        this.isUploading = false;
-        this.errorMessage = error.error?.error || 'Error al procesar el archivo';
-        console.error('Upload error:', error);
+        this.isLoading = false;
+        this.errorMessage = error.error?.error || 'Error al cargar los libros';
+        console.error('Load books error:', error);
       }
     });
   }
 
-  getAudioUrl(): string {
-    if (!this.uploadResult) return '';
-    return `http://127.0.0.1:8000/play/${this.uploadResult.file_id}`;
+  playBook(book: Book): void {
+    if (this.selectedBook?.id === book.id && this.isPlaying) {
+      this.audio.pause();
+      this.isPlaying = false;
+      return;
+    }
+
+    // Stop any current playback
+    this.audio.pause();
+    this.audio.currentTime = 0;
+
+    this.selectedBook = book;
+    this.audio.src = `http://127.0.0.1:8000/play/${book.id}`;
+
+    // Wait a bit before loading to avoid conflicts
+    setTimeout(() => {
+      this.audio.load();
+      this.audio.play().then(() => {
+        this.isPlaying = true;
+      }).catch(error => {
+        console.error('Error playing audio:', error);
+        this.isPlaying = false;
+      });
+    }, 100);
+  }
+
+  deleteBook(book: Book): void {
+    if (confirm(`¿Estás seguro de que quieres eliminar "${book.title}"?`)) {
+      this.audioBookService.deleteBook(book.id).subscribe({
+        next: () => {
+          this.books = this.books.filter(b => b.id !== book.id);
+        },
+        error: (error: any) => {
+          this.errorMessage = 'Error al eliminar el libro';
+          console.error('Delete book error:', error);
+        }
+      });
+    }
   }
 }

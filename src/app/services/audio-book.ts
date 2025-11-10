@@ -1,24 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpEvent, HttpEventType, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError, timeout } from 'rxjs/operators';
+import { catchError, timeout } from 'rxjs/operators';
 
-
-export interface UploadResponse {
-  file_id?: string;
-  original_filename?: string;
-  text_length: number;
-  audio_url?: string;
-  text_preview?: string;
+export interface Book {
   id: number;
   title: string;
+  description: string;
+  image_url: string;
+  text_length: number;
   upload_date: string;
-}
-
-export interface UploadProgress {
-  progress: number;
-  loaded: number;
-  total?: number;
 }
 
 @Injectable({
@@ -26,72 +17,28 @@ export interface UploadProgress {
 })
 export class AudioBookService {
   private apiUrl = 'http://127.0.0.1:8000';
-  private uploadTimeout = 300000; // 5 minutos para conversión larga
   private audioTimeout = 60000; // 60 segundos para cargar audio
 
-
-  
   constructor(private http: HttpClient) { }
 
-  uploadFile(formData: FormData): Observable<any> {
-    return this.http.post<any>(
-      `${this.apiUrl}/upload`,
-      formData
-    ).pipe(
-      timeout(this.uploadTimeout),
+  getBooks(): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.apiUrl}/books`).pipe(
+      timeout(10000),
       catchError(this.handleError.bind(this))
     );
   }
 
-  uploadFileWithProgress(file: File): Observable<UploadProgress | UploadResponse> {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    return this.http.post<UploadResponse>(
-      `${this.apiUrl}/upload-file/`, 
-      formData,
-      { 
-        reportProgress: true, 
-        observe: 'events' 
-      }
-    ).pipe(
-      timeout(this.uploadTimeout),
-      map(event => this.getUploadProgress(event)),
-      catchError(this.handleError.bind(this))
-    );
-  }
-
-  private getUploadProgress(event: HttpEvent<any>): UploadProgress | UploadResponse {
-    switch (event.type) {
-      case HttpEventType.UploadProgress:
-        const progress = event.total ? Math.round(100 * event.loaded / event.total) : 0;
-        return {
-          progress,
-          loaded: event.loaded,
-          total: event.total
-        };
-      case HttpEventType.Response:
-        return event.body as UploadResponse;
-      default:
-        return { progress: 0, loaded: 0 };
-    }
-  }
-
-  getAudioUrl(fileId: string): string {
-    return `${this.apiUrl}/audio/${fileId}.mp3?nocache=${Date.now()}`;
-  }
-
-    getAudio(fileId: string): Observable<Blob> {
-    const audioUrl = `${this.apiUrl}/audio/${fileId}.mp3?nocache=${Date.now()}`;
+  getAudio(bookId: number): Observable<Blob> {
+    const audioUrl = `${this.apiUrl}/play/${bookId}`;
     return this.http.get(audioUrl, { responseType: 'blob' }).pipe(
       timeout(this.audioTimeout),
       catchError(this.handleError.bind(this))
     );
   }
 
-  cleanupAudioFiles(): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/audio/cleanup`).pipe(
-      timeout(15000),
+  deleteBook(bookId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/books/${bookId}`).pipe(
+      timeout(10000),
       catchError(this.handleError.bind(this))
     );
   }
@@ -105,7 +52,7 @@ export class AudioBookService {
 
   private handleError(error: HttpErrorResponse | any) {
     let errorMessage = 'Ocurrió un error inesperado';
-    
+
     if (error.error instanceof ErrorEvent) {
       // Error del lado del cliente
       errorMessage = `Error: ${error.error.message}`;
@@ -122,7 +69,7 @@ export class AudioBookService {
         errorMessage = `Error ${error.status}: ${error.message}`;
       }
     }
-    
+
     console.error('Error en AudioBookService:', error);
     return throwError(() => new Error(errorMessage));
   }

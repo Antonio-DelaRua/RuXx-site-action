@@ -1,16 +1,8 @@
 from flask import Flask, request, jsonify, send_file, Response
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from werkzeug.utils import secure_filename
 from datetime import datetime
 import os
-import uuid
-import tempfile
-import shutil
-from pathlib import Path
-import PyPDF2
-# import magic
-# import clamd
 import re
 import pyttsx3
 import io
@@ -24,28 +16,32 @@ import hashlib
 app = Flask(__name__)
 
 # Config
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///books.db'
+import os
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+db_path = os.path.join(BASE_DIR, "instance", "books.db")
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path.replace(os.sep, '/')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024  # 10 MB
 app.config['AUDIO_CACHE_DIR'] = 'audio_cache'
+
+# Serve static files from public directory
+app.static_folder = 'public'
+app.static_url_path = '/'
 
 # Ensure cache directory exists
 os.makedirs(app.config['AUDIO_CACHE_DIR'], exist_ok=True)
 
 # Enable CORS for all routes
-CORS(app, origins=["http://localhost:4200", "http://localhost:51615"])
+CORS(app, origins=["http://localhost:4200", "http://localhost:51615", "http://localhost:50547"])
 
 db = SQLAlchemy(app)
-
-# Ensure upload folder exists
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # Book model
 class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     text_content = db.Column(db.Text, nullable=False)
+    description = db.Column(db.Text, nullable=True)
+    image_url = db.Column(db.String(500), nullable=True)
     upload_date = db.Column(db.DateTime, default=datetime.utcnow)
 
 # Helper functions
@@ -56,92 +52,6 @@ def prepare_text_for_tts(text: str) -> str:
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
 
-def verify_mime(file_path: str):
-    try:
-        mime = magic.from_file(file_path, mime=True)
-        allowed_mimes = {"application/pdf", "text/plain"}
-        if mime not in allowed_mimes:
-            raise ValueError(f"Invalid MIME type: {mime}")
-        return mime
-    except Exception as e:
-        raise ValueError(f"MIME verification failed: {str(e)}")
-
-def scan_with_clamav(file_path: str):
-    try:
-        cd = clamd.ClamdNetworkSocket()
-        result = cd.scan(file_path)
-        if result:
-            for res in result.values():
-                if res[0] == 'FOUND':
-                    return False
-        return True
-    except Exception as e:
-        raise ValueError(f"ClamAV scan failed: {str(e)}")
-
-def extract_text_from_pdf(file_path: str):
-    text = ""
-    with open(file_path, 'rb') as f:
-        reader = PyPDF2.PdfReader(f)
-        for page in reader.pages:
-            page_text = page.extract_text()
-            if page_text:
-                text += page_text + "\n"
-    if not text.strip():
-        raise ValueError("No text extracted from PDF")
-    return text
-
-def read_text_file(file_path: str):
-    with open(file_path, 'r', encoding='utf-8') as f:
-        return f.read()
-
-# Routes
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file provided'}), 400
-
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No file selected'}), 400
-
-    filename = secure_filename(file.filename)
-    file_ext = Path(filename).suffix.lower()
-    if file_ext not in ['.pdf', '.txt']:
-        return jsonify({'error': 'Invalid file type'}), 400
-
-    # Save to temp
-    temp_dir = tempfile.mkdtemp()
-    temp_path = os.path.join(temp_dir, str(uuid.uuid4()) + file_ext)
-    file.save(temp_path)
-
-    try:
-        # Skip MIME and scan for now (commented out)
-        # verify_mime(temp_path)
-        # if not scan_with_clamav(temp_path):
-        #     raise ValueError("File flagged as malicious")
-
-        # Extract text
-        if file_ext == '.pdf':
-            text = extract_text_from_pdf(temp_path)
-        else:
-            text = read_text_file(temp_path)
-
-        # Save to DB
-        book = Book(title=filename, text_content=text)
-        db.session.add(book)
-        db.session.commit()
-
-        return jsonify({
-            'id': book.id,
-            'title': book.title,
-            'text_length': len(text),
-            'upload_date': book.upload_date.isoformat()
-        }), 201
-
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-    finally:
-        shutil.rmtree(temp_dir)
 
 @app.route('/books', methods=['GET'])
 def list_books():
@@ -149,6 +59,8 @@ def list_books():
     return jsonify([{
         'id': b.id,
         'title': b.title,
+        'description': b.description or '',
+        'image_url': b.image_url or '',
         'text_length': len(b.text_content),
         'upload_date': b.upload_date.isoformat()
     } for b in books])
@@ -172,8 +84,9 @@ def play_book(book_id):
         print(f"Text length: {len(text)}")
 
         # Limit text length for TTS (pyttsx3 can handle longer text but we'll keep reasonable limit)
-        if len(text) > 10000:
-            text = text[:10000] + "..."
+        # Temporarily increase limit to test full book playback
+        if len(text) > 100000:
+            text = text[:100000] + "..."
 
         # Create hash of the text for caching
         text_hash = hashlib.md5(text.encode('utf-8')).hexdigest()
@@ -225,9 +138,19 @@ def play_book(book_id):
             # Check if temp file was created
             if os.path.exists(temp_audio_path):
                 print(f"Temp file created, size: {os.path.getsize(temp_audio_path)} bytes")
-                os.rename(temp_audio_path, cache_path)
-                print("TTS successful, cached audio")
-                return send_file(cache_path, mimetype='audio/wav')
+                # Wait a bit for the file to be fully written
+                time.sleep(1)
+                try:
+                    os.rename(temp_audio_path, cache_path)
+                    print("TTS successful, cached audio")
+                    return send_file(cache_path, mimetype='audio/wav')
+                except PermissionError:
+                    # If rename fails, try to copy and remove
+                    import shutil
+                    shutil.copy2(temp_audio_path, cache_path)
+                    os.remove(temp_audio_path)
+                    print("TTS successful, cached audio (copied)")
+                    return send_file(cache_path, mimetype='audio/wav')
             else:
                 print(f"Temp file not found: {temp_audio_path}")
                 raise Exception("TTS file was not created")
@@ -278,5 +201,21 @@ def health():
 
 if __name__ == '__main__':
     with app.app_context():
-        db.create_all()
+        import os
+        db_path = os.path.join(os.getcwd(), 'instance', 'books.db')
+        print(f"Current working directory: {os.getcwd()}")
+        print(f"Database path: {db_path}")
+        print(f"Instance directory exists: {os.path.exists('instance')}")
+        print(f"Database file exists: {os.path.exists(db_path)}")
+        if os.path.exists('instance'):
+            print(f"Instance directory permissions: {oct(os.stat('instance').st_mode)}")
+        if os.path.exists(db_path):
+            print(f"Database file permissions: {oct(os.stat(db_path).st_mode)}")
+        try:
+            db.create_all()
+            print("Database tables created successfully")
+        except Exception as e:
+            print(f"Error creating database: {e}")
+            import traceback
+            traceback.print_exc()
     app.run(debug=True, host='0.0.0.0', port=8000)

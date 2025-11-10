@@ -652,6 +652,243 @@
   animation: pulse 2s infinite;
 }
 
+/* Modern Book Cards */
+.books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.book-card-modern {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 15px 30px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.book-card-modern:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.book-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.book-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.book-card-modern:hover .book-image {
+  transform: scale(1.05);
+}
+
+.book-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.book-card-modern:hover .book-overlay {
+  opacity: 1;
+}
+
+.btn-play-overlay {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #333;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.btn-play-overlay:hover {
+  background: white;
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+.book-content-modern {
+  padding: 1.25rem;
+}
+
+.book-title-modern {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 0.6rem 0;
+  line-height: 1.3;
+}
+
+.book-description-modern {
+  color: #64748b;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0 0 1rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #475569;
+  font-weight: 500;
+}
+
+.stat-item i {
+  color: #a3990d;
+  font-size: 0.9rem;
+}
+
+/* Modern Audio Controls */
+.audio-controls-modern {
+  background: rgba(241, 245, 249, 0.6);
+  border-radius: 10px;
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.progress-container-modern {
+  position: relative;
+  margin-bottom: 0.6rem;
+}
+
+.audio-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.progress-bar-modern {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2.5px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #a3990d 0%, #a29fa5 100%);
+  border-radius: 2.5px;
+  transition: width 0.1s ease;
+}
+
+.time-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.control-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.btn-control {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(163, 153, 13, 0.3);
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a3990d;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.btn-control:hover {
+  background: #a3990d;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 5px 15px rgba(163, 153, 13, 0.4);
+}
+
+.btn-play-main {
+  width: 42px;
+  height: 42px;
+  font-size: 1rem;
+  background: linear-gradient(135deg, #a3990d 0%, #a29fa5 100%);
+  color: white;
+  border: none;
+}
+
+.btn-play-main:hover {
+  background: linear-gradient(135deg, #8b8510 0%, #909090 100%);
+  box-shadow: 0 6px 20px rgba(163, 153, 13, 0.5);
+}
+
+.book-actions-modern {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

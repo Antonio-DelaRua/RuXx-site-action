@@ -1,40 +1,48 @@
+<section class="audiolibro-section">
+  <div class="parallax-bg" [style.transform]="'translateY(' + parallaxOffset + 'px)'" style="background-image: url('/assets/audiolibro.jpg');"></div>
+  <div class="audiolibro-overlay"></div>
+  <div class="audiolibro-content">
+    <div class="container">
+      <div class="audiolibro-header">
+        <h2>🎧 Audiolibros</h2>
+        <p>Descubre una nueva forma de disfrutar la lectura con nuestros audiolibros de alta calidad</p>
+      </div>
 
+      <div class="audiolibro-features">
+        <div class="feature-card">
+          <div class="feature-icon">📚</div>
+          <h3>Biblioteca Extensa</h3>
+          <p>Accede a una amplia colección de libros en formato audio</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎵</div>
+          <h3>Calidad Premium</h3>
+          <p>Disfruta de una experiencia de audio inmersiva y profesional</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Acceso Instantáneo</h3>
+          <p>Escucha tus libros favoritos en cualquier momento y lugar</p>
+        </div>
+      </div>
 
-<section class="books-section" *ngIf="books.length > 0">
-  <div class="container">
-    <h2>Mis Audiolibros</h2>
-    <div class="books-grid">
-      <div class="book-card" *ngFor="let book of books" @fadeInUp>
-        <div class="book-header">
-          <h3>{{ book.title }}</h3>
-          <small>{{ book.upload_date | date:'short' }}</small>
-        </div>
-        <div class="book-details">
-          <p>{{ book.text_length }} caracteres</p>
-        </div>
-        <div class="book-actions">
-          <button
-            class="btn btn-primary"
-            (click)="playBook(book)"
-            [disabled]="isPlaying && currentPlayingBook?.id !== book.id">
-            <span *ngIf="currentPlayingBook?.id === book.id && isPlaying">⏸️ Pausar</span>
-            <span *ngIf="currentPlayingBook?.id !== book.id || !isPlaying">▶️ Reproducir</span>
-          </button>
-          <button class="btn btn-danger" (click)="deleteBook(book)">
-            🗑️ Eliminar
-          </button>
+      <div class="audiolibro-cta">
+        <div class="container">
+          <div class="cta-layout">
+            <div class="cta-text">
+              <h3>¿Listo para comenzar?</h3>
+              <p>Inicia sesión con tu cuenta de Google para acceder a todos nuestros audiolibros</p>
+              <p class="cta-note">O ve directamente a <a routerLink="/upload">Mis Audiolibros</a> si ya estas registrado.</p>
+            </div>
+            <div class="cta-button">
+              <button routerLink="/upload" class="btn btn-google">
+                <i class="fab fa-google"></i>
+                Iniciar Sesión con Google
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="empty-state" *ngIf="books.length === 0">
-  <div class="container">
-    <h2>No hay libros aún</h2>
-    <p>Sube tu primer archivo PDF o TXT para comenzar.</p>
-    <button routerLink="/upload" class="btn btn-primary">
-      Subir Libro
-    </button>
   </div>
 </section>
