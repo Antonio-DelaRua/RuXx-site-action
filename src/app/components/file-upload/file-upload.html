@@ -16,96 +16,59 @@
   </div>
 
   <!-- Books Grid -->
-  <div *ngIf="!isLoading && books.length > 0" class="books-grid">
-    <div *ngFor="let book of books" class="book-card-modern">
-      <div class="book-image-container">
-        <img [src]="book.image_url || '/assets/matatrolls.jpg'" [alt]="book.title" class="book-image" />
-        <div class="book-overlay">
-          <button
-            class="btn btn-play-overlay"
-            (click)="playBook(book)"
-            [disabled]="isPlaying && selectedBook?.id !== book.id"
-          >
-            <i class="fas" [class]="selectedBook?.id === book.id && isPlaying ? 'fa-pause' : 'fa-play'"></i>
-          </button>
-        </div>
+<div *ngIf="!isLoading && books.length > 0" class="books-grid">
+  <div
+    *ngFor="let book of books"
+    class="book-flip-container"
+    [class.flipped]="selectedBook?.id === book.id && isPlaying"
+  >
+    <div class="book-flip-card">
+      
+      <!-- FRONT: portada -->
+      <div class="book-front">
+        <img [src]="book.image_url || '/assets/matatrolls.jpg'" [alt]="book.title" />
+        <button class="flip-play-btn" (click)="playBook(book)">
+          <i class="fas fa-play"></i>
+        </button>
       </div>
 
-      <div class="book-content-modern">
-        <h3 class="book-title-modern">{{ book.title }}</h3>
-        <p class="book-description-modern">{{ book.description || 'Sin descripción disponible' }}</p>
+      <!-- BACK: detalles, controles, etc -->
+      <div class="book-back">
+        <h3>{{ book.title }}</h3>
+        <p>{{ book.description || 'Sin descripción disponible' }}</p>
 
-        <div class="book-stats">
-          <div class="stat-item">
-            <i class="fas fa-file-alt"></i>
-            <span>{{ getPagesCount(book.text_length) }} páginas</span>
-          </div>
-          <div class="stat-item">
-            <i class="fas fa-calendar"></i>
-            <span>{{ book.upload_date | date:'dd/MM/yyyy' }}</span>
-          </div>
-        </div>
-
-        <!-- Modern Audio Controls -->
-        <div *ngIf="selectedBook?.id === book.id" class="audio-controls-modern">
-          <div class="progress-container-modern">
-            <input
-              type="range"
-              class="audio-progress"
-              min="0"
-              [max]="audio.duration || 100"
-              [value]="audio.currentTime || 0"
-              (input)="seekAudio($event)"
-              step="0.1"
-            />
-            <div class="progress-bar-modern">
-              <div
-                class="progress-fill"
-                [style.width.%]="getProgressPercentage()"
-              ></div>
-            </div>
-          </div>
+        <div class="audio-controls-modern">
+          <input
+            type="range"
+            class="audio-progress"
+            min="0"
+            [max]="audio.duration || 100"
+            [value]="audio.currentTime || 0"
+            (input)="seekAudio($event)"
+          />
 
           <div class="time-display">
-            <span class="current-time">{{ formatTime(audio.currentTime || 0) }}</span>
-            <span class="duration">{{ formatTime(audio.duration || 0) }}</span>
+            <span>{{ formatTime(audio.currentTime || 0) }}</span>
+            <span>{{ formatTime(audio.duration || 0) }}</span>
           </div>
 
           <div class="control-buttons">
-            <button class="btn btn-control" (click)="rewindAudio()">
-              <i class="fas fa-backward"></i>
-            </button>
-            <button
-              class="btn btn-control btn-play-main"
-              (click)="playBook(book)"
-            >
+            <button class="btn-control" (click)="rewindAudio()"><i class="fas fa-backward"></i></button>
+            <button class="btn-control btn-play-main" (click)="playBook(book)">
               <i class="fas" [class]="isPlaying ? 'fa-pause' : 'fa-play'"></i>
             </button>
-            <button class="btn btn-control" (click)="forwardAudio()">
-              <i class="fas fa-forward"></i>
-            </button>
+            <button class="btn-control" (click)="forwardAudio()"><i class="fas fa-forward"></i></button>
           </div>
         </div>
 
-        <div class="book-actions-modern">
-          <button
-            class="btn btn-outline-primary action-btn"
-            (click)="playBook(book)"
-            [disabled]="isPlaying && selectedBook?.id !== book.id"
-          >
-            <i class="fas" [class]="selectedBook?.id === book.id && isPlaying ? 'fa-pause' : 'fa-play'"></i>
-            {{ selectedBook?.id === book.id && isPlaying ? 'Pausar' : 'Reproducir' }}
-          </button>
-          <button
-            class="btn btn-outline-danger action-btn"
-            (click)="deleteBook(book)"
-          >
-            <i class="fas fa-trash"></i> Eliminar
-          </button>
-        </div>
+        <button class="btn-close" (click)="stopAudio()">
+          <i class="fas fa-undo"></i> Volver
+        </button>
       </div>
     </div>
   </div>
+</div>
+
 
   <!-- Empty State -->
   <div *ngIf="!isLoading && books.length === 0 && !errorMessage" class="empty-state">

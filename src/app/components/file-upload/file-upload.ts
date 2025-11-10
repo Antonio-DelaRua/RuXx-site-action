@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { AudioBookService, Book } from '../../services/audio-book';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-file-upload',
@@ -21,44 +21,25 @@ export class FileUploadComponent implements OnInit, OnDestroy {
   audio = new Audio();
 
   constructor(private audioBookService: AudioBookService) {
-    // Audio event listeners
-    this.audio.addEventListener('loadedmetadata', () => {
-      // Force change detection when metadata loads
-      this.updateProgress();
-    });
-
-    this.audio.addEventListener('timeupdate', () => {
-      this.updateProgress();
-    });
-
-    this.audio.addEventListener('ended', () => {
-      this.isPlaying = false;
-      this.selectedBook = null;
-    });
-
-    this.audio.addEventListener('error', () => {
-      this.isPlaying = false;
-      this.selectedBook = null;
-    });
+    // === AUDIO EVENTOS ===
+    this.audio.addEventListener('loadedmetadata', () => this.updateProgress());
+    this.audio.addEventListener('timeupdate', () => this.updateProgress());
+    this.audio.addEventListener('ended', () => this.handleAudioEnded());
+    this.audio.addEventListener('error', () => this.handleAudioError());
   }
 
   ngOnInit(): void {
     this.loadBooks();
   }
 
-  ngOnDestroy() {
-    // Cleanup audio
-    this.audio.pause();
-    this.audio.src = '';
-
-    // Clear any pending timeouts
-    if ((this as any).playTimeout) {
-      clearTimeout((this as any).playTimeout);
-    }
+  ngOnDestroy(): void {
+    this.cleanupAudio();
   }
 
+  /* --------------------------
+     FUNCIONES AUXILIARES
+  ---------------------------*/
   getPagesCount(textLength: number): number {
-    // Rough estimation: ~2500 characters per page
     return Math.ceil(textLength / 2500);
   }
 
@@ -74,8 +55,7 @@ export class FileUploadComponent implements OnInit, OnDestroy {
   }
 
   updateProgress(): void {
-    // Force change detection for progress updates
-    // This method is called by audio event listeners
+    // Solo fuerza la detección visual
   }
 
   seekAudio(event: any): void {
@@ -91,6 +71,9 @@ export class FileUploadComponent implements OnInit, OnDestroy {
     this.audio.currentTime = Math.min(this.audio.duration || 0, this.audio.currentTime + 10);
   }
 
+  /* --------------------------
+     CARGA DE LIBROS
+  ---------------------------*/
   loadBooks(): void {
     this.isLoading = true;
     this.errorMessage = '';
@@ -108,50 +91,82 @@ export class FileUploadComponent implements OnInit, OnDestroy {
     });
   }
 
+  /* --------------------------
+     REPRODUCCIÓN Y FLIP 3D
+  ---------------------------*/
   playBook(book: Book): void {
+    // Si ya está sonando este mismo libro → pausa y vuelve al frente
     if (this.selectedBook?.id === book.id && this.isPlaying) {
-      // Pause current playback
       this.audio.pause();
       this.isPlaying = false;
       return;
     }
 
+    // Si está pausado → reanudar
     if (this.selectedBook?.id === book.id && !this.isPlaying) {
-      // Resume current playback
       this.audio.play().then(() => {
         this.isPlaying = true;
       }).catch(error => {
-        console.error('Error resuming audio:', error);
+        console.error('Error al reanudar audio:', error);
         this.isPlaying = false;
       });
       return;
     }
 
-    // Start new book playback
-    this.audio.pause();
-    this.isPlaying = false; // Set to false immediately to prevent conflicts
-
-    // Clear any pending timeouts
-    if ((this as any).playTimeout) {
-      clearTimeout((this as any).playTimeout);
-    }
-
+    // Nuevo libro seleccionado → voltear card
+    this.stopAudio(false); // no limpiar selectedBook aún
     this.selectedBook = book;
+    this.isPlaying = false;
     this.audio.src = `http://127.0.0.1:8000/play/${book.id}`;
 
-    // Wait a bit before loading to avoid conflicts
-    (this as any).playTimeout = setTimeout(() => {
+    setTimeout(() => {
       this.audio.load();
       this.audio.play().then(() => {
-        this.isPlaying = true;
+        this.isPlaying = true; // activa el flip (la card gira)
       }).catch(error => {
-        console.error('Error playing audio:', error);
+        console.error('Error al reproducir audio:', error);
         this.isPlaying = false;
         this.selectedBook = null;
       });
-    }, 200); // Increased timeout to 200ms
+    }, 250);
   }
 
+  stopAudio(resetBook: boolean = true): void {
+    this.audio.pause();
+    this.isPlaying = false;
+    if (resetBook) {
+      this.selectedBook = null;
+    }
+  }
+
+  /* --------------------------
+     EVENTOS AUDIO
+  ---------------------------*/
+  private handleAudioEnded(): void {
+    this.isPlaying = false;
+    this.selectedBook = null;
+  }
+
+  private handleAudioError(): void {
+    console.error('Audio playback error');
+    this.isPlaying = false;
+    this.selectedBook = null;
+  }
+
+  /* --------------------------
+     LIMPIEZA
+  ---------------------------*/
+  private cleanupAudio(): void {
+    this.audio.pause();
+    this.audio.src = '';
+    if ((this as any).playTimeout) {
+      clearTimeout((this as any).playTimeout);
+    }
+  }
+
+  /* --------------------------
+     ELIMINAR LIBRO
+  ---------------------------*/
   deleteBook(book: Book): void {
     if (confirm(`¿Estás seguro de que quieres eliminar "${book.title}"?`)) {
       this.audioBookService.deleteBook(book.id).subscribe({
