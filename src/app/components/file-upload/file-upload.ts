@@ -50,6 +50,11 @@ export class FileUploadComponent implements OnInit, OnDestroy {
     // Cleanup audio
     this.audio.pause();
     this.audio.src = '';
+
+    // Clear any pending timeouts
+    if ((this as any).playTimeout) {
+      clearTimeout((this as any).playTimeout);
+    }
   }
 
   getPagesCount(textLength: number): number {
@@ -124,21 +129,27 @@ export class FileUploadComponent implements OnInit, OnDestroy {
 
     // Start new book playback
     this.audio.pause();
-    this.audio.currentTime = 0;
+    this.isPlaying = false; // Set to false immediately to prevent conflicts
+
+    // Clear any pending timeouts
+    if ((this as any).playTimeout) {
+      clearTimeout((this as any).playTimeout);
+    }
 
     this.selectedBook = book;
     this.audio.src = `http://127.0.0.1:8000/play/${book.id}`;
 
     // Wait a bit before loading to avoid conflicts
-    setTimeout(() => {
+    (this as any).playTimeout = setTimeout(() => {
       this.audio.load();
       this.audio.play().then(() => {
         this.isPlaying = true;
       }).catch(error => {
         console.error('Error playing audio:', error);
         this.isPlaying = false;
+        this.selectedBook = null;
       });
-    }, 100);
+    }, 200); // Increased timeout to 200ms
   }
 
   deleteBook(book: Book): void {

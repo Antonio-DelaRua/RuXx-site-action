@@ -23,7 +23,7 @@ export class AudioBookService {
 
   getBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(`${this.apiUrl}/books`).pipe(
-      timeout(10000),
+      timeout(30000), // Increased timeout to 30 seconds for book loading
       catchError(this.handleError.bind(this))
     );
   }

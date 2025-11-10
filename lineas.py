@@ -13,4 +13,4 @@ def eliminar_saltos_linea(archivo_entrada, archivo_salida):
         f.write(texto_continuo)
 
 # Usar la función
-eliminar_saltos_linea('matatrolls.txt', 'archivo_sin_saltos.txt')
+eliminar_saltos_linea('camila1.txt', 'camila_lumber1.txt')

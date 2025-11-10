@@ -21,6 +21,8 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 db_path = os.path.join(BASE_DIR, "instance", "books.db")
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{db_path.replace(os.sep, '/')}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_POOL_SIZE'] = 20  # Increase pool size
+app.config['SQLALCHEMY_MAX_OVERFLOW'] = 30  # Increase overflow limit
 app.config['AUDIO_CACHE_DIR'] = 'audio_cache'
 
 # Serve static files from public directory
@@ -80,13 +82,7 @@ def play_book(book_id):
     try:
         book = Book.query.get_or_404(book_id)
         text = prepare_text_for_tts(book.text_content)
-        print(f"Playing book {book_id}: {book.title}")
-        print(f"Text length: {len(text)}")
-
-        # Limit text length for TTS (pyttsx3 can handle longer text but we'll keep reasonable limit)
-        # Temporarily increase limit to test full book playback
-        if len(text) > 100000:
-            text = text[:100000] + "..."
+        print(f"Playing book {book_id}: {book.title} (length: {len(text)})")
 
         # Create hash of the text for caching
         text_hash = hashlib.md5(text.encode('utf-8')).hexdigest()
@@ -97,74 +93,102 @@ def play_book(book_id):
             print("Serving cached audio")
             return send_file(cache_path, mimetype='audio/wav')
 
-        # Generate TTS using pyttsx3 (offline)
+        # Generate TTS for uncached books with proper error handling
+        print("Book not cached, generating TTS...")
+        lock_file = cache_path + '.lock'
+
+        # Check if another process is already generating this audio
+        if os.path.exists(lock_file):
+            print("Another process is generating this audio, returning beep")
+            return generate_fallback_audio()
+
         try:
-            print("Generating TTS with pyttsx3")
+            # Create lock file
+            with open(lock_file, 'w') as f:
+                f.write(str(os.getpid()))
+
             import comtypes
             comtypes.CoInitialize()
             engine = pyttsx3.init()
-            print(f"Engine initialized: {engine}")
 
-            # Configure voice settings
+            # Configure voice
             voices = engine.getProperty('voices')
-            print(f"Available voices: {len(voices) if voices else 0}")
             if voices:
-                print(f"Voice names: {[v.name for v in voices]}")
-                # Try to use a Spanish voice if available
-                spanish_selected = False
                 for voice in voices:
                     if 'spanish' in voice.name.lower() or 'español' in voice.name.lower() or 'es-es' in voice.name.lower():
                         engine.setProperty('voice', voice.id)
-                        print(f"Selected Spanish voice: {voice.name}")
-                        spanish_selected = True
+                        print(f"Selected voice: {voice.name}")
                         break
-                # If no Spanish voice, try female voice as fallback
-                if not spanish_selected:
-                    for voice in voices:
-                        if 'female' in voice.name.lower() or 'zira' in voice.name.lower():
-                            engine.setProperty('voice', voice.id)
-                            print(f"Selected fallback voice: {voice.name}")
-                            break
 
-            engine.setProperty('rate', 180)  # Speed of speech
-            engine.setProperty('volume', 0.9)  # Volume level (0.0 to 1.0)
+            engine.setProperty('rate', 180)
+            engine.setProperty('volume', 0.9)
 
-            # Save to temporary file first, then cache
-            temp_audio_path = cache_path + '.temp'
-            print(f"Saving to temp file: {temp_audio_path}")
-            engine.save_to_file(text, temp_audio_path)
+            # Limit text length to avoid issues
+            MAX_TEXT_LENGTH = 25000
+            if len(text) > MAX_TEXT_LENGTH:
+                print(f"Text too long ({len(text)}), truncating to {MAX_TEXT_LENGTH}")
+                text = text[:MAX_TEXT_LENGTH] + "..."
+
+            print(f"Generating TTS for {len(text)} characters")
+            engine.save_to_file(text, cache_path)
             engine.runAndWait()
 
-            # Check if temp file was created
-            if os.path.exists(temp_audio_path):
-                print(f"Temp file created, size: {os.path.getsize(temp_audio_path)} bytes")
-                # Wait a bit for the file to be fully written
-                time.sleep(1)
-                try:
-                    os.rename(temp_audio_path, cache_path)
-                    print("TTS successful, cached audio")
-                    return send_file(cache_path, mimetype='audio/wav')
-                except PermissionError:
-                    # If rename fails, try to copy and remove
-                    import shutil
-                    shutil.copy2(temp_audio_path, cache_path)
-                    os.remove(temp_audio_path)
-                    print("TTS successful, cached audio (copied)")
-                    return send_file(cache_path, mimetype='audio/wav')
+            # Check if file was created successfully
+            if os.path.exists(cache_path) and os.path.getsize(cache_path) > 0:
+                print(f"TTS generated successfully, size: {os.path.getsize(cache_path)} bytes")
+                return send_file(cache_path, mimetype='audio/wav')
             else:
-                print(f"Temp file not found: {temp_audio_path}")
-                raise Exception("TTS file was not created")
+                print("TTS generation failed - empty or missing file")
+                return generate_fallback_audio()
 
         except Exception as e:
-            print(f"TTS failed: {str(e)}")
-            import traceback
-            traceback.print_exc()
-            # Return a simple beep sound as fallback
+            print(f"TTS generation failed: {str(e)}")
             return generate_fallback_audio()
+        finally:
+            # Remove lock file
+            if os.path.exists(lock_file):
+                try:
+                    os.remove(lock_file)
+                except:
+                    pass
 
     except Exception as e:
         print(f"Error in play_book: {str(e)}")
         return generate_fallback_audio()
+
+def combine_audio_files(audio_files, output_file):
+    """Combine multiple WAV files into one"""
+    import wave
+    import struct
+
+    if not audio_files:
+        raise Exception("No audio files to combine")
+
+    # Read all audio data
+    combined_data = []
+    sample_rate = None
+    channels = None
+    sampwidth = None
+
+    for audio_file in audio_files:
+        with wave.open(audio_file, 'rb') as wav:
+            if sample_rate is None:
+                sample_rate = wav.getframerate()
+                channels = wav.getnchannels()
+                sampwidth = wav.getsampwidth()
+            elif sample_rate != wav.getframerate() or channels != wav.getnchannels() or sampwidth != wav.getsampwidth():
+                raise Exception("Audio files have incompatible formats")
+
+            frames = wav.readframes(wav.getnframes())
+            combined_data.append(frames)
+
+    # Write combined file
+    with wave.open(output_file, 'wb') as output_wav:
+        output_wav.setnchannels(channels)
+        output_wav.setsampwidth(sampwidth)
+        output_wav.setframerate(sample_rate)
+        for data in combined_data:
+            output_wav.writeframes(data)
 
 def generate_fallback_audio():
     """Generate a simple beep sound when TTS fails"""
