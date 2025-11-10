@@ -105,12 +105,24 @@ export class FileUploadComponent implements OnInit, OnDestroy {
 
   playBook(book: Book): void {
     if (this.selectedBook?.id === book.id && this.isPlaying) {
+      // Pause current playback
       this.audio.pause();
       this.isPlaying = false;
       return;
     }
 
-    // Stop any current playback
+    if (this.selectedBook?.id === book.id && !this.isPlaying) {
+      // Resume current playback
+      this.audio.play().then(() => {
+        this.isPlaying = true;
+      }).catch(error => {
+        console.error('Error resuming audio:', error);
+        this.isPlaying = false;
+      });
+      return;
+    }
+
+    // Start new book playback
     this.audio.pause();
     this.audio.currentTime = 0;
 
