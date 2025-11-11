@@ -1,9 +1,11 @@
-/* file-upload.component.css */
 :host {
   display: block;
   min-height: 100vh;
 }
 
+/* ===============================
+   ESTRUCTURA GENERAL
+================================= */
 .full-screen-container {
   min-height: 100vh;
   background: url('../../../../public/assets/lizaru.jpg') center/cover;
@@ -12,9 +14,7 @@
   overflow-x: hidden;
 }
 
-/* Header styles */
 .page-header {
-
   backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   padding: 2rem 0;
@@ -39,298 +39,40 @@
   letter-spacing: -0.5px;
 }
 
-
-
-/* Main content */
 .main-content {
   flex: 1;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem 2rem;
+  padding: 2rem;
   width: 100%;
   position: relative;
 }
 
-/* Layout principal para las secciones */
-.content-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  align-items: start;
-}
-
-.upload-section {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  padding: 2rem 1.5rem;
-  text-align: center;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 2px dashed transparent;
-  backdrop-filter: blur(20px);
-  box-shadow:
-    0 15px 30px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
-  height: fit-content;
-  width: 100%;
-  box-sizing: border-box;
-  max-width: 650px;
-  /* Máximo ancho en desktop */
-  margin: 0 auto;
-  margin-top: 2rem;
-}
-
-/* Para pantallas grandes, quitar el max-width cuando está en grid */
-.content-layout .upload-section {
-  max-width: none;
-  margin: 0;
-}
-
-/* Ajustes responsive */
-@media (max-width: 1024px) {
-  .upload-section {
-    padding: 1.75rem 1.25rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .upload-section {
-    padding: 1.5rem 1rem;
-    max-width: 100%;
-  }
-}
-
-
-.upload-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-}
-
-.upload-section h3 {
-  color: #1e293b;
-  margin: 0 0 0.75rem 0;
-  font-size: 1.6rem;
-  font-weight: 700;
-}
-
-.upload-section p {
-  color: #64748b;
-  margin: 0 0 2rem 0;
-  font-size: 1.1rem;
-  line-height: 1.5;
-}
-
-.file-input {
-  display: none;
-}
-
-.upload-btn {
-  background: linear-gradient(135deg, #a3990d 0%, #a29fa5 100%);
-  margin-right: 2rem;
+/* ===============================
+   BOTÓN VOLVER
+================================= */
+.back-home-btn {
+  position: absolute;
+  right: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #fff;
+  color: rgb(65, 64, 64);
   border: none;
-  border-radius: 50px;
-  padding: 0.875rem 2rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  transition: all 0.3s ease;
-  box-shadow:
-    0 6px 20px rgba(102, 126, 234, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-
-.upload-btn:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 10px 25px rgba(102, 126, 234, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
-}
-
-.upload-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-}
-
-.file-formats {
-  color: #94a3b8;
-  font-size: 0.9rem;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
   font-weight: 500;
+  transition: background-color 0.2s ease;
 }
 
-/* Progress section */
-.progress-section {
-  margin-bottom: 3rem;
-  max-width: 600px;
-  margin: 0 auto 3rem;
+.back-home-btn:hover {
+  background-color: #a0a0a0;
 }
 
-.progress-container {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow:
-    0 15px 30px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-}
-
-.progress-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.25rem;
-}
-
-.progress-header h4 {
-  color: #1e293b;
-  margin: 0;
-  font-size: 1.3rem;
-  font-weight: 600;
-}
-
-.progress-percentage {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #a3990d;
-  background: rgba(102, 126, 234, 0.1);
-  padding: 0.4rem 0.8rem;
-  border-radius: 50px;
-}
-
-.progress {
-  height: 12px;
-  border-radius: 50px;
-  overflow: hidden;
-  background: rgba(241, 245, 249, 0.8);
-  margin-bottom: 1.25rem;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.progress-bar {
-  transition: width 0.4s ease;
-  background: linear-gradient(135deg, #a3990d 0%, #a29fa5 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-.progress-text {
-  color: #64748b;
-  margin: 0;
-  text-align: center;
-  font-style: italic;
-  font-size: 0.95rem;
-}
-
-/* Result card - LADO DERECHO DEL UPLOAD */
-.result-card {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 18px;
-  padding: 2rem;
-  box-shadow:
-    0 15px 30px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  border-left: 5px solid #10b981;
-  height: fit-content;
-}
-
-.result-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.success-icon {
-  font-size: 2rem;
-  margin-right: 1rem;
-  filter: drop-shadow(0 4px 8px rgba(16, 185, 129, 0.3));
-}
-
-.result-header h3 {
-  color: #161616;
-  margin: 0;
-  font-size: 1.3rem;
-  font-weight: 700;
-}
-
-.result-details {
-  display: grid;
-  gap: 0.875rem;
-}
-
-.detail-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 0.75rem 1rem;
-  background: rgba(241, 245, 249, 0.6);
-  border-radius: 10px;
-  transition: all 0.3s ease;
-}
-
-.detail-item:hover {
-  background: rgba(241, 245, 249, 0.9);
-  transform: translateX(5px);
-}
-
-.detail-label {
-  font-weight: 600;
-  color: #1e293b;
-  font-size: 0.9rem;
-}
-
-.detail-value {
-  color: #475569;
-  text-align: right;
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.text-preview {
-  font-style: italic;
-  max-width: 200px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  border-left: 3px solid #667eea;
-  font-size: 0.85rem;
-}
-
-/* Audio player section - OCUPA EL 100% DE ANCHO */
-.audio-player-full-width {
-  grid-column: 1 / -1;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 18px;
-  padding: 2rem;
-  box-shadow:
-    0 15px 30px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-}
-
-.audio-player-full-width h4 {
-  color: #1e293b;
-  margin: 0 0 1.5rem 0;
-  font-size: 1.4rem;
-  font-weight: 700;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
-/* Audio player card */
-/* === GRID GENERAL === */
+/* ===============================
+   GRID DE LIBROS
+================================= */
 .books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -339,16 +81,9 @@
   background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
 }
 
-/* === CARD === */
-.books-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
-  perspective: 1200px;
-}
-
-/* === Flip container === */
+/* ===============================
+   TARJETAS FLIP (PORTADA / DETALLES)
+================================= */
 .book-flip-container {
   width: 100%;
   aspect-ratio: 2 / 3;
@@ -367,7 +102,6 @@
   transform: rotateY(180deg);
 }
 
-/* === FRONT === */
 .book-front,
 .book-back {
   position: absolute;
@@ -391,14 +125,14 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform .5s ease;
+  transition: transform 0.5s ease;
 }
 
 .book-front:hover img {
   transform: scale(1.05);
 }
 
-/* Play button overlay */
+/* Botón play en la portada */
 .flip-play-btn {
   position: absolute;
   bottom: 20px;
@@ -419,7 +153,7 @@
   box-shadow: 0 0 25px rgba(250, 204, 21, 0.6);
 }
 
-/* === BACK === */
+/* Reverso */
 .book-back {
   background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
   color: #e2e8f0;
@@ -445,11 +179,13 @@
   line-height: 1.4;
 }
 
-/* === AUDIO CONTROLS === */
+/* ===============================
+   CONTROLES DE AUDIO
+================================= */
 .audio-controls-modern {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 14px;
-  padding: 2rem;
+  padding: 1.5rem;
   text-align: center;
 }
 
@@ -462,7 +198,6 @@
   outline: none;
   cursor: pointer;
   margin-bottom: 0.75rem;
-  padding-top: 20px;
 }
 
 .audio-progress::-webkit-slider-thumb {
@@ -497,7 +232,7 @@
   border-radius: 10px;
   width: 40px;
   height: 40px;
-  transition: all .25s ease;
+  transition: all 0.25s ease;
 }
 
 .btn-control:hover {
@@ -512,12 +247,11 @@
   font-size: 1.3rem;
 }
 
-/* Cerrar */
+/* Botón cerrar */
 .btn-close-container {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
-  margin-bottom: 0.5rem;
 }
 
 .btn-close {
@@ -527,7 +261,7 @@
   font-weight: 600;
   font-size: 1.4rem;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, background 0.3s ease;
   padding: 0.5rem 1rem;
   border-radius: 8px;
 }
@@ -537,20 +271,20 @@
   background: rgba(250, 204, 21, 0.1);
 }
 
-/* Error section */
+/* ===============================
+   MENSAJES DE ERROR
+================================= */
 .error-section {
-  margin-bottom: 3rem;
   max-width: 600px;
-  margin: 0 auto 3rem;
+  margin: 3rem auto;
 }
 
 .error-card {
   background: rgba(255, 255, 255, 0.95);
   border-radius: 18px;
   padding: 2rem;
-  box-shadow:
-    0 15px 30px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1),
+              0 0 0 1px rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
   border-left: 5px solid #ef4444;
   text-align: center;
@@ -564,7 +298,7 @@
 
 .error-card h4 {
   color: #ef4444;
-  margin: 0 0 0.875rem 0;
+  margin-bottom: 0.875rem;
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -576,104 +310,36 @@
   line-height: 1.5;
 }
 
-/* Alert customization */
-.alert {
-  border-radius: 10px;
-  border: none;
-  padding: 1rem 1.25rem;
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.alert-warning {
-  background: rgba(254, 243, 199, 0.9);
-  color: #92400e;
-  border-left: 4px solid #f59e0b;
-}
-
-/* Responsive design */
+/* ===============================
+   RESPONSIVE
+================================= */
 @media (max-width: 1024px) {
-  .content-layout {
+  .books-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .audio-player-full-width {
-    grid-column: 1;
   }
 }
 
 @media (max-width: 768px) {
-  .header-content {
-    padding: 0 1rem;
-  }
-
   .page-title {
     font-size: 2.2rem;
-  }
-
-  .page-subtitle {
-    font-size: 1.1rem;
   }
 
   .main-content {
     padding: 1.5rem 1rem;
   }
 
-  .upload-section {
-    padding: 2rem 1.5rem;
-  }
-
-  .upload-icon {
-    font-size: 3.5rem;
-  }
-
-  .upload-section h3 {
-    font-size: 1.4rem;
-  }
-
-  .upload-section p {
-    font-size: 1rem;
-  }
-
-  .upload-btn {
-    padding: 0.75rem 1.75rem;
-    font-size: 1rem;
-  }
-
-  .result-card,
-  .audio-player-full-width {
-    padding: 1.5rem;
-  }
-
-  .detail-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-    text-align: left;
-  }
-
-  .detail-value {
-    text-align: left;
-  }
-
-  .text-preview {
-    max-width: 100%;
-    text-align: left;
-  }
-
-  .progress-container,
-  .error-card {
-    padding: 1.5rem;
-  }
-
-  .card-body {
-    padding: 1.25rem;
-  }
-
-  .btn {
-    padding: 0.5rem 1rem;
+  .book-back p {
     font-size: 0.85rem;
+  }
+
+  .flip-play-btn {
+    width: 55px;
+    height: 55px;
+  }
+
+  .btn-control {
+    width: 35px;
+    height: 35px;
   }
 }
 
@@ -682,278 +348,19 @@
     font-size: 1.8rem;
   }
 
-  .upload-section {
-    padding: 1.5rem 1rem;
+  .flip-play-btn {
+    width: 50px;
+    height: 50px;
   }
 
-  .upload-btn {
-    width: 100%;
-  }
-
-  .result-card,
-  .audio-player-full-width {
-    padding: 1.25rem;
+  .audio-controls-modern {
+    padding: 1rem;
   }
 }
 
-/* Loading animation */
-@keyframes pulse {
-
-  0%,
-  100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0.7;
-  }
-}
-
-.is-uploading {
-  animation: pulse 2s infinite;
-}
-
-/* Modern Book Cards */
-.books-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 3rem;
-}
-
-.book-card-modern {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow:
-    0 15px 30px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.book-card-modern:hover {
-  transform: translateY(-5px);
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.12),
-    0 0 0 1px rgba(255, 255, 255, 0.3);
-}
-
-.book-image-container {
-  position: relative;
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-}
-
-.book-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.book-card-modern:hover .book-image {
-  transform: scale(1.05);
-}
-
-.book-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.book-card-modern:hover .book-overlay {
-  opacity: 1;
-}
-
-.btn-play-overlay {
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: #333;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-}
-
-.btn-play-overlay:hover {
-  background: white;
-  transform: scale(1.1);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
-}
-
-.book-content-modern {
-  padding: 1.25rem;
-}
-
-.book-title-modern {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 0.6rem 0;
-  line-height: 1.3;
-}
-
-.book-description-modern {
-  color: #64748b;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  margin: 0 0 1rem 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.book-stats {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  color: #475569;
-  font-weight: 500;
-}
-
-.stat-item i {
-  color: #a3990d;
-  font-size: 0.9rem;
-}
-
-/* Modern Audio Controls */
-.audio-controls-modern {
-  background: rgba(241, 245, 249, 0.6);
-  border-radius: 10px;
-  padding: 0.8rem;
-  margin-bottom: 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.progress-container-modern {
-  position: relative;
-  margin-bottom: 0.6rem;
-}
-
-.audio-progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 5px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background: transparent;
-  cursor: pointer;
-  z-index: 2;
-}
-
-.progress-bar-modern {
-  height: 5px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2.5px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(135deg, #a3990d 0%, #a29fa5 100%);
-  border-radius: 2.5px;
-  transition: width 0.1s ease;
-}
-
-.time-display {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.75rem;
-  color: #64748b;
-  font-weight: 600;
-  margin-bottom: 0.6rem;
-}
-
-.control-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
-}
-
-.btn-control {
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid rgba(163, 153, 13, 0.3);
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #a3990d;
-  font-size: 0.8rem;
-  transition: all 0.3s ease;
-}
-
-.btn-control:hover {
-  background: #a3990d;
-  color: white;
-  transform: scale(1.1);
-  box-shadow: 0 5px 15px rgba(163, 153, 13, 0.4);
-}
-
-.btn-play-main {
-  width: 42px;
-  height: 42px;
-  font-size: 1rem;
-  background: linear-gradient(135deg, #a3990d 0%, #a29fa5 100%);
-  color: white;
-  border: none;
-}
-
-.btn-play-main:hover {
-  background: linear-gradient(135deg, #8b8510 0%, #909090 100%);
-  box-shadow: 0 6px 20px rgba(163, 153, 13, 0.5);
-}
-
-.book-actions-modern {
-  display: flex;
-  gap: 0.6rem;
-}
-
-.action-btn {
-  flex: 1;
-  padding: 0.6rem 0.8rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-}
-
-.action-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-}
-
-/* Custom scrollbar */
+/* ===============================
+   SCROLLBAR PERSONALIZADO
+================================= */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -970,28 +377,4 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #5a6fd8, #6b46c1);
-}
-
-
-
-
-.back-home-btn {
-  position: absolute;
-  right: 3rem;
-  /* pegado a la izquierda */
-  top: 50%;
-  transform: translateY(-50%);
-  /* centra verticalmente */
-  background-color: #fff;
-  color: rgb(65, 64, 64);
-  border: none;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
-}
-
-.back-home-btn:hover {
-  background-color: #a0a0a0;
 }
