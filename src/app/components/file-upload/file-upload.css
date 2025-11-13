@@ -71,14 +71,15 @@
 }
 
 /* ===============================
-   GRID DE LIBROS
+   GRID DE LIBROS (5 por fila)
 ================================= */
 .books-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 2rem;
-  padding: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.5rem;
+  padding: 1.5rem;
   background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
+  justify-items: center;
 }
 
 /* ===============================
@@ -86,6 +87,7 @@
 ================================= */
 .book-flip-container {
   width: 100%;
+  max-width: 280px;
   aspect-ratio: 2 / 3;
   perspective: 1500px;
 }
@@ -95,25 +97,26 @@
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.9s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transition: transform 0.8s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 
 .book-flip-container.flipped .book-flip-card {
   transform: rotateY(180deg);
 }
 
+/* Portada */
 .book-front,
 .book-back {
   position: absolute;
   width: 100%;
   height: 100%;
-  border-radius: 18px;
-  backface-visibility: hidden;
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  backface-visibility: hidden;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Portada */
+/* Imagen de portada */
 .book-front {
   background: #111;
   display: flex;
@@ -125,113 +128,109 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.4s ease;
 }
 
 .book-front:hover img {
   transform: scale(1.05);
 }
 
-/* Botón play en la portada */
+/* Botón play portada */
 .flip-play-btn {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
+  bottom: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
   border: none;
+  border-radius: 50%;
   background: linear-gradient(135deg, #facc15, #a3990d);
-  color: white;
-  font-size: 1.5rem;
-  box-shadow: 0 6px 20px rgba(250, 204, 21, 0.4);
+  color: #1a1a1a;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.4);
   transition: all 0.3s ease;
 }
 
 .flip-play-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 0 25px rgba(250, 204, 21, 0.6);
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.6);
 }
 
-/* Reverso */
+/* Reverso (detalle del libro) */
 .book-back {
-  background: linear-gradient(145deg, #0f0f0f, #1c1c1c);
-  color: #e2e8f0;
-  padding: 1.5rem;
+  background: linear-gradient(160deg, #1a1a1a, #111);
+  color: #f1f5f9;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transform: rotateY(180deg);
 }
 
+/* Título y descripción */
 .book-back h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: #fff;
-  margin-bottom: 0.5rem;
-  padding-top: 20px;
+  margin-bottom: 0.4rem;
 }
 
 .book-back p {
-  font-size: 0.9rem;
-  color: #a1a1aa;
-  margin-bottom: 1rem;
-  line-height: 1.4;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  line-height: 1.35;
+  margin-bottom: 0.8rem;
 }
 
-/* ===============================
-   CONTROLES DE AUDIO
-================================= */
+/* Controles de audio compactos */
 .audio-controls-modern {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 14px;
-  padding: 1.5rem;
-  text-align: center;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 0.8rem;
 }
 
 .audio-progress {
   width: 100%;
   appearance: none;
-  height: 6px;
-  border-radius: 10px;
+  height: 4px;
+  border-radius: 6px;
   background: rgba(255, 255, 255, 0.2);
-  outline: none;
-  cursor: pointer;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.4rem;
 }
 
 .audio-progress::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: #facc15;
   border: 2px solid #fff;
-  box-shadow: 0 2px 8px rgba(250, 204, 21, 0.4);
+  box-shadow: 0 2px 6px rgba(250, 204, 21, 0.4);
 }
 
 .time-display {
   display: flex;
   justify-content: space-between;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: #9ca3af;
 }
 
+/* Botones pequeños */
 .control-buttons {
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  margin-top: 0.75rem;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
 }
 
 .btn-control {
   background: rgba(255, 255, 255, 0.08);
   border: none;
   color: #f8fafc;
-  font-size: 1.1rem;
-  border-radius: 10px;
-  width: 40px;
-  height: 40px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  width: 30px;
+  height: 30px;
   transition: all 0.25s ease;
 }
 
@@ -244,14 +243,14 @@
 .btn-play-main {
   background: linear-gradient(135deg, #facc15, #a3990d);
   color: #1e1e1e;
-  font-size: 1.3rem;
-}
+  font-size: 1rem;
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
 /* Botón cerrar */
 .btn-close-container {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 0.8rem;
 }
 
 .btn-close {
@@ -259,10 +258,10 @@
   border: none;
   color: #facc15;
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.3s ease, background 0.3s ease;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 8px;
 }
 
@@ -272,7 +271,59 @@
 }
 
 /* ===============================
-   MENSAJES DE ERROR
+    AUDIO LOADING OVERLAY
+================================= */
+.audio-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  z-index: 10;
+}
+
+.audio-loading-spinner {
+  text-align: center;
+  color: #facc15;
+}
+
+.audio-loading-spinner i {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  animation: spin 1s linear infinite;
+}
+
+.audio-loading-spinner p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #fff;
+}
+
+.audio-loading-spinner small {
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.audio-controls-modern.hidden {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ===============================
+    MENSAJES DE ERROR
 ================================= */
 .error-section {
   max-width: 600px;
@@ -313,9 +364,15 @@
 /* ===============================
    RESPONSIVE
 ================================= */
+@media (max-width: 1200px) {
+  .books-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}
+
 @media (max-width: 1024px) {
   .books-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 }
 
@@ -329,17 +386,21 @@
   }
 
   .book-back p {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
   }
 
   .flip-play-btn {
-    width: 55px;
-    height: 55px;
+    width: 40px;
+    height: 40px;
   }
 
   .btn-control {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .books-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 }
 
@@ -349,12 +410,16 @@
   }
 
   .flip-play-btn {
-    width: 50px;
-    height: 50px;
+    width: 38px;
+    height: 38px;
   }
 
   .audio-controls-modern {
-    padding: 1rem;
+    padding: 0.8rem;
+  }
+
+  .books-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
 }
 

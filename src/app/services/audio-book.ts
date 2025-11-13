@@ -17,7 +17,7 @@ export interface Book {
 })
 export class AudioBookService {
   private apiUrl = 'http://127.0.0.1:8000';
-  private audioTimeout = 60000; // 60 segundos para cargar audio
+  private audioTimeout = 900000; // 15 minutos para cargar audio de libros grandes
 
   constructor(private http: HttpClient) { }
 

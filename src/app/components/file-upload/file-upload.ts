@@ -18,6 +18,7 @@ export class FileUploadComponent implements OnInit, OnDestroy {
   errorMessage = '';
   selectedBook: Book | null = null;
   isPlaying = false;
+  isGeneratingAudio = false; // Nuevo estado para generación de audio
   audio = new Audio();
 
   constructor(private audioBookService: AudioBookService) {
@@ -113,22 +114,44 @@ export class FileUploadComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Nuevo libro seleccionado → voltear card
+    // Nuevo libro seleccionado → voltear card INMEDIATAMENTE
     this.stopAudio(false); // no limpiar selectedBook aún
     this.selectedBook = book;
-    this.isPlaying = false;
-    this.audio.src = `http://127.0.0.1:8000/play/${book.id}`;
+    this.isPlaying = false; // Aún no está reproduciendo, pero la card ya gira
 
-    setTimeout(() => {
-      this.audio.load();
-      this.audio.play().then(() => {
-        this.isPlaying = true; // activa el flip (la card gira)
-      }).catch(error => {
-        console.error('Error al reproducir audio:', error);
+    // Timeout para mostrar indicador de carga solo si tarda
+    let loadingTimeout = setTimeout(() => {
+      this.isGeneratingAudio = true;
+    }, 2000); // Mostrar loading después de 2 segundos
+
+    // Fetch audio blob from API en background
+    this.audioBookService.getAudio(book.id).subscribe({
+      next: (audioBlob: Blob) => {
+        clearTimeout(loadingTimeout); // Cancelar timeout si carga rápido
+        this.isGeneratingAudio = false; // Asegurar que esté oculto
+        const audioUrl = URL.createObjectURL(audioBlob);
+        this.audio.src = audioUrl;
+
+        // Cargar y reproducir cuando esté listo
+        this.audio.load();
+        this.audio.play().then(() => {
+          this.isPlaying = true; // Ahora sí está reproduciendo
+        }).catch(error => {
+          console.error('Error al reproducir audio:', error);
+          this.isPlaying = false;
+          this.selectedBook = null;
+          URL.revokeObjectURL(audioUrl); // Clean up
+        });
+      },
+      error: (error: any) => {
+        clearTimeout(loadingTimeout); // Cancelar timeout en error
+        this.isGeneratingAudio = false; // Ocultar indicador
+        console.error('Error al cargar audio:', error);
+        this.errorMessage = 'Error al cargar el audio del libro';
         this.isPlaying = false;
         this.selectedBook = null;
-      });
-    }, 250);
+      }
+    });
   }
 
   stopAudio(resetBook: boolean = true): void {
@@ -136,28 +159,43 @@ export class FileUploadComponent implements OnInit, OnDestroy {
     this.isPlaying = false;
     if (resetBook) {
       this.selectedBook = null;
+      // Revoke object URL when stopping
+      if (this.audio.src) {
+        URL.revokeObjectURL(this.audio.src);
+      }
     }
   }
 
   /* --------------------------
-     EVENTOS AUDIO
-  ---------------------------*/
+      EVENTOS AUDIO
+   ---------------------------*/
   private handleAudioEnded(): void {
     this.isPlaying = false;
     this.selectedBook = null;
+    // Revoke object URL to free memory
+    if (this.audio.src) {
+      URL.revokeObjectURL(this.audio.src);
+    }
   }
 
   private handleAudioError(): void {
     console.error('Audio playback error');
     this.isPlaying = false;
     this.selectedBook = null;
+    // Revoke object URL to free memory
+    if (this.audio.src) {
+      URL.revokeObjectURL(this.audio.src);
+    }
   }
 
   /* --------------------------
-     LIMPIEZA
-  ---------------------------*/
+      LIMPIEZA
+   ---------------------------*/
   private cleanupAudio(): void {
     this.audio.pause();
+    if (this.audio.src) {
+      URL.revokeObjectURL(this.audio.src);
+    }
     this.audio.src = '';
     if ((this as any).playTimeout) {
       clearTimeout((this as any).playTimeout);

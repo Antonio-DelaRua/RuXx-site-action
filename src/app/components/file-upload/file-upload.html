@@ -20,7 +20,7 @@
   <div
     *ngFor="let book of books"
     class="book-flip-container"
-    [class.flipped]="selectedBook?.id === book.id && isPlaying"
+    [class.flipped]="selectedBook?.id === book.id"
   >
     <div class="book-flip-card">
       
@@ -37,7 +37,15 @@
         <h3>{{ book.title }}</h3>
         <p>{{ book.description || 'Sin descripción disponible' }}</p>
 
-        <div class="audio-controls-modern">
+        <!-- Loading indicator for audio generation -->
+        <div *ngIf="selectedBook?.id === book.id && isGeneratingAudio" class="audio-loading-overlay">
+          <div class="audio-loading-spinner">
+            <i class="fas fa-circle-notch fa-spin"></i>
+            <p>Generando audio completo...<br><small>Esto puede tomar varios minutos</small></p>
+          </div>
+        </div>
+
+        <div class="audio-controls-modern" [class.hidden]="!(selectedBook?.id === book.id)">
           <input
             type="range"
             class="audio-progress"
