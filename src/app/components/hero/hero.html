@@ -1,12 +1,33 @@
-<div class="hero-section">
+<div class="hero-section" [class.loaded]="robotLoaded">
   <!-- Robot arriba en móvil -->
-  <div class="robot-container">
+  <div
+    class="robot-container"
+    (mousemove)="onMouseMove($event)"
+    (mouseleave)="resetParallax()"
+  >
+    <!-- Robot Preview / Overlay -->
+    <div
+      class="robot-overlay"
+      [style.--px.px]="parallaxX"
+      [style.--py.px]="parallaxY"
+      *ngIf="!robotLoaded"
+    >
+      <span class="glitch" [attr.data-text]="currentText">
+        {{ currentText }}
+      </span>
+    </div>
+
+    <!-- Particles -->
+    <div class="particles" *ngIf="!robotLoaded"></div>
+
     <iframe
       src="https://my.spline.design/genkubgreetingrobot-zo31kTQNqe59mminva9R6Lol/"
       frameborder="0"
       allowfullscreen
       class="spline-iframe"
       loading="lazy"
+      [class.visible]="iframeVisible"
+      (load)="onRobotLoad()"
     ></iframe>
   </div>
 

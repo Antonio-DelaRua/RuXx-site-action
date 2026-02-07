@@ -44,7 +44,7 @@ main {
   max-width: 40rem;
   margin-left: 10%;
   margin-top: 60px;
-  z-index: 2; /* Aseguramos que esté por encima */
+  z-index: 2;
 }
 
 .tag-box {
@@ -110,7 +110,7 @@ main {
 }
 
 /* Botones de redes sociales */
-.social-buttons { 
+.social-buttons {
   display: flex;
   gap: 1rem;
   justify-content: flex-start;
@@ -216,6 +216,117 @@ main {
   clip-path: inset(0 0 15% 0);
   transform: translateZ(0);
   will-change: transform;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.robot-container iframe.visible {
+  opacity: 1;
+}
+
+/* === GLITCH TEXT + TYPING === */
+.robot-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transform: translate(var(--px, 0px), var(--py, 0px));
+  transition: transform 0.15s ease-out;
+}
+
+.glitch {
+  position: relative;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  opacity: 0.85;
+  color: #fff;
+  font-family: monospace;
+  text-transform: uppercase;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0.6;
+}
+
+.glitch::before {
+  transform: translate(1px, -1px);
+  animation: glitch1 1.8s infinite linear alternate-reverse;
+  color: #00ffff;
+}
+
+.glitch::after {
+  transform: translate(-1px, 1px);
+  animation: glitch2 2.2s infinite linear alternate-reverse;
+  color: #ff00ff;
+}
+
+@keyframes glitch1 {
+  0% { opacity: 0.2 }
+  100% { opacity: 0.7 }
+}
+
+@keyframes glitch2 {
+  0% { opacity: 0.7 }
+  100% { opacity: 0.2 }
+}
+
+/* === PARTICLES (NO CANVAS) === */
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.particles::before,
+.particles::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: float 20s linear infinite;
+}
+
+.particles::after {
+  animation-duration: 30s;
+  opacity: 0.5;
+}
+
+@keyframes float {
+  from { transform: translateY(0) }
+  to { transform: translateY(-60px) }
+}
+
+/* === FINAL TRANSITION === */
+.robot-overlay,
+.particles {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.hero-section.loaded .robot-overlay,
+.hero-section.loaded .particles {
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
+}
+
+/* === ROBOT PREVIEW PARALLAX === */
+.robot-container {
+  transform: translate(var(--px, 0px), var(--py, 0px));
+  transition: transform 0.15s ease-out;
+}
+
+.hero-section.loaded .robot-container {
+  /* Iframe visibility is controlled by .visible class */
 }
 
 /* HERO SECTION LAYOUT */
@@ -251,38 +362,46 @@ main {
 /* MOBILE RESPONSIVE - LAYOUT CORREGIDO */
 @media (max-width: 768px) {
   .hero-section {
-    flex-direction: column; /* Cambiamos a columna para móvil */
+    flex-direction: column;
     min-height: auto;
     padding: 2rem 0;
   }
 
   /* ROBOT EN LA PARTE SUPERIOR */
   .robot-container {
-    position: relative; /* Cambiamos a relative para el flujo normal */
-    order: 1; /* Primero en el orden */
+    position: relative;
+    order: 1;
     width: 100%;
-    height: 300px; /* Altura fija para móvil */
+    height: 300px;
     top: 0;
     right: 0;
     padding-left: 20px;
-    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 75%); /* Más recorte en móviles pequeños */
-
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 75%);
   }
 
   .robot-container iframe {
-    clip-path: none; /* Eliminamos el clip-path para móvil */
+    clip-path: none;
     height: 100%;
+  }
+
+  /* Glitch overlay adjustments for mobile */
+  .robot-overlay {
+    padding-right: 80px;
+  }
+
+  .glitch {
+    font-size: 0.9rem;
   }
 
   /* CONTENIDO DEBAJO DEL ROBOT */
   .content {
-    order: 2; /* Segundo en el orden */
+    order: 2;
     max-width: 100%;
     margin: 0 auto;
     padding: 0 1.5rem;
     margin-top: 0;
     margin-left: 0;
-    text-align: center; /* Centramos el texto en móvil */
+    text-align: center;
   }
 
   .tag-box {
@@ -311,10 +430,9 @@ main {
   }
 
   .social-buttons {
-    justify-content: center; /* Centramos botones sociales en móvil */
+    justify-content: center;
   }
 
-  /* Ajustes para header en móvil */
   header {
     padding: 1rem 0.1rem;
   }
@@ -337,10 +455,9 @@ main {
 
   .content h1 {
     font-size: 2rem;
-   
   }
 
-  .mobile-text{
+  .mobile-text {
     margin-top: 10px;
   }
 
@@ -349,18 +466,17 @@ main {
     height: 2.2rem;
   }
 
-.social-buttons {
+  .social-buttons {
     display: flex;
-    justify-content: center; /* Centrado horizontal */
-    align-items: center; /* Centrado vertical (si es necesario) */
+    justify-content: center;
+    align-items: center;
     gap: 1rem;
-    width: 100%; /* Ocupa todo el ancho disponible */
-}
+    width: 100%;
+  }
 
-.social-btn {
+  .social-btn {
     width: 40px;
     height: 40px;
     font-size: 16px;
-    /* Los botones ya estarán centrados por el contenedor */
-}
+  }
 }
